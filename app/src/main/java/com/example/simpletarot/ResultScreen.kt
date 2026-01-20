@@ -23,8 +23,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.simpletarot.data.DrawnCard
+import com.example.simpletarot.data.TarotCard
+import com.example.simpletarot.data.withClassification
 
 @Composable
 fun ResultsScreen(viewModel: TarotViewModel, onBack: () -> Unit) {
@@ -62,7 +65,6 @@ fun ResultsScreenStateless(cards : List<DrawnCard>, onBack: () -> Unit) {
         }
     }
 }
-
 
 @Composable
 fun CardDisplay(drawnCard: DrawnCard) {
@@ -103,4 +105,34 @@ fun CardDisplay(drawnCard: DrawnCard) {
             )
         }
     }
+}
+
+
+@Preview
+@Composable
+fun ResultsScreenPreview() {
+    val cards = listOf(
+        TarotCard("Knight of Pentacles",
+            "reliability, hard work, responsibility",
+            "stagnation, boredom, laziness"),
+        TarotCard("Nine of Swords",
+            "anxiety, guilt, worry",
+            "hope, comfort, letting go of fear"),
+        TarotCard("Two of Cups",
+            "connection, partnership, attraction",
+            "breakup, imbalance, tension"),
+        ).map { card ->
+            DrawnCard(card = card.withClassification(), isReversed = false)
+        }
+    ResultsScreenStateless(cards = cards, onBack = {})
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CardDisplayPreview() {
+    val card = TarotCard("The Fool",
+        "New beginnings, spontaneity, trust",
+        "Recklessness, naivety, holding back")
+        .withClassification()
+    CardDisplay(DrawnCard(card, false))
 }
