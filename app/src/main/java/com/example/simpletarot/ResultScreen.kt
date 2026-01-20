@@ -66,48 +66,6 @@ fun ResultsScreenStateless(cards : List<DrawnCard>, onBack: () -> Unit) {
     }
 }
 
-@Composable
-fun CardDisplay(drawnCard: DrawnCard) {
-    val card = drawnCard.card
-
-    Card(
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        shape = RoundedCornerShape(12.dp),
-        modifier = Modifier.width(230.dp).height(300.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Surface(
-                color = MaterialTheme.colorScheme.primary,
-                shape = RoundedCornerShape(8.dp)
-            ) {
-                Text(
-                    text = card.suit.displayName,
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                    style = MaterialTheme.typography.displaySmall
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = card.name + if (drawnCard.isReversed) " Reversed" else "",
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Center,
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                text = if (drawnCard.isReversed) card.reversedMeaning else card.uprightMeaning,
-                style = MaterialTheme.typography.bodySmall,
-                textAlign = TextAlign.Center,
-            )
-        }
-    }
-}
-
-
 @Preview
 @Composable
 fun ResultsScreenPreview() {
@@ -125,14 +83,4 @@ fun ResultsScreenPreview() {
             DrawnCard(card = card.withClassification(), isReversed = false)
         }
     ResultsScreenStateless(cards = cards, onBack = {})
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CardDisplayPreview() {
-    val card = TarotCard("The Fool",
-        "New beginnings, spontaneity, trust",
-        "Recklessness, naivety, holding back")
-        .withClassification()
-    CardDisplay(DrawnCard(card, false))
 }
