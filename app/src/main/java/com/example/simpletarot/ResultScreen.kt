@@ -18,17 +18,23 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.simpletarot.data.DrawnCard
-import com.example.simpletarot.data.TarotDeck
 
 @Composable
-fun ResultsScreen(cardCount: Int, onBack: () -> Unit) {
-    val drawnCards = remember { TarotDeck.draw(cardCount) }
+fun ResultsScreen(viewModel: TarotViewModel, onBack: () -> Unit) {
+    val spread by viewModel.currentSpread.collectAsState()
+    ResultsScreenStateless(cards = spread, onBack = onBack)
+}
+
+@Composable
+fun ResultsScreenStateless(cards : List<DrawnCard>, onBack: () -> Unit) {
+    val cardCount = cards.size
 
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),
@@ -44,7 +50,7 @@ fun ResultsScreen(cardCount: Int, onBack: () -> Unit) {
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(horizontal = 32.dp)
         ) {
-            items(drawnCards) { card ->
+            items(cards) { card ->
                 CardDisplay(card)
             }
         }
@@ -57,6 +63,7 @@ fun ResultsScreen(cardCount: Int, onBack: () -> Unit) {
     }
 }
 
+
 @Composable
 fun CardDisplay(drawnCard: DrawnCard) {
     val card = drawnCard.card
@@ -64,7 +71,7 @@ fun CardDisplay(drawnCard: DrawnCard) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(12.dp),
-        modifier = Modifier.width(200.dp).height(300.dp)
+        modifier = Modifier.width(230.dp).height(300.dp)
     ) {
         Column(
             modifier = Modifier.padding(16.dp),

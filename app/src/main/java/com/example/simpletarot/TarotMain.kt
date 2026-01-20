@@ -17,12 +17,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+enum class AppScreen {
+    Menu,
+    Result,
+}
 @Composable
-fun TarotMain() {
-    // Basic state to handle navigation between "Menu" and "Result"
-    var selectedSpread by remember { mutableStateOf<Int?>(null) }
+fun TarotMain(viewModel: TarotViewModel) {
+    var currentScreen by remember { mutableStateOf(AppScreen.Menu) }
 
-    if (selectedSpread == null) {
+    if (currentScreen == AppScreen.Menu) {
         // Menu Screen
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -32,17 +35,24 @@ fun TarotMain() {
             Text("Tarot Reader", style = MaterialTheme.typography.headlineSmall)
             Spacer(modifier = Modifier.height(32.dp))
 
-            Button(onClick = { selectedSpread = 1 }) {
+            Button(onClick = {
+                viewModel.drawCards(1)
+                currentScreen = AppScreen.Result
+            }) {
                 Text("Single Card Draw")
             }
 
-            Button(onClick = { selectedSpread = 3 }) {
+            Button(onClick = {
+                viewModel.drawCards(3)
+                currentScreen = AppScreen.Result
+            }) {
                 Text("Three Card Spread")
             }
         }
-    } else {
-        ResultsScreen(cardCount = selectedSpread!!) {
-            selectedSpread = null
+    } else if (currentScreen == AppScreen.Result) {
+        ResultsScreen(viewModel) {
+            currentScreen = AppScreen.Menu
+            viewModel.clearSpread()
         }
     }
 }

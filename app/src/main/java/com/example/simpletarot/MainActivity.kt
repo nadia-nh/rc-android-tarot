@@ -12,7 +12,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             SimpleTarotTheme {
-                TarotMain()
+                val viewModel = TarotViewModel()
+                TarotMain(viewModel)
             }
         }
     }
