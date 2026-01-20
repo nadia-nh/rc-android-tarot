@@ -258,7 +258,7 @@ object TarotDeck {
     fun draw(count: Int): List<DrawnCard> {
         return getDeck().shuffled().take(count).map { card ->
             val isReversed = Random.nextBoolean()
-            DrawnCard(card = card, isReversed = isReversed)
+            DrawnCard(card = card, isReversed = isReversed, isRevealed = false)
         }
     }
 }

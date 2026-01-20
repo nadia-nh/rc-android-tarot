@@ -42,7 +42,8 @@ enum class Rank {
 
 data class DrawnCard(
     val card: TarotCard,
-    val isReversed: Boolean
+    val isReversed: Boolean,
+    var isRevealed: Boolean,
 )
 
 private val minorArcanaSuits = Suit.entries.filter { it != Suit.MajorArcana }
