@@ -48,14 +48,28 @@ data class DrawnCard(
 
 private val minorArcanaSuits = Suit.entries.filter { it != Suit.MajorArcana }
 
-fun TarotCard.withClassification(): TarotCard {
-    val matchingSuit = minorArcanaSuits.firstOrNull { suit ->
-        name.endsWith(" of ${suit.displayName}")
-    } ?: return copy(suit = Suit.MajorArcana, rank = null)
+private fun TarotCard.getSuit() : Suit {
+    return minorArcanaSuits.firstOrNull {
+        val suitName = it.displayName
+        name.endsWith(" of $suitName")
+    } ?: Suit.MajorArcana
+}
 
-    val rankName = name.removeSuffix(" of ${matchingSuit.displayName}").trim()
-    val rank = Rank.fromLabel(rankName)
-    return copy(suit = matchingSuit, rank = rank)
+private fun getRankFromName(name: String, suit: Suit): Rank? {
+    if (suit == Suit.MajorArcana) {
+        return null
+    }
+
+    val suitName = suit.displayName
+    val rankName = name.removeSuffix(" of $suitName").trim()
+    return Rank.fromLabel(rankName)
+}
+
+fun TarotCard.withRankAndSuit(): TarotCard {
+    val suit = getSuit()
+    return copy(
+        suit = suit,
+        rank = getRankFromName(name, suit))
 }
 
 fun TarotCard.getImageFileName(): String {

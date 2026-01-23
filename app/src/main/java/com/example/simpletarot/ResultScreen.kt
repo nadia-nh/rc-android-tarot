@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.simpletarot.data.DrawnCard
 import com.example.simpletarot.data.TarotCard
-import com.example.simpletarot.data.withClassification
+import com.example.simpletarot.data.withRankAndSuit
 
 @Composable
 fun ResultsScreen(viewModel: TarotViewModel, onBack: () -> Unit) {
@@ -73,7 +73,7 @@ fun ResultsScreenPreview() {
             "connection, partnership, attraction",
             "breakup, imbalance, tension"),
         ).map { card ->
-            DrawnCard(card = card.withClassification(),
+            DrawnCard(card = card.withRankAndSuit(),
                 isReversed = false,
                 isRevealed = true)
         }

@@ -1,12 +1,12 @@
 package com.example.simpletarot
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.simpletarot.data.DrawnCard
 import com.example.simpletarot.data.TarotCard
-import com.example.simpletarot.data.withClassification
+import com.example.simpletarot.data.withRankAndSuit
 
 @Composable
 fun CardDisplay(drawnCard: DrawnCard) {
@@ -56,6 +56,7 @@ fun CardDisplay(drawnCard: DrawnCard) {
                     modifier = Modifier.size(48.dp)
                 )
             } else {
+                Log.i("tarot", "CardDisplay: ${drawnCard.card.name}")
                 CardImage(drawnCard)
             }
         }
@@ -68,6 +69,6 @@ fun CardDisplayPreview() {
     val card = TarotCard("The Fool",
         "New beginnings, spontaneity, trust",
         "Recklessness, naivety, holding back")
-        .withClassification()
+        .withRankAndSuit()
     CardDisplay(DrawnCard(card, false, isRevealed = true))
 }

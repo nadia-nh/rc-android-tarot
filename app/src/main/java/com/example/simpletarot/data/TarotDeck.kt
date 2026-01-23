@@ -252,13 +252,18 @@ private val baseDeck by lazy {
 
 object TarotDeck {
     fun getDeck(): List<TarotCard> {
-        return baseDeck.map { it.withClassification() }
+        return baseDeck.map { it.withRankAndSuit() }
     }
 
     fun draw(count: Int): List<DrawnCard> {
-        return getDeck().shuffled().take(count).map { card ->
-            val isReversed = Random.nextBoolean()
-            DrawnCard(card = card, isReversed = isReversed, isRevealed = false)
-        }
+        return getDeck()
+            .shuffled()
+            .take(count)
+            .map { card ->
+                DrawnCard(
+                    card = card,
+                    isReversed = Random.nextBoolean(),
+                    isRevealed = false)
+            }
     }
 }
