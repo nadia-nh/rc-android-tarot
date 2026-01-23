@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.simpletarot.ui.theme.LocalSpacing
 
 enum class AppScreen {
     Menu,
@@ -23,6 +24,7 @@ enum class AppScreen {
 }
 @Composable
 fun TarotMain(viewModel: TarotViewModel) {
+    val spacing = LocalSpacing.current
     var currentScreen by remember { mutableStateOf(AppScreen.Menu) }
 
     if (currentScreen == AppScreen.Menu) {
@@ -33,7 +35,7 @@ fun TarotMain(viewModel: TarotViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text("Tarot Reader", style = MaterialTheme.typography.headlineSmall)
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(spacing.extraLarge))
 
             Button(onClick = {
                 viewModel.drawCards(1)

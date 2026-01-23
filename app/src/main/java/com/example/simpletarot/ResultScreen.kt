@@ -18,10 +18,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.simpletarot.data.DrawnCard
 import com.example.simpletarot.data.TarotCard
 import com.example.simpletarot.data.withRankAndSuit
+import com.example.simpletarot.ui.theme.LocalSpacing
 
 @Composable
 fun ResultsScreen(viewModel: TarotViewModel, onBack: () -> Unit) {
@@ -32,20 +32,21 @@ fun ResultsScreen(viewModel: TarotViewModel, onBack: () -> Unit) {
 @Composable
 fun ResultsScreenStateless(cards : List<DrawnCard>, onBack: () -> Unit) {
     val cardCount = cards.size
+    val spacing = LocalSpacing.current
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier.fillMaxSize().padding(spacing.large),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = if (cardCount == 1) "Your Card" else "Your Spread",
             style = MaterialTheme.typography.titleSmall)
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(spacing.medium))
 
         // Display cards horizontally
         LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(horizontal = 32.dp)
+            horizontalArrangement = Arrangement.spacedBy(spacing.medium),
+            contentPadding = PaddingValues(horizontal = spacing.extraLarge)
         ) {
             items(cards) { card ->
                 CardDisplay(card)
