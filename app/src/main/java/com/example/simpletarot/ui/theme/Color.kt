@@ -9,3 +9,15 @@ val Pink80 = Color(0xFFEFB8C8)
 val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
+
+val DeepNavy = Color(0xFF0F172A)
+val CardBackGray = Color(0xFF1E293B)
+val MysticPurple = Color(0xFF8B5CF6)
+val GoldAccent = Color(0xFFF59E0B)
+val OffWhite = Color(0xFFF8FAFC)
+
+// Light Theme Colors
+val ParchmentWhite = Color(0xFFFCF9F2)
+val DeepInk = Color(0xFF1E293B)
+val RoyalViolet = Color(0xFF6D28D9)
+val SoftShadow = Color(0xFFE2E8F0)
