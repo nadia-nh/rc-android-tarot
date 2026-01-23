@@ -185,3 +185,7 @@ fun TarotCard.getResourceId(): Int {
         }
     }
 }
+
+fun DrawnCard.getMeaning(): String {
+    return if (isReversed) card.reversedMeaning else card.uprightMeaning
+}
