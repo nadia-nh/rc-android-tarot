@@ -18,6 +18,15 @@ class TarotViewModel : ViewModel() {
         _currentScreen.value = AppScreen.Result
     }
 
+    fun revealCard(cardIndex: Int) {
+        val currentList = _currentSpread.value.toMutableList()
+
+        if (cardIndex in currentList.indices) {
+            currentList[cardIndex] = currentList[cardIndex].copy(isRevealed = true)
+            _currentSpread.value = currentList
+        }
+    }
+
     fun clearSpread() {
         _currentSpread.value = emptyList()
         _currentScreen.value = AppScreen.Menu

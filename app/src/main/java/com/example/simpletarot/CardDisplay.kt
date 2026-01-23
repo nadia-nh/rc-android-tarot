@@ -14,10 +14,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,9 +23,9 @@ import com.example.simpletarot.data.TarotCard
 import com.example.simpletarot.data.withRankAndSuit
 
 @Composable
-fun CardDisplay(drawnCard: DrawnCard) {
-    var isRevealed by remember { mutableStateOf(drawnCard.isRevealed) }
-
+fun CardDisplay(
+    drawnCard: DrawnCard,
+    onReveal: () -> Unit) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = MaterialTheme.shapes.medium,
@@ -39,16 +35,13 @@ fun CardDisplay(drawnCard: DrawnCard) {
         modifier = Modifier
             .width(210.dp)
             .height(350.dp)
-            .clickable {
-                isRevealed = true
-                drawnCard.isRevealed = true
-            }
+            .clickable { onReveal() }
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
-            if (!isRevealed) {
+            if (!drawnCard.isRevealed) {
                 Icon(
                     imageVector = Icons.Default.Star,
                     contentDescription = "Hidden",
@@ -56,7 +49,7 @@ fun CardDisplay(drawnCard: DrawnCard) {
                     modifier = Modifier.size(48.dp)
                 )
             } else {
-                Log.i("tarot", "CardDisplay: ${drawnCard.card.name}")
+                Log.d("tarot", "CardDisplay: ${drawnCard.card.name}")
                 CardImage(drawnCard)
             }
         }
@@ -70,5 +63,5 @@ fun CardDisplayPreview() {
         "New beginnings, spontaneity, trust",
         "Recklessness, naivety, holding back")
         .withRankAndSuit()
-    CardDisplay(DrawnCard(card, false, isRevealed = true))
+    CardDisplay(DrawnCard(card, false, isRevealed = true)) { }
 }

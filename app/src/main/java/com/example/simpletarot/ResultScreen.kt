@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,13 +24,22 @@ import com.example.simpletarot.data.withRankAndSuit
 import com.example.simpletarot.ui.theme.LocalSpacing
 
 @Composable
-fun ResultsScreen(viewModel: TarotViewModel, onBack: () -> Unit) {
+fun ResultsScreen(
+    viewModel: TarotViewModel,
+    onBack: () -> Unit) {
     val spread by viewModel.currentSpread.collectAsState()
-    ResultsScreenStateless(cards = spread, onBack = onBack)
+    ResultsScreenStateless(
+        cards = spread,
+        onBack = onBack) {
+        index -> viewModel.revealCard(index)
+    }
 }
 
 @Composable
-fun ResultsScreenStateless(cards : List<DrawnCard>, onBack: () -> Unit) {
+fun ResultsScreenStateless(
+    cards : List<DrawnCard>,
+    onBack: () -> Unit,
+    onReveal: (index: Int) -> Unit = {}) {
     val cardCount = cards.size
     val spacing = LocalSpacing.current
 
@@ -48,8 +57,10 @@ fun ResultsScreenStateless(cards : List<DrawnCard>, onBack: () -> Unit) {
             horizontalArrangement = Arrangement.spacedBy(spacing.medium),
             contentPadding = PaddingValues(horizontal = spacing.extraLarge)
         ) {
-            items(cards) { card ->
-                CardDisplay(card)
+            itemsIndexed(cards) { index, card ->
+                CardDisplay(card) {
+                    onReveal(index)
+                }
             }
         }
 
