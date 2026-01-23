@@ -9,10 +9,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -25,7 +23,7 @@ enum class AppScreen {
 @Composable
 fun TarotMain(viewModel: TarotViewModel) {
     val spacing = LocalSpacing.current
-    var currentScreen by remember { mutableStateOf(AppScreen.Menu) }
+    val currentScreen by viewModel.currentScreen.collectAsState()
 
     if (currentScreen == AppScreen.Menu) {
         // Menu Screen
@@ -39,21 +37,18 @@ fun TarotMain(viewModel: TarotViewModel) {
 
             Button(onClick = {
                 viewModel.drawCards(1)
-                currentScreen = AppScreen.Result
             }) {
                 Text("Single Card Draw")
             }
 
             Button(onClick = {
                 viewModel.drawCards(3)
-                currentScreen = AppScreen.Result
             }) {
                 Text("Three Card Spread")
             }
         }
     } else if (currentScreen == AppScreen.Result) {
         ResultsScreen(viewModel) {
-            currentScreen = AppScreen.Menu
             viewModel.clearSpread()
         }
     }
