@@ -2,22 +2,20 @@ package com.example.simpletarot.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val LightPrimary = Color(0xFFD16630)
+val LightSecondary = Color(0xFFF59E0B)
+val LightBackground = Color(0xFFF3E3CA)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val LightSurface = Color(0xFFF6CA9F)
+val LightOnPrimary = Color(0xFFFFFFFC)
+val LightOnBackground = Color(0xFF94241A)
+val LightOnSurface = Color(0xFF5C1E1C)
 
-val DeepNavy = Color(0xFF0F172A)
-val CardBackGray = Color(0xFF1E293B)
-val MysticPurple = Color(0xFF8B5CF6)
-val GoldAccent = Color(0xFFF59E0B)
-val OffWhite = Color(0xFFF8FAFC)
+val DarkPrimary = Color(0xFFC75C26)
+val DarkSecondary = Color(0xFFF59E0B)
+val DarkBackground = Color(0xFF1E1E1E)
+val DarkSurface = Color(0xFF000000)
 
-// Light Theme Colors
-val ParchmentWhite = Color(0xFFFCF9F2)
-val DeepInk = Color(0xFF1E293B)
-val RoyalViolet = Color(0xFF6D28D9)
-val SoftShadow = Color(0xFFE2E8F0)
+val DarkOnPrimary = Color(0xFFF9E6CF)
+val DarkOnBackground = Color(0xFFE68D3E)
+val DarkOnSurface = Color(0xFFE68D3E)
