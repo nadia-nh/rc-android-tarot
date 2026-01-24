@@ -3,7 +3,6 @@ package com.example.simpletarot.ui.theme
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -12,10 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 
 private val LightColorScheme = lightColorScheme(
     primary = RoyalViolet,
@@ -35,29 +30,6 @@ private val DarkColorScheme = darkColorScheme(
     onPrimary = Color.White,
     onBackground = OffWhite,
     onSurface = OffWhite,
-)
-
-private val TarotTypography = Typography(
-    // Large Titles (Menu Header)
-    headlineSmall = TextStyle(
-        fontFamily = FontFamily.Serif,
-        fontWeight = FontWeight.Bold,
-        fontSize = 24.sp,
-        letterSpacing = 2.sp
-    ),
-    // Card Names
-    titleSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 18.sp,
-        lineHeight = 24.sp,
-    ),
-    // Descriptions / Meanings
-    bodyMedium = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
-    )
 )
 
 @Composable
