@@ -1,5 +1,6 @@
 package com.example.simpletarot
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,10 +45,13 @@ fun ResultsScreenStateless(
     val spacing = LocalSpacing.current
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.background)
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = if (cardCount == 1) "Your Card" else "Your Spread",
+            color = MaterialTheme.colorScheme.onBackground,
             style = MaterialTheme.typography.headlineSmall)
 
         Spacer(modifier = Modifier.height(spacing.medium))
@@ -70,7 +74,8 @@ fun ResultsScreenStateless(
         }
 
         Button(onClick = onBack) {
-            Text("New Reading")
+            Text("New Reading",
+                color = MaterialTheme.colorScheme.onPrimary)
         }
     }
 }

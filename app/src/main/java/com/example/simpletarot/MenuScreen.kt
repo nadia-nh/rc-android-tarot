@@ -1,5 +1,6 @@
 package com.example.simpletarot
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,19 +19,25 @@ fun MenuScreen(onDraw: (count: Int) -> Unit) {
     val spacing = LocalSpacing.current
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.background)
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Tarot Reader", style = MaterialTheme.typography.headlineSmall)
+        Text("Arcana Flux Tarot",
+            color = MaterialTheme.colorScheme.onBackground,
+            style = MaterialTheme.typography.headlineSmall)
         Spacer(modifier = Modifier.height(spacing.extraLarge))
 
         Button(onClick = { onDraw(1) }) {
-            Text("Single Card Draw")
+            Text("Single Card Draw",
+                color = MaterialTheme.colorScheme.onPrimary)
         }
 
         Button(onClick = { onDraw(3) }) {
-            Text("Three Card Spread")
+            Text("Three Card Spread",
+                color = MaterialTheme.colorScheme.onPrimary)
         }
     }
 }

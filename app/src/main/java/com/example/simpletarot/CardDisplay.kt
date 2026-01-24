@@ -76,6 +76,7 @@ fun CardDisplay(
 
         if (drawnCard.isRevealed) {
             Text(text = drawnCard.getMeaning(),
+                color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(top = spacing.extraSmall),
