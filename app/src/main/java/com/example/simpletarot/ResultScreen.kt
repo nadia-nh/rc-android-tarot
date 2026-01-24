@@ -1,12 +1,12 @@
 package com.example.simpletarot
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
@@ -44,29 +44,33 @@ fun ResultsScreenStateless(
     val spacing = LocalSpacing.current
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(spacing.large),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = if (cardCount == 1) "Your Card" else "Your Spread",
-            style = MaterialTheme.typography.titleSmall)
+            style = MaterialTheme.typography.headlineSmall)
 
         Spacer(modifier = Modifier.height(spacing.medium))
 
-        // Display cards horizontally
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(spacing.medium),
-            contentPadding = PaddingValues(horizontal = spacing.extraLarge)
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.Center
         ) {
-            itemsIndexed(cards) { index, card ->
-                CardDisplay(card) {
-                    onReveal(index)
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(spacing.medium),
+                contentPadding = PaddingValues(horizontal = spacing.extraLarge),
+                verticalAlignment = Alignment.Top
+            ) {
+                itemsIndexed(cards) { index, card ->
+                    CardDisplay(card) {
+                        onReveal(index)
+                    }
                 }
             }
         }
 
-        Spacer(modifier = Modifier.weight(1f))
         Button(onClick = onBack) {
-            Text("Draw Again")
+            Text("New Reading")
         }
     }
 }
