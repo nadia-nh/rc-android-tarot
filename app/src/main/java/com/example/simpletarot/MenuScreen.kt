@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,23 +22,38 @@ fun MenuScreen(onDraw: (count: Int) -> Unit) {
     Column(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(spacing.large),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(spacing.large))
         Text("Arcana Flux Tarot",
             color = MaterialTheme.colorScheme.onBackground,
             style = MaterialTheme.typography.headlineSmall)
-        Spacer(modifier = Modifier.height(spacing.extraLarge))
 
-        Button(onClick = { onDraw(1) }) {
-            Text("Single Card Draw",
-                color = MaterialTheme.colorScheme.onPrimary)
-        }
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Button(onClick = { onDraw(1) }) {
+                Text(
+                    "Single Card Draw",
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MaterialTheme.typography.titleSmall
+                )
+            }
 
-        Button(onClick = { onDraw(3) }) {
-            Text("Three Card Spread",
-                color = MaterialTheme.colorScheme.onPrimary)
+            Spacer(modifier = Modifier.height(spacing.large))
+
+            Button(onClick = { onDraw(3) }) {
+                Text(
+                    "Three Card Spread",
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MaterialTheme.typography.titleSmall
+                )
+            }
         }
     }
 }

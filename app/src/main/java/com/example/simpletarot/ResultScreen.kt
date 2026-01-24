@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
@@ -47,14 +48,14 @@ fun ResultsScreenStateless(
     Column(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(spacing.medium),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(spacing.medium))
         Text(text = if (cardCount == 1) "Your Card" else "Your Spread",
             color = MaterialTheme.colorScheme.onBackground,
             style = MaterialTheme.typography.headlineSmall)
-
-        Spacer(modifier = Modifier.height(spacing.medium))
 
         Box(
             modifier = Modifier.weight(1f),
@@ -77,6 +78,7 @@ fun ResultsScreenStateless(
             Text("New Reading",
                 color = MaterialTheme.colorScheme.onPrimary)
         }
+        Spacer(modifier = Modifier.height(spacing.small))
     }
 }
 
