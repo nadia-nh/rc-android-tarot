@@ -39,7 +39,7 @@ fun CardDisplay(
 
     Column(
         modifier = Modifier
-            .width(150.dp)
+            .width(160.dp)
             .padding(spacing.small),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

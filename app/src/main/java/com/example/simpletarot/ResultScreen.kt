@@ -87,14 +87,14 @@ fun ResultsScreenStateless(
 fun ResultsScreenPreview() {
     val cards = listOf(
         TarotCard("Knight of Pentacles",
-            "reliability, hard work, responsibility",
-            "stagnation, boredom, laziness"),
+            "Reliability, hard work, responsibility",
+            "Stagnation, boredom, laziness"),
         TarotCard("Nine of Swords",
-            "anxiety, guilt, worry",
-            "hope, comfort, letting go of fear"),
+            "Anxiety, guilt, worry",
+            "Hope, comfort, letting go of fear"),
         TarotCard("Two of Cups",
-            "connection, partnership, attraction",
-            "breakup, imbalance, tension"),
+            "Connection, partnership, attraction",
+            "Breakup, imbalance, tension"),
         ).map { card ->
             DrawnCard(card = card.withRankAndSuit(),
                 isReversed = false,

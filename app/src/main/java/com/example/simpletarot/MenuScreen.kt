@@ -1,5 +1,6 @@
 package com.example.simpletarot
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,11 +9,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.simpletarot.ui.theme.LocalSpacing
 
 @Composable
@@ -31,6 +35,30 @@ fun MenuScreen(onDraw: (count: Int) -> Unit) {
         Text("Arcana Flux Tarot",
             color = MaterialTheme.colorScheme.onBackground,
             style = MaterialTheme.typography.headlineSmall)
+
+        Spacer(modifier = Modifier.height(spacing.large))
+        Surface(
+            color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.4f),
+            shape = MaterialTheme.shapes.large
+        ) {
+            Column(modifier = Modifier.padding(spacing.large),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Focus on open-ended questions",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                )
+
+                Spacer(modifier = Modifier.height(spacing.medium))
+                Text(
+                    text = "What do I need to know today?\nWhat are the themes of my work life?",
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontStyle = FontStyle.Italic,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                )
+            }
+        }
 
         Column(
             modifier = Modifier.weight(1f),
@@ -55,5 +83,13 @@ fun MenuScreen(onDraw: (count: Int) -> Unit) {
                 )
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun MenuScreenPreview() {
+    MenuScreen {
+        Log.d("tarot", "MenuScreenPreview: $it")
     }
 }

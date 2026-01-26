@@ -21,6 +21,13 @@ val TarotTypography = Typography(
         fontSize = 18.sp,
         lineHeight = 24.sp,
     ),
+    // Slightly Larger title
+    titleMedium = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Medium,
+        fontSize = 20.sp,
+        lineHeight = 24.sp,
+    ),
     // Descriptions / Meanings
     bodyMedium = TextStyle(
         fontFamily = FontFamily.Default,
