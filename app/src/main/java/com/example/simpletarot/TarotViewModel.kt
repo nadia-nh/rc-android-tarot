@@ -1,12 +1,17 @@
 package com.example.simpletarot
 
+import DrawnCardEntity
+import ReadingEntity
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.simpletarot.data.DrawnCard
 import com.example.simpletarot.data.TarotDeck
+import com.example.simpletarot.database.TarotRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
-class TarotViewModel : ViewModel() {
+class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
     private val _currentSpread = MutableStateFlow<List<DrawnCard>>(emptyList())
     private val _currentScreen = MutableStateFlow(AppScreen.Menu)
 
@@ -30,5 +35,25 @@ class TarotViewModel : ViewModel() {
     fun clearSpread() {
         _currentSpread.value = emptyList()
         _currentScreen.value = AppScreen.Menu
+    }
+
+    // Save current spread
+    fun saveReading() {
+        val cardCount = _currentSpread.value.size
+        val spreadType = if (cardCount == 3) "ThreeCardDraw" else "SingleCardDraw"
+        val reading = ReadingEntity(spreadType = spreadType)
+        val cards = _currentSpread.value.map {
+            DrawnCardEntity(
+                readingOwnerId = reading.readingId,
+                name = it.card.name,
+                isReversed = it.isReversed,
+                suit = it.card.suit.name,
+                rank = it.card.rank?.name
+            )
+        }
+
+        viewModelScope.launch {
+            repository.saveReading(reading, cards)
+        }
     }
 }
