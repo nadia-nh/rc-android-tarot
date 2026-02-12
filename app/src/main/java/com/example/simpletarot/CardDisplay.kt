@@ -3,8 +3,10 @@ package com.example.simpletarot
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,36 +37,59 @@ import com.example.simpletarot.ui.theme.LocalSpacing
 
 @Composable
 fun CardDisplay(
+    isLandscape: Boolean = false,
     drawnCard: DrawnCard,
     onReveal: () -> Unit = {}) {
     val spacing = LocalSpacing.current
 
-    Column(
-        modifier = Modifier
-            .width(160.dp)
-            .padding(spacing.small),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        CardWithImageOnReveal(drawnCard = drawnCard, onReveal = onReveal)
-        Spacer(modifier = Modifier.height(spacing.small))
-        CardMeaning(drawnCard = drawnCard)
+    if (isLandscape) {
+        Column(
+            modifier = Modifier
+                .width(160.dp)
+                .padding(spacing.small),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CardWithImageOnReveal(
+                isLandscape = true,
+                drawnCard = drawnCard,
+                onReveal = onReveal)
+            Spacer(modifier = Modifier.size(spacing.small))
+            CardMeaning(drawnCard = drawnCard)
+        }
+    } else {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(spacing.small),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            CardWithImageOnReveal(
+                isLandscape = false,
+                drawnCard = drawnCard,
+                onReveal = onReveal)
+            Spacer(modifier = Modifier.size(spacing.medium))
+            CardMeaning(drawnCard = drawnCard)
+        }
     }
 }
 
 @Composable
 fun CardWithImageOnReveal(
+    isLandscape: Boolean = false,
     drawnCard: DrawnCard,
     onReveal: () -> Unit = {}) {
+    val modifier = Modifier.height(200.dp).clickable { onReveal() }
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
-            .clickable { onReveal() }
+        modifier = if (isLandscape)
+                modifier.fillMaxWidth()
+            else
+                modifier.width(160.dp)
     ) { CardImageOrPlaceholder(drawnCard) }
 }
 
@@ -91,9 +116,10 @@ fun CardImageOrPlaceholder(drawnCard: DrawnCard) {
 fun CardMeaning(drawnCard: DrawnCard) {
     if (drawnCard.isRevealed) {
         Text(text = drawnCard.getMeaning(),
+            modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colorScheme.onBackground,
             style = MaterialTheme.typography.bodyMedium,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Start,
             maxLines = 4,
             overflow = TextOverflow.Ellipsis)
     }

@@ -86,7 +86,6 @@ fun ResultsScreenStateless(
                 allCardsRevealed.collectAsState().value,
                 onSave)
             Spacer(modifier = Modifier.size(spacing.medium))
-
             BackButton(onBack = onBack)
         }
 
@@ -96,8 +95,8 @@ fun ResultsScreenStateless(
 
 @Composable
 fun CardsDisplay(
-    spacing: TarotSpacing = LocalSpacing.current,
     isLandscape: Boolean = false,
+    spacing: TarotSpacing = LocalSpacing.current,
     cards: List<DrawnCard>,
     onReveal: (index: Int) -> Unit = {}) {
     if (isLandscape) {
@@ -107,7 +106,7 @@ fun CardsDisplay(
             verticalAlignment = Alignment.Top
         ) {
             itemsIndexed(cards) { index, card ->
-                CardDisplay(card) {
+                CardDisplay(drawnCard = card) {
                     onReveal(index)
                 }
             }
@@ -119,7 +118,7 @@ fun CardsDisplay(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             itemsIndexed(cards) { index, card ->
-                CardDisplay(card) {
+                CardDisplay(drawnCard = card) {
                     onReveal(index)
                 }
             }
