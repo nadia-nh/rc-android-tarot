@@ -35,11 +35,12 @@ import com.example.simpletarot.ui.theme.TarotSpacing
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import com.example.simpletarot.data.PreviewConstants
 
 @Composable
 fun ResultsScreen(
     viewModel: TarotViewModel,
-    onBack: () -> Unit) {
+    onBack: () -> Unit = {}) {
     val spread by viewModel.currentSpread.collectAsState()
     ResultsScreenStateless(
         cards = spread,
@@ -55,8 +56,8 @@ fun ResultsScreenStateless(
     cards : List<DrawnCard>,
     isSaved: StateFlow<Boolean> = MutableStateFlow(false).asStateFlow(),
     allCardsRevealed: StateFlow<Boolean> = MutableStateFlow(false).asStateFlow(),
-    onBack: () -> Unit,
-    onSave: () -> Unit,
+    onBack: () -> Unit = {},
+    onSave: () -> Unit = {},
     onReveal: (index: Int) -> Unit = {}) {
     val cardCount = cards.size
     val spacing = LocalSpacing.current
@@ -82,6 +83,7 @@ fun ResultsScreenStateless(
             verticalAlignment = Alignment.CenterVertically
         ) {
             SaveButton(
+                spacing = spacing,
                 isSaved.collectAsState().value,
                 allCardsRevealed.collectAsState().value,
                 onSave)
@@ -127,14 +129,18 @@ fun CardsDisplay(
 }
 
 @Composable
-fun SaveButton(isSaved: Boolean, allCardsRevealed: Boolean, onSave: () -> Unit = {}) {
+fun SaveButton(
+    spacing: TarotSpacing = LocalSpacing.current,
+    isSaved: Boolean,
+    allCardsRevealed: Boolean,
+    onSave: () -> Unit = {}) {
     Button(
         onClick = onSave,
         enabled = allCardsRevealed && !isSaved) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             if (isSaved) {
                 Icon(Icons.Default.Check, contentDescription = null)
-                Spacer(Modifier.size(8.dp))
+                Spacer(Modifier.size(spacing.small))
                 Text(
                     "Saved",
                     color = MaterialTheme.colorScheme.onPrimary)
@@ -159,22 +165,7 @@ fun BackButton(onBack: () -> Unit = {}) {
 @Preview
 @Composable
 fun CardsDisplayPreview() {
-    val cards = listOf(
-        TarotCard("Knight of Pentacles",
-            "Reliability, hard work, responsibility",
-            "Stagnation, boredom, laziness"),
-        TarotCard("Nine of Swords",
-            "Anxiety, guilt, worry",
-            "Hope, comfort, letting go of fear"),
-        TarotCard("Two of Cups",
-            "Connection, partnership, attraction",
-            "Breakup, imbalance, tension"),
-    ).map { card ->
-        DrawnCard(card = card.withRankAndSuit(),
-            isReversed = false,
-            isRevealed = true)
-    }
-    CardsDisplay(cards = cards)
+    CardsDisplay(cards = PreviewConstants.tarotCards)
 }
 
 @Preview
@@ -192,20 +183,5 @@ fun BackButtonPreview() {
 @Preview
 @Composable
 fun ResultsScreenPreview() {
-    val cards = listOf(
-        TarotCard("Knight of Pentacles",
-            "Reliability, hard work, responsibility",
-            "Stagnation, boredom, laziness"),
-        TarotCard("Nine of Swords",
-            "Anxiety, guilt, worry",
-            "Hope, comfort, letting go of fear"),
-        TarotCard("Two of Cups",
-            "Connection, partnership, attraction",
-            "Breakup, imbalance, tension"),
-        ).map { card ->
-            DrawnCard(card = card.withRankAndSuit(),
-                isReversed = false,
-                isRevealed = true)
-        }
-    ResultsScreenStateless(cards = cards, onSave = {}, onBack = {})
+    ResultsScreenStateless(cards = PreviewConstants.tarotCards)
 }

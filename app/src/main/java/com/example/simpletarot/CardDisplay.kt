@@ -28,11 +28,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.simpletarot.PreviewConstants.drawnCard
+import com.example.simpletarot.data.PreviewConstants
 import com.example.simpletarot.data.DrawnCard
-import com.example.simpletarot.data.TarotCard
 import com.example.simpletarot.data.getMeaning
-import com.example.simpletarot.data.withRankAndSuit
 import com.example.simpletarot.ui.theme.LocalSpacing
 
 @Composable
@@ -133,7 +131,7 @@ fun CardWithImageOnRevealPreview() {
         .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        CardWithImageOnReveal(drawnCard = drawnCard)
+        CardWithImageOnReveal(drawnCard = PreviewConstants.drawnCard)
     }
 }
 
@@ -145,7 +143,8 @@ fun CardImageOrPlaceholderPreview() {
         .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        CardImageOrPlaceholder(drawnCard = drawnCard.copy(isRevealed = false))
+        CardImageOrPlaceholder(
+            drawnCard = PreviewConstants.drawnCard.copy(isRevealed = false))
     }
 }
 
@@ -157,20 +156,12 @@ fun CardMeaningPreview() {
         .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        CardMeaning(drawnCard = drawnCard)
+        CardMeaning(drawnCard = PreviewConstants.drawnCard)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun CardDisplayPreview() {
-    CardDisplay(drawnCard = drawnCard)
-}
-
-private object PreviewConstants {
-    val tarotCard = TarotCard("The Fool",
-        "New beginnings, spontaneity, trust",
-        "Recklessness, naivety, holding back")
-        .withRankAndSuit()
-    val drawnCard = DrawnCard(tarotCard, false, isRevealed = true)
+    CardDisplay(drawnCard = PreviewConstants.drawnCard)
 }
