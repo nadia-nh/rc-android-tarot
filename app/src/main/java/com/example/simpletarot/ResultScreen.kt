@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
@@ -96,16 +97,31 @@ fun ResultsScreenStateless(
 @Composable
 fun CardsDisplay(
     spacing: TarotSpacing = LocalSpacing.current,
+    isLandscape: Boolean = false,
     cards: List<DrawnCard>,
     onReveal: (index: Int) -> Unit = {}) {
-    LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(spacing.medium),
-        contentPadding = PaddingValues(horizontal = spacing.extraLarge),
-        verticalAlignment = Alignment.Top
-    ) {
-        itemsIndexed(cards) { index, card ->
-            CardDisplay(card) {
-                onReveal(index)
+    if (isLandscape) {
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(spacing.medium),
+            contentPadding = PaddingValues(horizontal = spacing.extraLarge),
+            verticalAlignment = Alignment.Top
+        ) {
+            itemsIndexed(cards) { index, card ->
+                CardDisplay(card) {
+                    onReveal(index)
+                }
+            }
+        }
+    } else {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(spacing.medium),
+            contentPadding = PaddingValues(vertical = spacing.extraLarge),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            itemsIndexed(cards) { index, card ->
+                CardDisplay(card) {
+                    onReveal(index)
+                }
             }
         }
     }
