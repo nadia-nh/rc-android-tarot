@@ -13,7 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.simpletarot.data.DrawnCard
 import com.example.simpletarot.data.TarotCard
 import com.example.simpletarot.data.withRankAndSuit
@@ -37,6 +41,7 @@ fun ResultsScreen(
     val spread by viewModel.currentSpread.collectAsState()
     ResultsScreenStateless(
         cards = spread,
+        isSaved = viewModel.isSaved,
         allCardsRevealed = viewModel.isRevealed,
         onBack = onBack,
         onSave = { viewModel.saveReading() },
@@ -46,6 +51,7 @@ fun ResultsScreen(
 @Composable
 fun ResultsScreenStateless(
     cards : List<DrawnCard>,
+    isSaved: StateFlow<Boolean> = MutableStateFlow(false).asStateFlow(),
     allCardsRevealed: StateFlow<Boolean> = MutableStateFlow(false).asStateFlow(),
     onBack: () -> Unit,
     onSave: () -> Unit,
@@ -67,12 +73,11 @@ fun ResultsScreenStateless(
         Box(
             modifier = Modifier.weight(1f),
             contentAlignment = Alignment.Center
-        ) {
+        ) { 
             LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(spacing.medium),
-                contentPadding = PaddingValues(horizontal = spacing.extraLarge),
-                verticalAlignment = Alignment.Top
-            ) {
+            horizontalArrangement = Arrangement.spacedBy(spacing.medium),
+            contentPadding = PaddingValues(horizontal = spacing.extraLarge),
+            verticalAlignment = Alignment.Top) {
                 itemsIndexed(cards) { index, card ->
                     CardDisplay(card) {
                         onReveal(index)
@@ -85,15 +90,11 @@ fun ResultsScreenStateless(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-                Button(
-                    onClick = onSave,
-                    enabled = allCardsRevealed.collectAsState().value) {
-                    Text(
-                        "Save Reading",
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
-                }
-                Spacer(modifier = Modifier.size(spacing.medium))
+            SaveButton(
+                isSaved.collectAsState().value,
+                allCardsRevealed.collectAsState().value,
+                onSave)
+            Spacer(modifier = Modifier.size(spacing.medium))
 
             Button(onClick = onBack) {
                 Text(
@@ -105,6 +106,32 @@ fun ResultsScreenStateless(
 
         Spacer(modifier = Modifier.height(spacing.medium))
     }
+}
+
+@Composable
+fun SaveButton(isSaved: Boolean, allCardsRevealed: Boolean, onSave: () -> Unit = {}) {
+    Button(
+        onClick = onSave,
+        enabled = allCardsRevealed && !isSaved) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            if (isSaved) {
+                Icon(Icons.Default.Check, contentDescription = null)
+                Spacer(Modifier.size(8.dp))
+                Text(
+                    "Saved",
+                    color = MaterialTheme.colorScheme.onPrimary)
+            } else {
+                Text("Save Reading",
+                    color = MaterialTheme.colorScheme.onPrimary)
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun SaveButtonPreview() {
+    SaveButton(isSaved = false, allCardsRevealed = true)
 }
 
 @Preview

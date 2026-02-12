@@ -21,6 +21,7 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
 
     val currentSpread: StateFlow<List<DrawnCard>> = _currentSpread
     val currentScreen: StateFlow<AppScreen> = _currentScreen
+    val isSaved: StateFlow<Boolean> = _isSaved
 
     val isRevealed: StateFlow<Boolean> = _currentSpread
         .map { cards -> cards.all { it.isRevealed } }
@@ -33,6 +34,7 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
     fun drawCards(count: Int) {
         _currentSpread.value = TarotDeck.draw(count)
         _currentScreen.value = AppScreen.Result
+        _isSaved.value = false
     }
 
     fun revealCard(cardIndex: Int) {
