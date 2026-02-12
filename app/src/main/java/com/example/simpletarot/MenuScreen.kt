@@ -38,7 +38,7 @@ fun MenuScreen(onDraw: (count: Int) -> Unit) {
 
         Spacer(modifier = Modifier.height(spacing.large))
         Surface(
-            color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.4f),
+            color = MaterialTheme.colorScheme.secondary,
             shape = MaterialTheme.shapes.large
         ) {
             Column(modifier = Modifier.padding(spacing.large),
@@ -47,7 +47,7 @@ fun MenuScreen(onDraw: (count: Int) -> Unit) {
                 Text(
                     text = "Focus on open-ended questions",
                     style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
 
                 Spacer(modifier = Modifier.height(spacing.medium))
@@ -55,7 +55,7 @@ fun MenuScreen(onDraw: (count: Int) -> Unit) {
                     text = "What do I need to know today?\nWhat are the themes of my work life?",
                     style = MaterialTheme.typography.bodyMedium,
                     fontStyle = FontStyle.Italic,
-                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
             }
         }
