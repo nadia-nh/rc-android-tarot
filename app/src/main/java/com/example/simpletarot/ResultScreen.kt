@@ -30,6 +30,7 @@ import com.example.simpletarot.data.DrawnCard
 import com.example.simpletarot.data.TarotCard
 import com.example.simpletarot.data.withRankAndSuit
 import com.example.simpletarot.ui.theme.LocalSpacing
+import com.example.simpletarot.ui.theme.TarotSpacing
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -73,18 +74,7 @@ fun ResultsScreenStateless(
         Box(
             modifier = Modifier.weight(1f),
             contentAlignment = Alignment.Center
-        ) { 
-            LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(spacing.medium),
-            contentPadding = PaddingValues(horizontal = spacing.extraLarge),
-            verticalAlignment = Alignment.Top) {
-                itemsIndexed(cards) { index, card ->
-                    CardDisplay(card) {
-                        onReveal(index)
-                    }
-                }
-            }
-        }
+        ) { CardsDisplay(spacing = spacing, cards = cards, onReveal = onReveal) }
 
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -96,15 +86,28 @@ fun ResultsScreenStateless(
                 onSave)
             Spacer(modifier = Modifier.size(spacing.medium))
 
-            Button(onClick = onBack) {
-                Text(
-                    "New Reading",
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            }
+            BackButton(onBack = onBack)
         }
 
         Spacer(modifier = Modifier.height(spacing.medium))
+    }
+}
+
+@Composable
+fun CardsDisplay(
+    spacing: TarotSpacing = LocalSpacing.current,
+    cards: List<DrawnCard>,
+    onReveal: (index: Int) -> Unit = {}) {
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(spacing.medium),
+        contentPadding = PaddingValues(horizontal = spacing.extraLarge),
+        verticalAlignment = Alignment.Top
+    ) {
+        itemsIndexed(cards) { index, card ->
+            CardDisplay(card) {
+                onReveal(index)
+            }
+        }
     }
 }
 
@@ -128,10 +131,47 @@ fun SaveButton(isSaved: Boolean, allCardsRevealed: Boolean, onSave: () -> Unit =
     }
 }
 
+@Composable
+fun BackButton(onBack: () -> Unit = {}) {
+    Button(onClick = onBack) {
+        Text(
+            "New Reading",
+            color = MaterialTheme.colorScheme.onPrimary
+        )
+    }
+}
+
+@Preview
+@Composable
+fun CardsDisplayPreview() {
+    val cards = listOf(
+        TarotCard("Knight of Pentacles",
+            "Reliability, hard work, responsibility",
+            "Stagnation, boredom, laziness"),
+        TarotCard("Nine of Swords",
+            "Anxiety, guilt, worry",
+            "Hope, comfort, letting go of fear"),
+        TarotCard("Two of Cups",
+            "Connection, partnership, attraction",
+            "Breakup, imbalance, tension"),
+    ).map { card ->
+        DrawnCard(card = card.withRankAndSuit(),
+            isReversed = false,
+            isRevealed = true)
+    }
+    CardsDisplay(cards = cards)
+}
+
 @Preview
 @Composable
 fun SaveButtonPreview() {
     SaveButton(isSaved = false, allCardsRevealed = true)
+}
+
+@Preview
+@Composable
+fun BackButtonPreview() {
+    BackButton()
 }
 
 @Preview
