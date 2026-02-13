@@ -42,33 +42,49 @@ fun CardDisplay(
 
     if (isLandscape) {
         Column(
-            modifier = Modifier
-                .width(160.dp)
-                .padding(spacing.small),
+            modifier = Modifier.width(160.dp).padding(spacing.small),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CardWithImageOnReveal(
+            CardDisplayInternal(
                 isLandscape = true,
                 drawnCard = drawnCard,
-                onReveal = onReveal)
-            Spacer(modifier = Modifier.size(spacing.small))
-            CardMeaning(drawnCard = drawnCard)
+                onReveal = onReveal
+            )
         }
     } else {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(spacing.small),
+            modifier = Modifier.fillMaxWidth().padding(spacing.small),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.Center
         ) {
-            CardWithImageOnReveal(
+            CardDisplayInternal(
                 isLandscape = false,
                 drawnCard = drawnCard,
-                onReveal = onReveal)
-            Spacer(modifier = Modifier.size(spacing.medium))
-            CardMeaning(drawnCard = drawnCard)
+                onReveal = onReveal
+            )
         }
+    }
+}
+
+@Composable
+fun CardDisplayInternal(
+    isLandscape: Boolean = false,
+    drawnCard: DrawnCard,
+    onReveal: () -> Unit = {}) {
+    if (drawnCard.isRevealed) {
+        CardWithImageOnReveal(
+            isLandscape = isLandscape,
+            drawnCard = drawnCard,
+            onReveal = onReveal
+        )
+        Spacer(modifier = Modifier.size(LocalSpacing.current.small))
+        CardMeaning(drawnCard = drawnCard)
+    } else {
+        CardWithImageOnReveal(
+            isLandscape = isLandscape,
+            drawnCard = drawnCard,
+            onReveal = onReveal
+        )
     }
 }
 
@@ -112,15 +128,13 @@ fun CardImageOrPlaceholder(drawnCard: DrawnCard) {
 }
 @Composable
 fun CardMeaning(drawnCard: DrawnCard) {
-    if (drawnCard.isRevealed) {
-        Text(text = drawnCard.getMeaning(),
-            modifier = Modifier.fillMaxWidth(),
-            color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.bodyMedium,
-            textAlign = TextAlign.Start,
-            maxLines = 4,
-            overflow = TextOverflow.Ellipsis)
-    }
+    Text(text = drawnCard.getMeaning(),
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.onBackground,
+        style = MaterialTheme.typography.bodyMedium,
+        textAlign = TextAlign.Start,
+        maxLines = 4,
+        overflow = TextOverflow.Ellipsis)
 }
 
 @Preview

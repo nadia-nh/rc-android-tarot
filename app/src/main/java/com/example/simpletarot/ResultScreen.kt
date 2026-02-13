@@ -26,10 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.simpletarot.data.DrawnCard
-import com.example.simpletarot.data.TarotCard
-import com.example.simpletarot.data.withRankAndSuit
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.theme.TarotSpacing
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,10 +36,12 @@ import com.example.simpletarot.data.PreviewConstants
 
 @Composable
 fun ResultsScreen(
+    isLandscape: Boolean = false,
     viewModel: TarotViewModel,
     onBack: () -> Unit = {}) {
     val spread by viewModel.currentSpread.collectAsState()
     ResultsScreenStateless(
+        isLandscape = isLandscape,
         cards = spread,
         isSaved = viewModel.isSaved,
         allCardsRevealed = viewModel.isRevealed,
@@ -53,6 +52,7 @@ fun ResultsScreen(
 
 @Composable
 fun ResultsScreenStateless(
+    isLandscape: Boolean = false,
     cards : List<DrawnCard>,
     isSaved: StateFlow<Boolean> = MutableStateFlow(false).asStateFlow(),
     allCardsRevealed: StateFlow<Boolean> = MutableStateFlow(false).asStateFlow(),
@@ -76,7 +76,13 @@ fun ResultsScreenStateless(
         Box(
             modifier = Modifier.weight(1f),
             contentAlignment = Alignment.Center
-        ) { CardsDisplay(spacing = spacing, cards = cards, onReveal = onReveal) }
+        ) {
+            CardsDisplay(
+                isLandscape = isLandscape,
+                spacing = spacing,
+                cards = cards,
+                onReveal = onReveal)
+        }
 
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -105,10 +111,12 @@ fun CardsDisplay(
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(spacing.medium),
             contentPadding = PaddingValues(horizontal = spacing.extraLarge),
-            verticalAlignment = Alignment.Top
+            verticalAlignment = Alignment.CenterVertically
         ) {
             itemsIndexed(cards) { index, card ->
-                CardDisplay(drawnCard = card) {
+                CardDisplay(
+                    isLandscape = isLandscape,
+                    drawnCard = card) {
                     onReveal(index)
                 }
             }
@@ -120,7 +128,9 @@ fun CardsDisplay(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             itemsIndexed(cards) { index, card ->
-                CardDisplay(drawnCard = card) {
+                CardDisplay(
+                    isLandscape = isLandscape,
+                    drawnCard = card) {
                     onReveal(index)
                 }
             }

@@ -53,7 +53,7 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
 
     // Save current spread
     fun saveReading() {
-        if (_isSaved.value) return;
+        if (_isSaved.value) return
 
         val cardCount = _currentSpread.value.size
         val spreadType = if (cardCount == 3) "ThreeCardDraw" else "SingleCardDraw"
