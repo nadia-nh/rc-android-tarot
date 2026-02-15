@@ -1,6 +1,5 @@
 package com.example.simpletarot.database
 
-import TarotDao
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
