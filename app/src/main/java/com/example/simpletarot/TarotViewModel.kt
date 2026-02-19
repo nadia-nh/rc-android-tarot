@@ -1,12 +1,12 @@
 package com.example.simpletarot
 
-import DrawnCardEntity
-import ReadingEntity
+import com.example.simpletarot.database.ReadingEntity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.simpletarot.data.DrawnCard
 import com.example.simpletarot.data.TarotDeck
 import com.example.simpletarot.database.TarotRepository
+import com.example.simpletarot.database.toEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -59,13 +59,7 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
         val spreadType = if (cardCount == 3) "ThreeCardDraw" else "SingleCardDraw"
         val reading = ReadingEntity(spreadType = spreadType)
         val cards = _currentSpread.value.map {
-            DrawnCardEntity(
-                readingOwnerId = reading.readingId,
-                name = it.card.name,
-                isReversed = it.isReversed,
-                suit = it.card.suit.name,
-                rank = it.card.rank?.name
-            )
+            it.toEntity(reading.readingId)
         }
 
         viewModelScope.launch {
