@@ -51,6 +51,14 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
         _currentScreen.value = AppScreen.Menu
     }
 
+    fun backToMenu() {
+        _currentScreen.value = AppScreen.Menu
+    }
+
+    fun openHistory() {
+        _currentScreen.value = AppScreen.History
+    }
+
     // Save current spread
     fun saveReading() {
         if (_isSaved.value) return

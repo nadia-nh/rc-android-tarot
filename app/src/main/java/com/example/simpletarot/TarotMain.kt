@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 enum class AppScreen {
     Menu,
     Result,
+    History
 }
 @Composable
 fun TarotMain(
@@ -28,12 +29,19 @@ fun TarotMain(
             MenuScreen(
                 isLandscape = isLandscape,
                 onDraw = {count -> viewModel.drawCards(count)},
+                onOpenHistory = { viewModel.openHistory() }
             )
         AppScreen.Result ->
             ResultsScreen(
                 isLandscape = isLandscape,
                 viewModel = viewModel) {
                 viewModel.clearSpread()
+            }
+        AppScreen.History ->
+            HistoryScreen(
+                isLandscape = isLandscape,
+                viewModel = viewModel) {
+                viewModel.backToMenu()
             }
     }
 }
