@@ -14,11 +14,14 @@ import com.example.simpletarot.data.TarotCard
 import com.example.simpletarot.data.getResourceId
 
 @Composable
-fun CardImage(card: DrawnCard) {
+fun CardImage(
+    card: DrawnCard,
+    modifier: Modifier = Modifier
+) {
     val tarotCard = card.card
     Image(
         painter = painterResource(id = tarotCard.getResourceId()),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxHeight()
             .rotate(if (card.isReversed) 180f else 0f),
         contentScale = ContentScale.FillHeight,
