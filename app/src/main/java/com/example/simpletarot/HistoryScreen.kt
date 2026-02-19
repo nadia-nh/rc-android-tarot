@@ -50,46 +50,66 @@ fun HistoryScreen(
     HistoryScreenStateless(history = history, onBack = onBack)
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HistoryScreenStateless(
     history: List<ReadingWithCards>,
     onBack: () -> Unit = {}
 ) {
-    val spacing = LocalSpacing.current
+    Scaffold(topBar = { HistoryScreenTopBar(onBack) })
+    { padding ->
+        HistoryScreenContents(
+            spacing = LocalSpacing.current,
+            padding = padding,
+            history = history
+        )
+    }
+}
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Tarot History")},
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back")
-                    }
-                }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HistoryScreenTopBar(
+    onBack: () -> Unit = {}
+) {
+    TopAppBar(
+        title = {
+            Text(
+                text = "Tarot History",
+                color = MaterialTheme.colorScheme.onBackground
             )
-        }
-    ) { padding ->
-        if (history.isEmpty()) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("No Tarot readings saved yet",
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = MaterialTheme.typography.headlineSmall)
+        },
+        navigationIcon = {
+            IconButton(onClick = onBack) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back")
             }
-        } else {
-            LazyColumn(
-                modifier = Modifier.padding(padding),
-                contentPadding = PaddingValues(spacing.medium),
-                verticalArrangement = Arrangement.spacedBy(spacing.small)
-            ) {
-                items(history) { readingWithCards ->
-                    TarotReadingItem(readingWithCards = readingWithCards)
-                }
+        }
+    )
+}
+
+@Composable
+fun HistoryScreenContents(
+    spacing: TarotSpacing = LocalSpacing.current,
+    padding: PaddingValues = PaddingValues(),
+    history: List<ReadingWithCards> = emptyList(),
+) {
+    if (history.isEmpty()) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text("No Tarot readings saved yet",
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.headlineSmall)
+        }
+    } else {
+        LazyColumn(
+            modifier = Modifier.padding(padding),
+            contentPadding = PaddingValues(spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(spacing.small)
+        ) {
+            items(history) { readingWithCards ->
+                TarotReadingItem(readingWithCards = readingWithCards)
             }
         }
     }
@@ -156,6 +176,18 @@ fun TarotReadingItemCards(
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HistoryScreenTopBarPreview() {
+    HistoryScreenTopBar()
+}
+
+@Preview(showBackground = true)
+@Composable
+fun HistoryScreenContentsPreview() {
+    HistoryScreenContents(history = PreviewConstants.readings)
 }
 
 @Preview(showBackground = true)
