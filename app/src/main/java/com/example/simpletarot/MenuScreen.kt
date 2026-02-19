@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -21,7 +22,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.simpletarot.ui.theme.LocalSpacing
 
 @Composable
-fun MenuScreen(onDraw: (count: Int) -> Unit) {
+fun MenuScreen(
+    isLandscape: Boolean = false,
+    onDraw: (count: Int) -> Unit = {},
     val spacing = LocalSpacing.current
 
     Column(
@@ -61,14 +64,26 @@ fun MenuScreen(onDraw: (count: Int) -> Unit) {
             }
         }
 
-        Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            StyledButton("Single Card Draw") { onDraw(1) }
-            Spacer(modifier = Modifier.size(spacing.large))
-            StyledButton("Three Card Spread") { onDraw(3) }
+        if (isLandscape) {
+            Row(
+                modifier = Modifier.weight(1f),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                StyledButton("Single Card Draw") { onDraw(1) }
+                Spacer(modifier = Modifier.size(spacing.large))
+                StyledButton("Three Card Spread") { onDraw(3) }
+            }
+        } else {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                StyledButton("Single Card Draw") { onDraw(1) }
+                Spacer(modifier = Modifier.size(spacing.large))
+                StyledButton("Three Card Spread") { onDraw(3) }
+            }
         }
     }
 }
@@ -95,7 +110,7 @@ fun StyledButtonPreview() {
 @Preview(showBackground = true)
 @Composable
 fun MenuScreenPreview() {
-    MenuScreen {
+    MenuScreen(onDraw = {
         Log.d("tarot", "MenuScreenPreview: $it")
-    }
+    })
 }

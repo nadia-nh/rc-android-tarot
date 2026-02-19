@@ -25,9 +25,10 @@ fun TarotMain(
 
     when (currentScreen) {
         AppScreen.Menu ->
-            MenuScreen {
-                count -> viewModel.drawCards(count)
-            }
+            MenuScreen(
+                isLandscape = isLandscape,
+                onDraw = {count -> viewModel.drawCards(count)},
+            )
         AppScreen.Result ->
             ResultsScreen(
                 isLandscape = isLandscape,
