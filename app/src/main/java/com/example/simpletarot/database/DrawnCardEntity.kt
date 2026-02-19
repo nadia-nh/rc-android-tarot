@@ -36,13 +36,26 @@ fun DrawnCard.toEntity(readingId: Long): DrawnCardEntity = DrawnCardEntity(
     rank = card.rank?.name,
 )
 
-fun DrawnCardEntity.toDrawnCard(): DrawnCard = DrawnCard(
-    card = TarotCard(
-        name = name,
-        uprightMeaning = "",
-        reversedMeaning = "",
-        suit = Suit.valueOf(suit),
-        rank = Rank.valueOf(rank ?: "MajorArcana")
-    ),
-    isReversed = isReversed
-)
+fun DrawnCardEntity.toDrawnCard(): DrawnCard {
+    val cardSuit = try {
+        Suit.valueOf(suit)
+    } catch (_: IllegalArgumentException) {
+        Suit.Unknown
+    }
+    val cardRank = try {
+        Rank.valueOf(rank ?: "Ace")
+    } catch (_: IllegalArgumentException) {
+        Rank.Unknown
+    }
+
+    return DrawnCard(
+        card = TarotCard(
+            name = name,
+            uprightMeaning = "",
+            reversedMeaning = "",
+            suit = cardSuit,
+            rank = cardRank,
+        ),
+        isReversed = isReversed
+    )
+}

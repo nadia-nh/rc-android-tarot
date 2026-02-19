@@ -11,6 +11,7 @@ data class TarotCard(
 )
 
 enum class Suit(val displayName: String) {
+    Unknown("Unknown"),
     MajorArcana("Major Arcana"),
     Wands("Wands"),
     Cups("Cups"),
@@ -19,6 +20,7 @@ enum class Suit(val displayName: String) {
 }
 
 enum class Rank {
+    Unknown,
     Ace,
     Two,
     Three,
