@@ -25,6 +25,7 @@ import com.example.simpletarot.ui.theme.LocalSpacing
 fun MenuScreen(
     isLandscape: Boolean = false,
     onDraw: (count: Int) -> Unit = {},
+    onOpenHistory: () -> Unit = {}) {
     val spacing = LocalSpacing.current
 
     Column(
@@ -73,6 +74,8 @@ fun MenuScreen(
                 StyledButton("Single Card Draw") { onDraw(1) }
                 Spacer(modifier = Modifier.size(spacing.large))
                 StyledButton("Three Card Spread") { onDraw(3) }
+                Spacer(modifier = Modifier.size(spacing.large))
+                StyledButton("Show History") { onOpenHistory() }
             }
         } else {
             Column(
@@ -83,6 +86,8 @@ fun MenuScreen(
                 StyledButton("Single Card Draw") { onDraw(1) }
                 Spacer(modifier = Modifier.size(spacing.large))
                 StyledButton("Three Card Spread") { onDraw(3) }
+                Spacer(modifier = Modifier.size(spacing.large))
+                StyledButton("Show History") { onOpenHistory() }
             }
         }
     }
