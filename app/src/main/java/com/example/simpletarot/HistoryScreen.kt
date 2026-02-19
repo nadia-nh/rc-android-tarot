@@ -36,9 +36,7 @@ import com.example.simpletarot.database.DrawnCardEntity
 import com.example.simpletarot.database.ReadingWithCards
 import com.example.simpletarot.database.toDrawnCard
 import com.example.simpletarot.ui.theme.TarotSpacing
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import com.example.simpletarot.util.DateUtils
 
 @Composable
 fun HistoryScreen(
@@ -157,8 +155,7 @@ fun TarotReadingItemHeader(
             style = MaterialTheme.typography.titleMedium
         )
         Text(
-            text = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-                .format(Date(timestamp)),
+            text = DateUtils.formatTimestampDate(timestamp),
             style = MaterialTheme.typography.bodySmall
         )
     }
