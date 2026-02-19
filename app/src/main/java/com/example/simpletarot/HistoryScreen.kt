@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.simpletarot.data.PreviewConstants
+import com.example.simpletarot.database.DrawnCardEntity
 import com.example.simpletarot.database.ReadingWithCards
 import com.example.simpletarot.database.toDrawnCard
 import com.example.simpletarot.ui.theme.TarotSpacing
@@ -99,7 +100,6 @@ fun TarotReadingItem(
     spacing: TarotSpacing = LocalSpacing.current,
     readingWithCards: ReadingWithCards) {
     val reading = readingWithCards.reading
-    val cards = readingWithCards.cards
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -108,36 +108,71 @@ fun TarotReadingItem(
         Column(
             modifier = Modifier.padding(spacing.medium)
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = reading.spreadType,
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Text(
-                    text = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-                        .format(Date(reading.timestamp)),
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
-
+            TarotReadingItemHeader(
+                spreadType = reading.spreadType,
+                timestamp = reading.timestamp)
             Spacer(modifier = Modifier.height(spacing.small))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(spacing.small)
-            ) {
-                cards.forEach { card ->
-                    CardImage(
-                        card = card.toDrawnCard(),
-                        modifier = Modifier.height(80.dp)
-                    )
-                }
-            }
+            TarotReadingItemCards(
+                spacing = spacing,
+                cards = readingWithCards.cards)
         }
     }
+}
+
+@Composable
+fun TarotReadingItemHeader(
+    spreadType: String = "",
+    timestamp: Long = System.currentTimeMillis()
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = spreadType,
+            style = MaterialTheme.typography.titleMedium
+        )
+        Text(
+            text = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
+                .format(Date(timestamp)),
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
+}
+
+@Composable
+fun TarotReadingItemCards(
+    spacing: TarotSpacing = LocalSpacing.current,
+    cards: List<DrawnCardEntity> = emptyList()
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(spacing.small)
+    ) {
+        cards.forEach { card ->
+            CardImage(
+                card = card.toDrawnCard(),
+                modifier = Modifier.height(80.dp)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TarotReadingItemHeaderPreview() {
+    TarotReadingItemHeader(
+        spreadType = "Three Card Draw",
+        timestamp = System.currentTimeMillis()
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TarotReadingItemCardsPreview() {
+    TarotReadingItemCards(
+        cards = PreviewConstants.readingWithCards.cards
+    )
 }
 
 @Preview(showBackground = true)
