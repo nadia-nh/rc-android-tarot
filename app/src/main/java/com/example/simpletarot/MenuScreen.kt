@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
@@ -65,25 +66,30 @@ fun MenuScreen(onDraw: (count: Int) -> Unit) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Button(onClick = { onDraw(1) }) {
-                Text(
-                    "Single Card Draw",
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    style = MaterialTheme.typography.titleSmall
-                )
-            }
-
-            Spacer(modifier = Modifier.height(spacing.large))
-
-            Button(onClick = { onDraw(3) }) {
-                Text(
-                    "Three Card Spread",
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    style = MaterialTheme.typography.titleSmall
-                )
-            }
+            StyledButton("Single Card Draw") { onDraw(1) }
+            Spacer(modifier = Modifier.size(spacing.large))
+            StyledButton("Three Card Spread") { onDraw(3) }
         }
     }
+}
+
+@Composable
+fun StyledButton(
+    text: String = "Single Card Draw",
+    onClick: () -> Unit = {}) {
+    Button(onClick = onClick) {
+        Text(
+            text,
+            color = MaterialTheme.colorScheme.onPrimary,
+            style = MaterialTheme.typography.titleSmall
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun StyledButtonPreview() {
+    StyledButton("Test Button") { }
 }
 
 @Preview(showBackground = true)
