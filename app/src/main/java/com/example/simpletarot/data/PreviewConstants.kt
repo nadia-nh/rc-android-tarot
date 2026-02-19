@@ -1,6 +1,11 @@
 package com.example.simpletarot.data
 
- object PreviewConstants {
+import com.example.simpletarot.database.DrawnCardEntity
+import com.example.simpletarot.database.ReadingEntity
+import com.example.simpletarot.database.ReadingWithCards
+import com.example.simpletarot.database.toEntity
+
+object PreviewConstants {
     val tarotCard = TarotCard("The Fool",
         "New beginnings, spontaneity, trust",
         "Recklessness, naivety, holding back")
@@ -22,4 +27,26 @@ package com.example.simpletarot.data
             isReversed = false,
             isRevealed = true)
     }
+     
+     val readingEntities = listOf(
+         ReadingEntity(spreadType = "ThreeCardDraw"),
+         ReadingEntity(spreadType = "SingleCardDraw"),
+         ReadingEntity(spreadType = "ThreeCardDraw"),
+     )
+
+    val cardEntities = tarotCards.mapIndexed { index, card ->
+        card.toEntity(index.toLong())
+    }
+
+    val readings = readingEntities.mapIndexed { index, reading ->
+        ReadingWithCards(
+            reading = reading,
+            cards = cardEntities.filter { it.readingOwnerId == index.toLong() }
+        )
+    }
+
+    val readingWithCards = ReadingWithCards(
+        reading = readingEntities[0],
+        cards = cardEntities
+    )
 }
