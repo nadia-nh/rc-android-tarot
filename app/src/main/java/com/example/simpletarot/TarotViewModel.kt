@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.simpletarot.data.DrawnCard
 import com.example.simpletarot.data.TarotDeck
+import com.example.simpletarot.database.ReadingWithCards
 import com.example.simpletarot.database.TarotRepository
 import com.example.simpletarot.database.toEntity
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,6 +30,13 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = false
+        )
+
+    val previousReadings: StateFlow<List<ReadingWithCards>> = repository.allReadings
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
         )
 
     fun drawCards(count: Int) {
