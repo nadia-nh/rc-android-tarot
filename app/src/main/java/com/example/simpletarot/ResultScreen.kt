@@ -166,7 +166,7 @@ fun SaveButton(
 fun BackButton(onBack: () -> Unit = {}) {
     Button(onClick = onBack) {
         Text(
-            "New Reading",
+            "Back to Menu",
             color = MaterialTheme.colorScheme.onPrimary
         )
     }
