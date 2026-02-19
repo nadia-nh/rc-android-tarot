@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.IconButton
@@ -34,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.simpletarot.data.PreviewConstants
 import com.example.simpletarot.database.ReadingWithCards
+import com.example.simpletarot.database.toDrawnCard
 import com.example.simpletarot.ui.theme.TarotSpacing
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -125,11 +125,16 @@ fun TarotReadingItem(
 
             Spacer(modifier = Modifier.height(spacing.small))
 
-            cards.forEach { card ->
-                Text(
-                    text = "${card.name} " + if (card.isReversed) "Reversed " else "",
-                    style = MaterialTheme.typography.bodyMedium
-                )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(spacing.small)
+            ) {
+                cards.forEach { card ->
+                    CardImage(
+                        card = card.toDrawnCard(),
+                        modifier = Modifier.height(80.dp)
+                    )
+                }
             }
         }
     }
