@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.IconButton
@@ -22,6 +23,7 @@ import androidx.compose.runtime.getValue
 import com.example.simpletarot.ui.theme.LocalSpacing
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -92,10 +94,18 @@ fun HistoryScreenContents(
     history: List<ReadingWithCards> = emptyList(),
 ) {
     if (history.isEmpty()) {
-        Box(
+        Column(
             modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Icon(
+                imageVector = Icons.Default.History,
+                contentDescription = null,
+                modifier = Modifier.size(64.dp),
+                tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+            )
+            Spacer(modifier = Modifier.height(spacing.medium))
             Text("No Tarot readings saved yet",
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.headlineSmall)
@@ -188,7 +198,7 @@ fun HistoryScreenTopBarPreview() {
 @Preview(showBackground = true)
 @Composable
 fun HistoryScreenContentsPreview() {
-    HistoryScreenContents(history = PreviewConstants.readings)
+    HistoryScreenContents(history = emptyList())//PreviewConstants.readings)
 }
 
 @Preview(showBackground = true)
