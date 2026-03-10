@@ -8,6 +8,8 @@ import com.example.simpletarot.ui.theme.SimpleTarotTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.simpletarot.database.TarotDatabase
 import com.example.simpletarot.database.TarotRepository
+import com.example.simpletarot.viewmodel.TarotViewModel
+import com.example.simpletarot.viewmodel.TarotViewModelFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

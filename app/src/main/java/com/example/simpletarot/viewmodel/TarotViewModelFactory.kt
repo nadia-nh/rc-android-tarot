@@ -1,4 +1,4 @@
-package com.example.simpletarot
+package com.example.simpletarot.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

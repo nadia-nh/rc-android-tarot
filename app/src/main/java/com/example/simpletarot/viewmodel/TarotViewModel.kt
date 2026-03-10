@@ -1,10 +1,11 @@
-package com.example.simpletarot
+package com.example.simpletarot.viewmodel
 
-import com.example.simpletarot.database.ReadingEntity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.simpletarot.AppScreen
 import com.example.simpletarot.data.DrawnCard
 import com.example.simpletarot.data.TarotDeck
+import com.example.simpletarot.database.ReadingEntity
 import com.example.simpletarot.database.ReadingWithCards
 import com.example.simpletarot.database.TarotRepository
 import com.example.simpletarot.database.toEntity
@@ -28,14 +29,14 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
         .map { cards -> cards.all { it.isRevealed } }
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
+            started = SharingStarted.Companion.WhileSubscribed(5000),
             initialValue = false
         )
 
     val previousReadings: StateFlow<List<ReadingWithCards>> = repository.allReadings
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
+            started = SharingStarted.Companion.WhileSubscribed(5000),
             initialValue = emptyList()
         )
 

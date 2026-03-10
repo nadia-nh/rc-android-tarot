@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalConfiguration
+import com.example.simpletarot.viewmodel.TarotViewModel
 
 enum class AppScreen {
     Menu,
@@ -14,7 +15,8 @@ enum class AppScreen {
 }
 @Composable
 fun TarotMain(
-    viewModel: TarotViewModel) {
+    viewModel: TarotViewModel
+) {
     val orientation = LocalConfiguration.current.orientation
     val isLandscape = orientation == Configuration.ORIENTATION_LANDSCAPE
     val currentScreen by viewModel.currentScreen.collectAsState()

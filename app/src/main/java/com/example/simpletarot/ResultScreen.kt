@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import com.example.simpletarot.data.PreviewConstants
+import com.example.simpletarot.viewmodel.TarotViewModel
 
 @Composable
 fun ResultsScreen(

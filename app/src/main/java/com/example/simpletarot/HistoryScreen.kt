@@ -39,6 +39,7 @@ import com.example.simpletarot.database.ReadingWithCards
 import com.example.simpletarot.database.toDrawnCard
 import com.example.simpletarot.ui.theme.TarotSpacing
 import com.example.simpletarot.util.DateUtils
+import com.example.simpletarot.viewmodel.TarotViewModel
 
 @Composable
 fun HistoryScreen(
@@ -198,7 +199,7 @@ fun HistoryScreenTopBarPreview() {
 @Preview(showBackground = true)
 @Composable
 fun HistoryScreenContentsPreview() {
-    HistoryScreenContents(history = emptyList())//PreviewConstants.readings)
+    HistoryScreenContents(history = PreviewConstants.readings)
 }
 
 @Preview(showBackground = true)
