@@ -57,7 +57,7 @@ fun MenuScreen(
 
                 Spacer(modifier = Modifier.height(spacing.medium))
                 Text(
-                    text = "What do I need to know today?\nWhat are the themes of my work life?",
+                    text = "What do I need to know today?\nWhat are the themes of my work / love / career life?",
                     style = MaterialTheme.typography.bodyMedium,
                     fontStyle = FontStyle.Italic,
                     color = MaterialTheme.colorScheme.onSecondary
