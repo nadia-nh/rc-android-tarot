@@ -9,7 +9,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.example.simpletarot.ui.screens.HistoryScreen
 import com.example.simpletarot.ui.screens.MenuScreen
 import com.example.simpletarot.ui.screens.ResultsScreen
-import com.example.simpletarot.viewmodel.TarotViewModel
+import com.example.simpletarot.ui.viewmodel.TarotViewModel
 
 enum class AppScreen {
     Menu,

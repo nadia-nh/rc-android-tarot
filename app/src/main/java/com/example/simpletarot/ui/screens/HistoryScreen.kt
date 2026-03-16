@@ -39,7 +39,7 @@ import com.example.simpletarot.database.ReadingWithCards
 import com.example.simpletarot.database.toDrawnCard
 import com.example.simpletarot.ui.theme.TarotSpacing
 import com.example.simpletarot.util.DateUtils
-import com.example.simpletarot.viewmodel.TarotViewModel
+import com.example.simpletarot.ui.viewmodel.TarotViewModel
 
 @Composable
 fun HistoryScreen(
