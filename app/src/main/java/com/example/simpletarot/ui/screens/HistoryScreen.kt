@@ -1,7 +1,6 @@
-package com.example.simpletarot
+package com.example.simpletarot.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -33,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.simpletarot.CardImage
 import com.example.simpletarot.data.PreviewConstants
 import com.example.simpletarot.database.DrawnCardEntity
 import com.example.simpletarot.database.ReadingWithCards

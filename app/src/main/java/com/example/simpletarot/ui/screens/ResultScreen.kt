@@ -1,4 +1,4 @@
-package com.example.simpletarot
+package com.example.simpletarot.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.simpletarot.CardDisplay
 import com.example.simpletarot.data.DrawnCard
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.theme.TarotSpacing
@@ -117,7 +118,8 @@ fun CardsDisplay(
             itemsIndexed(cards) { index, card ->
                 CardDisplay(
                     isLandscape = isLandscape,
-                    drawnCard = card) {
+                    drawnCard = card
+                ) {
                     onReveal(index)
                 }
             }
@@ -131,7 +133,8 @@ fun CardsDisplay(
             itemsIndexed(cards) { index, card ->
                 CardDisplay(
                     isLandscape = isLandscape,
-                    drawnCard = card) {
+                    drawnCard = card
+                ) {
                     onReveal(index)
                 }
             }
