@@ -26,7 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.simpletarot.CardDisplay
+import com.example.simpletarot.ui.components.CardDisplay
 import com.example.simpletarot.data.DrawnCard
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.theme.TarotSpacing
