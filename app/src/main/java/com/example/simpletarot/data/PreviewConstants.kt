@@ -29,19 +29,19 @@ object PreviewConstants {
     }
      
      val readingEntities = listOf(
-         ReadingEntity(spreadType = "ThreeCardDraw"),
-         ReadingEntity(spreadType = "SingleCardDraw"),
-         ReadingEntity(spreadType = "ThreeCardDraw"),
+         ReadingEntity(readingId = 1, spreadType = "ThreeCardDraw"),
+         ReadingEntity(readingId = 2, spreadType = "SingleCardDraw"),
+         ReadingEntity(readingId = 3, spreadType = "ThreeCardDraw"),
      )
 
     val cardEntities = tarotCards.mapIndexed { index, card ->
-        card.toEntity(index.toLong())
+        card.toEntity((index + 1).toLong())
     }
 
-    val readings = readingEntities.mapIndexed { index, reading ->
+    val readings = readingEntities.map { reading ->
         ReadingWithCards(
             reading = reading,
-            cards = cardEntities.filter { it.readingOwnerId == index.toLong() }
+            cards = cardEntities.filter { it.readingOwnerId == reading.readingId }
         )
     }
 
