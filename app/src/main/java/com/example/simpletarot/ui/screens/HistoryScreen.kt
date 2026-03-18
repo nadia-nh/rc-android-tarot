@@ -12,14 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import com.example.simpletarot.ui.theme.LocalSpacing
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.History
@@ -27,19 +19,33 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberSwipeToDismissBoxState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.simpletarot.ui.components.CardImage
 import com.example.simpletarot.data.PreviewConstants
 import com.example.simpletarot.database.DrawnCardEntity
+import com.example.simpletarot.database.ReadingEntity
 import com.example.simpletarot.database.ReadingWithCards
 import com.example.simpletarot.database.toDrawnCard
+import com.example.simpletarot.ui.components.CardImage
+import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.theme.TarotSpacing
-import com.example.simpletarot.util.DateUtils
 import com.example.simpletarot.ui.viewmodel.TarotViewModel
+import com.example.simpletarot.util.DateUtils
+import kotlinx.coroutines.launch
 
 @Composable
 fun HistoryScreen(
@@ -121,6 +127,33 @@ fun HistoryScreenContents(
                 TarotReadingItem(readingWithCards = readingWithCards)
             }
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SwipeableTarotItem(
+    item: ReadingWithCards,
+    onDeleteRequest: (ReadingEntity) -> Unit
+) {
+    val coroutineScope = rememberCoroutineScope()
+    val dismissState = rememberSwipeToDismissBoxState()
+
+    SwipeToDismissBox(
+        state = dismissState,
+        enableDismissFromStartToEnd = false, // Disable "swipe right"
+        backgroundContent = {},
+        onDismiss = { value ->
+            if (value == SwipeToDismissBoxValue.EndToStart) {
+                // Keep the item from disappearing until it's actually removed
+                coroutineScope.launch {
+                    dismissState.reset()
+                    onDeleteRequest(item.reading)
+                }
+            }
+        }
+    ) {
+        TarotReadingItem(readingWithCards = item)
     }
 }
 
