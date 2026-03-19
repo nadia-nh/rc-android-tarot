@@ -11,4 +11,8 @@ class TarotRepository(private val tarotDao: TarotDao) {
         val cardsWithOwner = cards.map { it.copy(readingOwnerId = id) }
         tarotDao.insertDrawnCards(cardsWithOwner)
     }
+
+    suspend fun deleteReading(reading: ReadingEntity) {
+        tarotDao.deleteReading(reading)
+    }
 }
