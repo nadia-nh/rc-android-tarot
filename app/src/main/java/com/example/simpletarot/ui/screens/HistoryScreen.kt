@@ -158,6 +158,20 @@ fun SwipeableTarotItem(
 }
 
 @Composable
+fun HandleDeleteRequest(
+    reading: ReadingEntity?,
+    onConfirm: () -> Unit = {},
+    onDismiss: () -> Unit = {}) {
+    // Show Dialog if a reading is pending deletion
+    reading?.let { reading ->
+        DeleteConfirmationDialog(
+            onConfirm = { onConfirm() },
+            onDismiss = { onDismiss() }
+        )
+    }
+}
+
+@Composable
 fun TarotReadingItem(
     spacing: TarotSpacing = LocalSpacing.current,
     readingWithCards: ReadingWithCards) {
