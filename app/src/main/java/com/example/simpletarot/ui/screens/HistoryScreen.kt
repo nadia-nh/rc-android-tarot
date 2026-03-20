@@ -168,7 +168,7 @@ fun TarotReadingItem(
         elevation = CardDefaults.cardElevation(0.dp),
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.3f)
+            containerColor = MaterialTheme.colorScheme.surfaceDim
         ),
     ) {
         Column(
