@@ -1,6 +1,8 @@
 package com.example.simpletarot.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -14,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -41,6 +44,8 @@ import com.example.simpletarot.database.ReadingEntity
 import com.example.simpletarot.database.ReadingWithCards
 import com.example.simpletarot.database.toDrawnCard
 import com.example.simpletarot.ui.components.CardImage
+import com.example.simpletarot.ui.components.DeleteConfirmationDialog
+import com.example.simpletarot.ui.components.getColorFromSwipeState
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.theme.TarotSpacing
 import com.example.simpletarot.ui.viewmodel.TarotViewModel
@@ -142,7 +147,26 @@ fun SwipeableTarotItem(
     SwipeToDismissBox(
         state = dismissState,
         enableDismissFromStartToEnd = false, // Disable "swipe right"
-        backgroundContent = {},
+        backgroundContent = {
+            val isSwiping = dismissState.currentValue != SwipeToDismissBoxValue.Settled
+            val color = getColorFromSwipeState(dismissState.currentValue)
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color, MaterialTheme.shapes.medium)
+                    .padding(horizontal = 20.dp),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                if (isSwiping) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete",
+                        tint = MaterialTheme.colorScheme.onErrorContainer
+                    )
+                }
+            }
+        },
         onDismiss = { value ->
             if (value == SwipeToDismissBoxValue.EndToStart) {
                 // Keep the item from disappearing until it's actually removed
