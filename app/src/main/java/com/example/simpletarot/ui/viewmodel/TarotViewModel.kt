@@ -20,10 +20,12 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
     private val _currentSpread = MutableStateFlow<List<DrawnCard>>(emptyList())
     private val _currentScreen = MutableStateFlow(AppScreen.Menu)
     private val _isSaved = MutableStateFlow(false)
+    private val _pendingDeletion = MutableStateFlow<ReadingEntity?>(null)
 
     val currentSpread: StateFlow<List<DrawnCard>> = _currentSpread
     val currentScreen: StateFlow<AppScreen> = _currentScreen
     val isSaved: StateFlow<Boolean> = _isSaved
+    val pendingDeletion: StateFlow<ReadingEntity?> = _pendingDeletion
 
     val isRevealed: StateFlow<Boolean> = _currentSpread
         .map { cards -> cards.all { it.isRevealed } }
@@ -82,6 +84,22 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
         viewModelScope.launch {
             repository.saveReading(reading, cards)
             _isSaved.value = true
+        }
+    }
+
+    fun scheduleDeletion(reading: ReadingEntity) {
+        _pendingDeletion.value = reading
+    }
+
+    fun cancelDeletion() {
+        _pendingDeletion.value = null
+    }
+
+    fun confirmDeletion() {
+        val reading = _pendingDeletion.value ?: return
+        viewModelScope.launch {
+            repository.deleteReading(reading)
+            _pendingDeletion.value = null
         }
     }
 }
