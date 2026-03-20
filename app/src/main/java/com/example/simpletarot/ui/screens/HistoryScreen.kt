@@ -47,6 +47,7 @@ import com.example.simpletarot.ui.components.CardImage
 import com.example.simpletarot.ui.components.DeleteConfirmationDialog
 import com.example.simpletarot.ui.components.getColorFromSwipeState
 import com.example.simpletarot.ui.theme.LocalSpacing
+import com.example.simpletarot.ui.theme.SimpleTarotTheme
 import com.example.simpletarot.ui.theme.TarotSpacing
 import com.example.simpletarot.ui.viewmodel.TarotViewModel
 import com.example.simpletarot.util.DateUtils
@@ -279,46 +280,61 @@ fun TarotReadingItemCards(
 @Preview(showBackground = true)
 @Composable
 fun HistoryScreenTopBarPreview() {
-    HistoryScreenTopBar()
+    SimpleTarotTheme {
+        HistoryScreenTopBar()
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun HistoryScreenContentsPreview() {
-    HistoryScreenContents(history = PreviewConstants.readings)
+    SimpleTarotTheme {
+        HistoryScreenContents(history = PreviewConstants.readings)
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun TarotReadingItemHeaderPreview() {
-    TarotReadingItemHeader(
-        spreadType = "Three Card Draw",
-        timestamp = System.currentTimeMillis()
-    )
+    SimpleTarotTheme {
+        TarotReadingItemHeader(
+            spreadType = "Three Card Draw",
+            timestamp = System.currentTimeMillis()
+        )
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun SwipeableTarotItemPreview() {
-    SwipeableTarotItem(item = PreviewConstants.readingWithCards)
+    SimpleTarotTheme {
+        SwipeableTarotItem(item = PreviewConstants.readingWithCards)
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun TarotReadingItemCardsPreview() {
-    TarotReadingItemCards(
-        cards = PreviewConstants.readingWithCards.cards
-    )
+    SimpleTarotTheme {
+        TarotReadingItemCards(
+            cards = PreviewConstants.readingWithCards.cards
+        )
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun TarotReadingItemPreview() {
-    TarotReadingItem(readingWithCards = PreviewConstants.readingWithCards)
+    SimpleTarotTheme {
+        TarotReadingItem(
+            readingWithCards = PreviewConstants.readingWithCards)
+    }
 }
 
 @Preview
 @Composable
 fun HistoryScreenPreview() {
-    HistoryScreenStateless(PreviewConstants.readings)
+    SimpleTarotTheme {
+        HistoryScreenStateless(PreviewConstants.readings)
+    }
 }
