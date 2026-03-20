@@ -24,8 +24,8 @@ fun DeleteConfirmationDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Delete Reading?") },
-        text = { Text("This will permanently remove this draw from your journal.") },
+        title = { Text("Delete reading?") },
+        text = { Text("This action will permanently remove this tarot spread from your journal.") },
         confirmButton = {
             TextButton(onClick = onConfirm) {
                 Text("Delete", color = MaterialTheme.colorScheme.error)
