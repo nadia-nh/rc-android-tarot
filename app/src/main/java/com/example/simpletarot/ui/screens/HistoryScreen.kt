@@ -59,20 +59,30 @@ fun HistoryScreen(
     onBack: () -> Unit = {}
 ){
     val history by viewModel.previousReadings.collectAsState()
-    HistoryScreenStateless(history = history, onBack = onBack)
+    val pendingDeletion by viewModel.pendingDeletion.collectAsState()
+    HistoryScreenStateless(
+        history = history,
+        onBack = onBack,
+        onDeleteRequest = { viewModel.scheduleDeletion(it) })
+    HandleDeleteRequest(
+        reading = pendingDeletion,
+        onConfirm = { viewModel.confirmDeletion() },
+        onDismiss = { viewModel.cancelDeletion() })
 }
 
 @Composable
 fun HistoryScreenStateless(
     history: List<ReadingWithCards>,
-    onBack: () -> Unit = {}
+    onBack: () -> Unit = {},
+    onDeleteRequest: (reading: ReadingEntity) -> Unit = {}
 ) {
     Scaffold(topBar = { HistoryScreenTopBar(onBack) })
     { padding ->
         HistoryScreenContents(
             spacing = LocalSpacing.current,
             padding = padding,
-            history = history
+            history = history,
+            onDeleteRequest = onDeleteRequest
         )
     }
 }
@@ -80,7 +90,7 @@ fun HistoryScreenStateless(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HistoryScreenTopBar(
-    onBack: () -> Unit = {}
+    onBack: () -> Unit = {},
 ) {
     TopAppBar(
         title = {
@@ -104,6 +114,7 @@ fun HistoryScreenContents(
     spacing: TarotSpacing = LocalSpacing.current,
     padding: PaddingValues = PaddingValues(),
     history: List<ReadingWithCards> = emptyList(),
+    onDeleteRequest: (reading: ReadingEntity) -> Unit = {},
 ) {
     if (history.isEmpty()) {
         Column(
@@ -128,8 +139,12 @@ fun HistoryScreenContents(
             contentPadding = PaddingValues(spacing.medium),
             verticalArrangement = Arrangement.spacedBy(spacing.small)
         ) {
-            items(history) { readingWithCards ->
-                TarotReadingItem(readingWithCards = readingWithCards)
+            items(
+                items = history,
+                key = { it.reading.readingId }) { readingWithCards ->
+                SwipeableTarotItem(
+                    item = readingWithCards,
+                    onDeleteRequest = onDeleteRequest)
             }
         }
     }
