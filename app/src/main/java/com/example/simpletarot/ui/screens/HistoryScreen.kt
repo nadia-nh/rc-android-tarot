@@ -134,7 +134,7 @@ fun HistoryScreenContents(
 @Composable
 fun SwipeableTarotItem(
     item: ReadingWithCards,
-    onDeleteRequest: (ReadingEntity) -> Unit
+    onDeleteRequest: (ReadingEntity) -> Unit = {}
 ) {
     val coroutineScope = rememberCoroutineScope()
     val dismissState = rememberSwipeToDismissBoxState()
@@ -256,6 +256,12 @@ fun TarotReadingItemHeaderPreview() {
         spreadType = "Three Card Draw",
         timestamp = System.currentTimeMillis()
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SwipeableTarotItemPreview() {
+    SwipeableTarotItem(item = PreviewConstants.readingWithCards)
 }
 
 @Preview(showBackground = true)
