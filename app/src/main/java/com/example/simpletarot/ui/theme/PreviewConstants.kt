@@ -3,9 +3,9 @@ package com.example.simpletarot.ui.theme
 import com.example.simpletarot.domain.model.DrawnCard
 import com.example.simpletarot.domain.model.TarotCard
 import com.example.simpletarot.domain.model.withRankAndSuit
-import com.example.simpletarot.database.ReadingEntity
-import com.example.simpletarot.database.ReadingWithCards
-import com.example.simpletarot.database.toEntity
+import com.example.simpletarot.data.local.ReadingEntity
+import com.example.simpletarot.data.local.ReadingWithCards
+import com.example.simpletarot.data.local.toEntity
 
 object PreviewConstants {
     val tarotCard = TarotCard(

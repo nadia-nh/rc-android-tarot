@@ -39,10 +39,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.simpletarot.ui.theme.PreviewConstants
-import com.example.simpletarot.database.DrawnCardEntity
-import com.example.simpletarot.database.ReadingEntity
-import com.example.simpletarot.database.ReadingWithCards
-import com.example.simpletarot.database.toDrawnCard
+import com.example.simpletarot.data.local.DrawnCardEntity
+import com.example.simpletarot.data.local.ReadingEntity
+import com.example.simpletarot.data.local.ReadingWithCards
+import com.example.simpletarot.data.local.toDrawnCard
 import com.example.simpletarot.ui.components.CardImage
 import com.example.simpletarot.ui.components.DeleteConfirmationDialog
 import com.example.simpletarot.ui.components.getColorFromSwipeState

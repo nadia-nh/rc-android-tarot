@@ -1,4 +1,4 @@
-package com.example.simpletarot.database
+package com.example.simpletarot.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

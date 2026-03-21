@@ -4,6 +4,9 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.example.simpletarot.data.local.DrawnCardEntity
+import com.example.simpletarot.data.local.ReadingEntity
+import com.example.simpletarot.data.local.ReadingWithCards
 import kotlinx.coroutines.flow.Flow
 
 @Dao
