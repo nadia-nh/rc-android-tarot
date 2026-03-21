@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import com.example.simpletarot.ui.theme.SimpleTarotTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.simpletarot.data.local.TarotDatabase
+import com.example.simpletarot.data.remote.TarotApiService
 import com.example.simpletarot.data.repository.TarotRepository
 import com.example.simpletarot.ui.viewmodel.TarotViewModel
 import com.example.simpletarot.ui.viewmodel.TarotViewModelFactory
@@ -16,7 +17,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val database by lazy { TarotDatabase.getDatabase(this) }
-        val repository by lazy { TarotRepository(database.tarotDao()) }
+        val repository by lazy { TarotRepository(
+            tarotApiService = TarotApiService.create(),
+            tarotDao = database.tarotDao()) }
 
         enableEdgeToEdge()
         setContent {
