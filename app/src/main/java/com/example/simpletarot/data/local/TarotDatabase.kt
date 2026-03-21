@@ -1,12 +1,9 @@
-package com.example.simpletarot.database
+package com.example.simpletarot.data.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.simpletarot.data.local.DrawnCardEntity
-import com.example.simpletarot.data.local.ReadingEntity
-import com.example.simpletarot.data.local.TarotDao
 
 @Database(
     entities = [ReadingEntity::class, DrawnCardEntity::class],

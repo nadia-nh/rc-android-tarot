@@ -2,7 +2,7 @@ package com.example.simpletarot.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.simpletarot.database.TarotRepository
+import com.example.simpletarot.data.local.TarotRepository
 
 class TarotViewModelFactory(private val repository: TarotRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

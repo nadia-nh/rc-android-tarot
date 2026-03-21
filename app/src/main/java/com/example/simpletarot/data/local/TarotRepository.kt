@@ -1,9 +1,5 @@
-package com.example.simpletarot.database
+package com.example.simpletarot.data.local
 
-import com.example.simpletarot.data.local.DrawnCardEntity
-import com.example.simpletarot.data.local.ReadingEntity
-import com.example.simpletarot.data.local.ReadingWithCards
-import com.example.simpletarot.data.local.TarotDao
 import kotlinx.coroutines.flow.Flow
 
 class TarotRepository(private val tarotDao: TarotDao) {
