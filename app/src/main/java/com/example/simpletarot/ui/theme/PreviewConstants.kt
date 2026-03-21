@@ -1,8 +1,8 @@
 package com.example.simpletarot.ui.theme
 
-import com.example.simpletarot.data.DrawnCard
-import com.example.simpletarot.data.TarotCard
-import com.example.simpletarot.data.withRankAndSuit
+import com.example.simpletarot.domain.model.DrawnCard
+import com.example.simpletarot.domain.model.TarotCard
+import com.example.simpletarot.domain.model.withRankAndSuit
 import com.example.simpletarot.database.ReadingEntity
 import com.example.simpletarot.database.ReadingWithCards
 import com.example.simpletarot.database.toEntity

@@ -1,4 +1,4 @@
-package com.example.simpletarot.data
+package com.example.simpletarot.domain.model
 
 import com.example.simpletarot.R
 

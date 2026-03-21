@@ -3,10 +3,10 @@ package com.example.simpletarot.database
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.example.simpletarot.data.DrawnCard
-import com.example.simpletarot.data.Rank
-import com.example.simpletarot.data.Suit
-import com.example.simpletarot.data.TarotCard
+import com.example.simpletarot.domain.model.DrawnCard
+import com.example.simpletarot.domain.model.Rank
+import com.example.simpletarot.domain.model.Suit
+import com.example.simpletarot.domain.model.TarotCard
 
 @Entity(
     tableName = "drawn_cards",

@@ -3,7 +3,7 @@ package com.example.simpletarot.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.simpletarot.AppScreen
-import com.example.simpletarot.data.DrawnCard
+import com.example.simpletarot.domain.model.DrawnCard
 import com.example.simpletarot.data.local.TarotDeck
 import com.example.simpletarot.database.ReadingEntity
 import com.example.simpletarot.database.ReadingWithCards

@@ -8,9 +8,9 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.simpletarot.data.DrawnCard
-import com.example.simpletarot.data.TarotCard
-import com.example.simpletarot.data.getResourceId
+import com.example.simpletarot.domain.model.DrawnCard
+import com.example.simpletarot.domain.model.TarotCard
+import com.example.simpletarot.domain.model.getResourceId
 
 @Composable
 fun CardImage(
