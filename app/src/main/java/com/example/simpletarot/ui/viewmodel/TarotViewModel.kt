@@ -7,7 +7,7 @@ import com.example.simpletarot.domain.model.DrawnCard
 import com.example.simpletarot.data.local.TarotDeck
 import com.example.simpletarot.data.local.ReadingEntity
 import com.example.simpletarot.data.local.ReadingWithCards
-import com.example.simpletarot.data.local.TarotRepository
+import com.example.simpletarot.data.repository.TarotRepository
 import com.example.simpletarot.data.local.toEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

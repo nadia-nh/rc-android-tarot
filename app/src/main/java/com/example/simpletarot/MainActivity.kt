@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import com.example.simpletarot.ui.theme.SimpleTarotTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.simpletarot.data.local.TarotDatabase
-import com.example.simpletarot.data.local.TarotRepository
+import com.example.simpletarot.data.repository.TarotRepository
 import com.example.simpletarot.ui.viewmodel.TarotViewModel
 import com.example.simpletarot.ui.viewmodel.TarotViewModelFactory
 
