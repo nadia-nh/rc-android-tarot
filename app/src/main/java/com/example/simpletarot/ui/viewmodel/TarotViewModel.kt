@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.simpletarot.AppScreen
 import com.example.simpletarot.domain.model.DrawnCard
-import com.example.simpletarot.data.local.TarotDeck
 import com.example.simpletarot.data.local.ReadingEntity
 import com.example.simpletarot.data.local.ReadingWithCards
 import com.example.simpletarot.data.repository.TarotRepository
@@ -20,7 +19,7 @@ import kotlin.collections.map
 import kotlin.random.Random
 
 class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
-    private val _tarotDeck: List<TarotCard> = TarotDeck.getDeck()
+    private val _tarotDeck = MutableStateFlow<List<TarotCard>>(emptyList())
     private val _currentSpread = MutableStateFlow<List<DrawnCard>>(emptyList())
     private val _currentScreen = MutableStateFlow(AppScreen.Menu)
     private val _isSaved = MutableStateFlow(false)
@@ -46,8 +45,15 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
             initialValue = emptyList()
         )
 
+    init {
+        viewModelScope.launch {
+            _tarotDeck.value = repository
+                .getFullDeck(useNetwork = true)
+        }
+    }
+
     private fun draw(count: Int): List<DrawnCard> {
-        return _tarotDeck
+        return _tarotDeck.value
             .shuffled()
             .take(count)
             .map { card ->
