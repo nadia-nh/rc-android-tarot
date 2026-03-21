@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.simpletarot.AppScreen
 import com.example.simpletarot.data.DrawnCard
-import com.example.simpletarot.data.TarotDeck
+import com.example.simpletarot.data.local.TarotDeck
 import com.example.simpletarot.database.ReadingEntity
 import com.example.simpletarot.database.ReadingWithCards
 import com.example.simpletarot.database.TarotRepository
