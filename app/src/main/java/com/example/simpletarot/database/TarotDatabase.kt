@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.simpletarot.data.local.DrawnCardEntity
 import com.example.simpletarot.data.local.ReadingEntity
+import com.example.simpletarot.data.local.TarotDao
 
 @Database(
     entities = [ReadingEntity::class, DrawnCardEntity::class],
