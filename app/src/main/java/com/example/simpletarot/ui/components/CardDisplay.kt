@@ -133,7 +133,7 @@ fun CardMeaning(drawnCard: DrawnCard) {
         color = MaterialTheme.colorScheme.onBackground,
         style = MaterialTheme.typography.bodyMedium,
         textAlign = TextAlign.Start,
-        maxLines = 4,
+        maxLines = 12,
         overflow = TextOverflow.Ellipsis)
 }
 
