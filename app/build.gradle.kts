@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+    kotlin("plugin.serialization") version "2.3.0"
 }
 
 android {
@@ -78,6 +79,13 @@ dependencies {
 
     // Extra icons
     implementation(libs.androidx.compose.material.icons.extended)
+
+    // Retrofit for API calls
+    implementation(libs.retrofit)
+
+    // Kotlin Serialization for JSON parsing
+    implementation(libs.converter.kotlinx.serialization)
+    implementation(libs.kotlinx.serialization.json)
 
     // Testing
     testImplementation(libs.junit)
