@@ -33,7 +33,7 @@ import com.example.simpletarot.ui.theme.TarotSpacing
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import com.example.simpletarot.data.PreviewConstants
+import com.example.simpletarot.ui.theme.PreviewConstants
 import com.example.simpletarot.ui.viewmodel.TarotViewModel
 
 @Composable

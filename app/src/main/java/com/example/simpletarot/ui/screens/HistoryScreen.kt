@@ -38,7 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.simpletarot.data.PreviewConstants
+import com.example.simpletarot.ui.theme.PreviewConstants
 import com.example.simpletarot.database.DrawnCardEntity
 import com.example.simpletarot.database.ReadingEntity
 import com.example.simpletarot.database.ReadingWithCards

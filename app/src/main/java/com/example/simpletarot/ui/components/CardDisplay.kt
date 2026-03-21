@@ -28,7 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.simpletarot.data.PreviewConstants
+import com.example.simpletarot.ui.theme.PreviewConstants
 import com.example.simpletarot.data.DrawnCard
 import com.example.simpletarot.data.getMeaning
 import com.example.simpletarot.ui.theme.LocalSpacing
