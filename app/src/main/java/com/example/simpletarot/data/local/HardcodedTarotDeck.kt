@@ -413,17 +413,4 @@ object TarotDeck {
     fun getDeck(): List<TarotCard> {
         return baseDeck.map { it.withRankAndSuit() }
     }
-
-    fun draw(count: Int): List<DrawnCard> {
-        return getDeck()
-            .shuffled()
-            .take(count)
-            .map { card ->
-                DrawnCard(
-                    card = card,
-                    isReversed = Random.nextBoolean(),
-                    isRevealed = false
-                )
-            }
-    }
 }

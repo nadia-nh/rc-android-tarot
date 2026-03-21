@@ -9,14 +9,18 @@ import com.example.simpletarot.data.local.ReadingEntity
 import com.example.simpletarot.data.local.ReadingWithCards
 import com.example.simpletarot.data.repository.TarotRepository
 import com.example.simpletarot.data.local.toEntity
+import com.example.simpletarot.domain.model.TarotCard
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlin.collections.map
+import kotlin.random.Random
 
 class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
+    private val _tarotDeck: List<TarotCard> = TarotDeck.getDeck()
     private val _currentSpread = MutableStateFlow<List<DrawnCard>>(emptyList())
     private val _currentScreen = MutableStateFlow(AppScreen.Menu)
     private val _isSaved = MutableStateFlow(false)
@@ -31,19 +35,32 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
         .map { cards -> cards.all { it.isRevealed } }
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.Companion.WhileSubscribed(5000),
+            started = SharingStarted.WhileSubscribed(5000),
             initialValue = false
         )
 
     val previousReadings: StateFlow<List<ReadingWithCards>> = repository.allReadings
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.Companion.WhileSubscribed(5000),
+            started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()
         )
 
+    private fun draw(count: Int): List<DrawnCard> {
+        return _tarotDeck
+            .shuffled()
+            .take(count)
+            .map { card ->
+                DrawnCard(
+                    card = card,
+                    isReversed = Random.nextBoolean(),
+                    isRevealed = false
+                )
+            }
+    }
+
     fun drawCards(count: Int) {
-        _currentSpread.value = TarotDeck.draw(count)
+        _currentSpread.value = draw(count)
         _currentScreen.value = AppScreen.Result
         _isSaved.value = false
     }
