@@ -5,8 +5,16 @@ import com.example.simpletarot.domain.model.withRankAndSuit
 
 fun ApiCard.toDomainModel(): TarotCard {
     return TarotCard(
-        name = this.name,
+        name = convertName(this.name),
         uprightMeaning = this.meaning_up,
         reversedMeaning = this.meaning_rev)
         .withRankAndSuit()
 }
+
+private fun convertName(name: String) =
+    when (name) {
+        "Fortitude" -> "Strength"
+        "The Last Judgment" -> "Judgement"
+        else -> name
+    }
+

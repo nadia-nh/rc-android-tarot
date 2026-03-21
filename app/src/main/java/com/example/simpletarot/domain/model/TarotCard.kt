@@ -98,7 +98,7 @@ fun TarotCard.getResourceId(): Int {
             "The Chariot" -> R.drawable.major_the_chariot
             "Strength" -> R.drawable.major_strength
             "The Hermit" -> R.drawable.major_the_hermit
-            "Wheel of Fortune" -> R.drawable.major_wheel_of_fortune
+            "Wheel Of Fortune" -> R.drawable.major_wheel_of_fortune
             "Justice" -> R.drawable.major_justice
             "The Hanged Man" -> R.drawable.major_the_hanged_man
             "Death" -> R.drawable.major_death

@@ -1,9 +1,7 @@
 package com.example.simpletarot.data.local
 
-import com.example.simpletarot.domain.model.DrawnCard
 import com.example.simpletarot.domain.model.TarotCard
 import com.example.simpletarot.domain.model.withRankAndSuit
-import kotlin.random.Random
 
 private val baseDeck by lazy {
     listOf(
@@ -59,7 +57,7 @@ private val baseDeck by lazy {
             "Isolation, loneliness, withdrawal"
         ),
         TarotCard(
-            "Wheel of Fortune",
+            "Wheel Of Fortune",
             "Change, cycles, destiny",
             "Bad luck, resistance to change, setbacks"
         ),
