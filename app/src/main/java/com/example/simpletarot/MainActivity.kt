@@ -11,6 +11,7 @@ import com.example.simpletarot.data.remote.TarotApiService
 import com.example.simpletarot.data.repository.TarotRepository
 import com.example.simpletarot.ui.viewmodel.TarotViewModel
 import com.example.simpletarot.ui.viewmodel.TarotViewModelFactory
+import com.example.simpletarot.util.NetworkUtils
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +28,8 @@ class MainActivity : ComponentActivity() {
                 val viewModel : TarotViewModel = viewModel(
                     factory = TarotViewModelFactory(repository)
                 )
+                viewModel.toggleNetworkStatus(
+                    enabled = NetworkUtils.isOnline(context = this))
                 TarotMain(viewModel)
             }
         }
