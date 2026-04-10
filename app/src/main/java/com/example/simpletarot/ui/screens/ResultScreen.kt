@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -149,18 +150,19 @@ fun SaveButton(
     allCardsRevealed: Boolean,
     onSave: () -> Unit = {}) {
     Button(
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.primary
+        ),
         onClick = onSave,
         enabled = allCardsRevealed && !isSaved) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             if (isSaved) {
                 Icon(Icons.Default.Check, contentDescription = null)
                 Spacer(Modifier.size(spacing.small))
-                Text(
-                    "Saved",
-                    color = MaterialTheme.colorScheme.onPrimary)
+                Text("Saved")
             } else {
-                Text("Save Reading",
-                    color = MaterialTheme.colorScheme.onPrimary)
+                Text("Save Reading")
             }
         }
     }
@@ -168,10 +170,14 @@ fun SaveButton(
 
 @Composable
 fun BackButton(onBack: () -> Unit = {}) {
-    Button(onClick = onBack) {
+    Button(
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.primary
+        ),
+        onClick = onBack) {
         Text(
-            "Back to Menu",
-            color = MaterialTheme.colorScheme.onPrimary
+            "Back to Menu"
         )
     }
 }

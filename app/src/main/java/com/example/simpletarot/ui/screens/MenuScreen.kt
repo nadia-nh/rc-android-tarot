@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -97,13 +98,17 @@ fun MenuScreen(
 fun StyledButton(
     text: String = "Single Card Draw",
     onClick: () -> Unit = {}) {
-    Button(onClick = onClick) {
-        Text(
-            text,
-            color = MaterialTheme.colorScheme.onPrimary,
-            style = MaterialTheme.typography.titleSmall
-        )
-    }
+    Button(
+        onClick = onClick,
+        colors = ButtonDefaults.outlinedButtonColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.primary
+        )) {
+            Text(
+                text,
+                style = MaterialTheme.typography.titleSmall
+            )
+        }
 }
 
 @Preview(showBackground = true)
