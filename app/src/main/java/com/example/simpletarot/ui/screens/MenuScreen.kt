@@ -44,7 +44,7 @@ fun MenuScreen(
 
         Spacer(modifier = Modifier.height(spacing.large))
         Surface(
-            color = MaterialTheme.colorScheme.secondary,
+            color = MaterialTheme.colorScheme.surfaceVariant,
             shape = MaterialTheme.shapes.large
         ) {
             Column(modifier = Modifier.padding(spacing.large),
@@ -53,7 +53,7 @@ fun MenuScreen(
                 Text(
                     text = "Focus on open-ended questions",
                     style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onSecondary
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 Spacer(modifier = Modifier.height(spacing.medium))
@@ -61,7 +61,7 @@ fun MenuScreen(
                     text = "What do I need to know today?\nWhat are the themes of my work life?",
                     style = MaterialTheme.typography.bodyMedium,
                     fontStyle = FontStyle.Italic,
-                    color = MaterialTheme.colorScheme.onSecondary
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
