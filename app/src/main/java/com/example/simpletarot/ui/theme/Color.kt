@@ -2,26 +2,23 @@ package com.example.simpletarot.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Palette: https://www.pixilart.com/palettes/orange-only-349
+// ui/theme/Color.kt
 
-val LightPrimary = Color(0xFFD16630)
-val LightSecondary = Color(0x66F59E0B)
-val LightBackground = Color(0xFFF3E3CA)
+// === Primary Palettes ===
+val MysticPurple = Color(0xFF4A148C) // Deep, saturated purple
+val MossGreen = Color(0xFF1B5E20)   // Rich, dark forest green
+val LavenderText = Color(0xFFD1C4E9) // Soft, light purple for dark mode text
 
-val LightSurface = Color(0xFFF6CA9F)
-val LightSurfaceDim = Color(0xFFF5D1B8)
-val LightOnPrimary = Color(0xFFFFFFFC)
-val LightOnSecondary = Color(0xFF94241A)
-val LightOnBackground = Color(0xFF94241A)
-val LightOnSurface = Color(0xFF5C1E1C)
+// === Utility Colors ===
+val SoftGold = Color(0xFFD4AF37) // For subtle outlines or star icons (optional)
+val PureWhite = Color(0xFFFFFFFF)
+val MidnightBlack = Color(0xFF000000)
 
-val DarkPrimary = Color(0xFFC75C26)
-val DarkSecondary = Color(0x26F59E0B)
-val DarkBackground = Color(0xFF1E1E1E)
-val DarkSurface = Color(0xFF000000)
-val DarkSurfaceDim = Color(0xFF1A120E)
+// === Light Mode (Zen Cream) ===
+val LightBackground = Color(0xFFFFFDF5) // Cream base
+val LightSurface = Color(0xFFF8F4EA)    // Soft beige cards
+val LightOnSurface = Color(0xFF211E16)  // Very dark gray/brown for main text
 
-val DarkOnPrimary = Color(0xFFF9E6CF)
-val DarkOnSecondary = Color(0xFFF9E6CF)
-val DarkOnBackground = Color(0xFFE68D3E)
-val DarkOnSurface = Color(0xFFE68D3E)
+// === Dark Mode (Obsidian Arcana) ===
+val DarkBackground = Color(0xFF0E051A) // Deep purple-black base
+val DarkSurface = Color(0xFF000D04)    // Deep obsidian-green cards

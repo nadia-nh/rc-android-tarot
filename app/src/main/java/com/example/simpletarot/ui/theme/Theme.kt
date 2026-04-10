@@ -13,27 +13,45 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val LightColorScheme = lightColorScheme(
-    primary = LightPrimary,
-    secondary = LightSecondary,
+    primary = MysticPurple,
+    onPrimary = PureWhite,
+    primaryContainer = MysticPurple,
+    onPrimaryContainer = PureWhite,
+
+    secondary = MossGreen,
+    onSecondary = PureWhite,
+    secondaryContainer = LightSurface,
+    onSecondaryContainer = LightOnSurface,
+
     background = LightBackground,
-    surface = LightSurface,
-    surfaceDim = LightSurfaceDim,
-    onPrimary = LightOnPrimary,
-    onSecondary = LightOnSecondary,
-    onBackground = LightOnBackground,
+    onBackground = LightOnSurface,
+
+    surface = PureWhite,
     onSurface = LightOnSurface,
+
+    surfaceVariant = LightSurface,
+    onSurfaceVariant = MysticPurple,
+
+    outlineVariant = Color(0xFFE0D9C8)
 )
 
 private val DarkColorScheme = darkColorScheme(
-    primary = DarkPrimary,
-    secondary = DarkSecondary,
+    primary = LavenderText,
+    onPrimary = DarkBackground,
+    secondary = MossGreen,
+    onSecondary = PureWhite,
+
     background = DarkBackground,
-    surface = DarkSurface,
-    surfaceDim = DarkSurfaceDim,
-    onPrimary = DarkOnPrimary,
-    onSecondary = DarkOnSecondary,
-    onBackground = DarkOnBackground,
-    onSurface = DarkOnSurface,
+    onBackground = LavenderText,
+
+    surface = MidnightBlack,
+    onSurface = LavenderText,
+
+    surfaceVariant = DarkSurface,
+    onSurfaceVariant = PureWhite,
+
+    outline = Color.White.copy(alpha = 0.3f),
+    outlineVariant = Color.White.copy(alpha = 0.1f)
 )
 
 @Composable
