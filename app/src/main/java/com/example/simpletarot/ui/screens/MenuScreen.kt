@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.simpletarot.ui.components.StyledButton
 import com.example.simpletarot.ui.theme.LocalSpacing
 
 @Composable
@@ -84,37 +83,26 @@ fun MenuScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                StyledButton("Single Card Draw") { onDraw(1) }
+                StyledButton(
+                    "Single Card Draw",
+                    style = MaterialTheme.typography.titleSmall) {
+                    onDraw(1)
+                }
                 Spacer(modifier = Modifier.size(spacing.large))
-                StyledButton("Three Card Spread") { onDraw(3) }
+                StyledButton(
+                    "Three Card Spread",
+                    style = MaterialTheme.typography.titleSmall) {
+                    onDraw(3)
+                }
                 Spacer(modifier = Modifier.size(spacing.large))
-                StyledButton("Show History") { onOpenHistory() }
+                StyledButton(
+                    "Show History",
+                    style = MaterialTheme.typography.titleSmall) {
+                    onOpenHistory()
+                }
             }
         }
     }
-}
-
-@Composable
-fun StyledButton(
-    text: String = "Single Card Draw",
-    onClick: () -> Unit = {}) {
-    Button(
-        onClick = onClick,
-        colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.primary
-        )) {
-            Text(
-                text,
-                style = MaterialTheme.typography.titleSmall
-            )
-        }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun StyledButtonPreview() {
-    StyledButton("Test Button") { }
 }
 
 @Preview(showBackground = true)
