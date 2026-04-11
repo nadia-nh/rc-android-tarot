@@ -16,9 +16,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.simpletarot.ui.components.CardDisplay
 import com.example.simpletarot.domain.model.DrawnCard
+import com.example.simpletarot.ui.components.StyledButton
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.theme.TarotSpacing
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -149,37 +147,20 @@ fun SaveButton(
     isSaved: Boolean,
     allCardsRevealed: Boolean,
     onSave: () -> Unit = {}) {
-    Button(
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.primary
-        ),
-        onClick = onSave,
-        enabled = allCardsRevealed && !isSaved) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            if (isSaved) {
-                Icon(Icons.Default.Check, contentDescription = null)
-                Spacer(Modifier.size(spacing.small))
-                Text("Saved")
-            } else {
-                Text("Save Reading")
-            }
-        }
-    }
+    StyledButton(
+        text = if (isSaved) "Saved" else "Save Reading",
+        style = MaterialTheme.typography.bodyMedium,
+        spacing = spacing,
+        enabled = allCardsRevealed && !isSaved,
+        displayIcon = isSaved,
+        icon = Icons.Default.Check,
+        onClick = onSave
+    )
 }
 
 @Composable
 fun BackButton(onBack: () -> Unit = {}) {
-    Button(
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.primary
-        ),
-        onClick = onBack) {
-        Text(
-            "Back to Menu"
-        )
-    }
+    StyledButton(text = "Back to Menu") { onBack() }
 }
 
 @Preview
