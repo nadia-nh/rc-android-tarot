@@ -117,7 +117,7 @@ fun CardImageOrPlaceholder(drawnCard: DrawnCard) {
             Icon(
                 imageVector = Icons.Default.Star,
                 contentDescription = "Hidden",
-                tint = MaterialTheme.colorScheme.secondary.copy(alpha = 0.8f),
+                tint = MaterialTheme.colorScheme.surfaceTint,
                 modifier = Modifier.size(48.dp)
             )
         } else {

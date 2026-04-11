@@ -28,6 +28,7 @@ private val LightColorScheme = lightColorScheme(
 
     surface = PureWhite,
     onSurface = LightOnSurface,
+    surfaceTint = SoftGold,
 
     surfaceVariant = LightSurface,
     onSurfaceVariant = MysticPurple,
@@ -46,6 +47,7 @@ private val DarkColorScheme = darkColorScheme(
 
     surface = MidnightBlack,
     onSurface = LavenderText,
+    surfaceTint = SoftGold,
 
     surfaceVariant = DarkSurface,
     onSurfaceVariant = PureWhite,
