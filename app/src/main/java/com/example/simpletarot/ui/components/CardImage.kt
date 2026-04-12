@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.simpletarot.domain.model.DrawnCard
 import com.example.simpletarot.domain.model.TarotCard
 import com.example.simpletarot.domain.model.getResourceId
+import com.example.simpletarot.ui.theme.SimpleTarotTheme
 
 @Composable
 fun CardImage(
@@ -31,9 +32,11 @@ fun CardImage(
 @Preview
 @Composable
 fun CardImagePreview() {
-    CardImage(card = DrawnCard(card = TarotCard("The Fool",
-        "New beginnings, character, trust",
-        "Recklessness, naivety, holding back"),
-        isReversed = false,
-        isRevealed = true))
+    SimpleTarotTheme {
+        CardImage(card = DrawnCard(card = TarotCard("The Fool",
+            "New beginnings, character, trust",
+            "Recklessness, naivety, holding back"),
+            isReversed = false,
+            isRevealed = true))
+    }
 }

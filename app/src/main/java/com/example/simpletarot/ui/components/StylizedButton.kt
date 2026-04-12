@@ -17,6 +17,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.simpletarot.ui.theme.LocalSpacing
+import com.example.simpletarot.ui.theme.SimpleTarotTheme
 import com.example.simpletarot.ui.theme.TarotSpacing
 
 @Composable
@@ -57,5 +58,7 @@ fun StyledButton(
 @Preview(showBackground = true)
 @Composable
 fun StyledButtonPreview() {
-    StyledButton("Test Button") { }
+    SimpleTarotTheme {
+        StyledButton("Test Button") { }
+    }
 }

@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import com.example.simpletarot.ui.theme.PreviewConstants
+import com.example.simpletarot.ui.theme.SimpleTarotTheme
 import com.example.simpletarot.ui.viewmodel.TarotViewModel
 
 @Composable
@@ -166,23 +167,31 @@ fun BackButton(onBack: () -> Unit = {}) {
 @Preview
 @Composable
 fun CardsDisplayPreview() {
-    CardsDisplay(cards = PreviewConstants.tarotCards)
+    SimpleTarotTheme {
+        CardsDisplay(cards = PreviewConstants.tarotCards)
+    }
 }
 
 @Preview
 @Composable
 fun SaveButtonPreview() {
-    SaveButton(isSaved = false, allCardsRevealed = true)
+    SimpleTarotTheme {
+        SaveButton(isSaved = false, allCardsRevealed = true)
+    }
 }
 
 @Preview
 @Composable
 fun BackButtonPreview() {
-    BackButton()
+    SimpleTarotTheme {
+        BackButton()
+    }
 }
 
 @Preview
 @Composable
 fun ResultsScreenPreview() {
-    ResultsScreenStateless(cards = PreviewConstants.tarotCards)
+    SimpleTarotTheme {
+        ResultsScreenStateless(cards = PreviewConstants.tarotCards)
+    }
 }

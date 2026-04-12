@@ -32,6 +32,7 @@ import com.example.simpletarot.ui.theme.PreviewConstants
 import com.example.simpletarot.domain.model.DrawnCard
 import com.example.simpletarot.domain.model.getMeaning
 import com.example.simpletarot.ui.theme.LocalSpacing
+import com.example.simpletarot.ui.theme.SimpleTarotTheme
 
 @Composable
 fun CardDisplay(
@@ -140,42 +141,52 @@ fun CardMeaning(drawnCard: DrawnCard) {
 @Preview
 @Composable
 fun CardWithImageOnRevealPreview() {
-    Box(modifier = Modifier
-        .background(color = MaterialTheme.colorScheme.background)
-        .fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CardWithImageOnReveal(drawnCard = PreviewConstants.drawnCard)
+    SimpleTarotTheme {
+        Box(modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.background)
+            .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CardWithImageOnReveal(drawnCard = PreviewConstants.drawnCard)
+        }
     }
 }
 
 @Preview
 @Composable
 fun CardImageOrPlaceholderPreview() {
-    Box(modifier = Modifier
-        .background(color = MaterialTheme.colorScheme.background)
-        .fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CardImageOrPlaceholder(
-            drawnCard = PreviewConstants.drawnCard.copy(isRevealed = false))
+    SimpleTarotTheme {
+        Box(
+            modifier = Modifier
+                .background(color = MaterialTheme.colorScheme.background)
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CardImageOrPlaceholder(
+                drawnCard = PreviewConstants.drawnCard.copy(isRevealed = false)
+            )
+        }
     }
 }
 
 @Preview
 @Composable
 fun CardMeaningPreview() {
-    Box(modifier = Modifier
-        .background(color = MaterialTheme.colorScheme.background)
-        .fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CardMeaning(drawnCard = PreviewConstants.drawnCard)
+    SimpleTarotTheme {
+        Box(modifier = Modifier
+            .background(color = MaterialTheme.colorScheme.background)
+            .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CardMeaning(drawnCard = PreviewConstants.drawnCard)
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun CardDisplayPreview() {
-    CardDisplay(drawnCard = PreviewConstants.drawnCard)
+    SimpleTarotTheme {
+        CardDisplay(drawnCard = PreviewConstants.drawnCard)
+    }
 }

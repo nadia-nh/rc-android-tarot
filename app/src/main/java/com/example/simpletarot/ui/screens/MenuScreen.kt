@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.simpletarot.ui.components.StyledButton
 import com.example.simpletarot.ui.theme.LocalSpacing
+import com.example.simpletarot.ui.theme.SimpleTarotTheme
 
 @Composable
 fun MenuScreen(
@@ -108,7 +109,9 @@ fun MenuScreen(
 @Preview(showBackground = true)
 @Composable
 fun MenuScreenPreview() {
-    MenuScreen(onDraw = {
-        Log.d("tarot", "MenuScreenPreview: $it")
-    })
+    SimpleTarotTheme {
+        MenuScreen(onDraw = {
+            Log.d("tarot", "MenuScreenPreview: $it")
+        })
+    }
 }
