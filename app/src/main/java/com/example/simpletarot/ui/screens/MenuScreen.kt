@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CropPortrait
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -66,43 +69,34 @@ fun MenuScreen(
             }
         }
 
-        if (isLandscape) {
-            Row(
-                modifier = Modifier.weight(1f),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                StyledButton("Single Card Draw") { onDraw(1) }
-                Spacer(modifier = Modifier.size(spacing.large))
-                StyledButton("Three Card Spread") { onDraw(3) }
-                Spacer(modifier = Modifier.size(spacing.large))
-                StyledButton("Show History") { onOpenHistory() }
-            }
-        } else {
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                StyledButton(
-                    "Single Card Draw",
-                    style = MaterialTheme.typography.titleSmall) {
-                    onDraw(1)
+        Row(
+            modifier = Modifier.weight(1f),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            StyledButton(
+                "1",
+                style = MaterialTheme.typography.titleSmall,
+                displayIcon = true,
+                icon = Icons.Default.CropPortrait) {
+                onDraw(1)
                 }
                 Spacer(modifier = Modifier.size(spacing.large))
                 StyledButton(
-                    "Three Card Spread",
-                    style = MaterialTheme.typography.titleSmall) {
+                    "3",
+                    style = MaterialTheme.typography.titleSmall,
+                    displayIcon = true,
+                    icon = Icons.Default.CropPortrait) {
                     onDraw(3)
                 }
                 Spacer(modifier = Modifier.size(spacing.large))
                 StyledButton(
-                    "Show History",
-                    style = MaterialTheme.typography.titleSmall) {
+                    "",
+                    displayIcon = true,
+                    icon = Icons.Default.History) {
                     onOpenHistory()
                 }
             }
-        }
     }
 }
 
