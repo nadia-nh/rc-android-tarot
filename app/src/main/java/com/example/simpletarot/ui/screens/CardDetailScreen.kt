@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.simpletarot.domain.model.DrawnCard
@@ -45,14 +46,18 @@ fun CardDetailScreen(
                     .fillMaxHeight()
             )
 
-            Spacer(modifier = Modifier.width(spacing.medium))
+            Spacer(modifier = Modifier.width(spacing.small))
 
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-                CardTitle(drawnCard = drawnCard)
-                Spacer(modifier = Modifier.height(spacing.small))
-                CardMeaning(drawnCard = drawnCard)
+                CardTitle(
+                    drawnCard = drawnCard,
+                    style = MaterialTheme.typography.titleMedium)
+                Spacer(modifier = Modifier.height(spacing.medium))
+                CardMeaning(
+                    drawnCard = drawnCard,
+                    style = MaterialTheme.typography.bodyLarge)
             }
         }
     } else {
@@ -70,10 +75,15 @@ fun CardDetailScreen(
                     .height(420.dp)
             )
 
-            Spacer(modifier = Modifier.height(spacing.medium))
-            CardTitle(drawnCard = drawnCard)
             Spacer(modifier = Modifier.height(spacing.small))
-            CardMeaning(drawnCard = drawnCard)
+            CardTitle(
+                drawnCard = drawnCard,
+                style = MaterialTheme.typography.titleMedium
+                    .copy(fontWeight = FontWeight.Bold))
+            Spacer(modifier = Modifier.height(spacing.medium))
+            CardMeaning(
+                drawnCard = drawnCard,
+                style = MaterialTheme.typography.bodyLarge)
         }
     }
 }
