@@ -38,7 +38,8 @@ import com.example.simpletarot.ui.theme.SimpleTarotTheme
 fun CardDisplay(
     isLandscape: Boolean = false,
     drawnCard: DrawnCard,
-    onReveal: () -> Unit = {}) {
+    onReveal: () -> Unit = {},
+    onCardClick: (DrawnCard) -> Unit = {}) {
     val spacing = LocalSpacing.current
 
     if (isLandscape) {
@@ -49,7 +50,8 @@ fun CardDisplay(
             CardDisplayInternal(
                 isLandscape = true,
                 drawnCard = drawnCard,
-                onReveal = onReveal
+                onReveal = onReveal,
+                onCardClick = onCardClick
             )
         }
     } else {
@@ -61,7 +63,8 @@ fun CardDisplay(
             CardDisplayInternal(
                 isLandscape = false,
                 drawnCard = drawnCard,
-                onReveal = onReveal
+                onReveal = onReveal,
+                onCardClick = onCardClick
             )
         }
     }
@@ -71,21 +74,21 @@ fun CardDisplay(
 fun CardDisplayInternal(
     isLandscape: Boolean = false,
     drawnCard: DrawnCard,
-    onReveal: () -> Unit = {}) {
-    if (drawnCard.isRevealed) {
+    onReveal: () -> Unit = {},
+    onCardClick: (DrawnCard) -> Unit = {}) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         CardWithImageOnReveal(
             isLandscape = isLandscape,
             drawnCard = drawnCard,
-            onReveal = onReveal
+            onReveal = onReveal,
+            onCardClick = onCardClick
         )
-        Spacer(modifier = Modifier.size(LocalSpacing.current.small))
-        CardMeaning(drawnCard = drawnCard)
-    } else {
-        CardWithImageOnReveal(
-            isLandscape = isLandscape,
-            drawnCard = drawnCard,
-            onReveal = onReveal
-        )
+        if (drawnCard.isRevealed) {
+            Spacer(modifier = Modifier.size(LocalSpacing.current.small))
+            CardTitle(drawnCard = drawnCard)
+        }
     }
 }
 
@@ -93,8 +96,9 @@ fun CardDisplayInternal(
 fun CardWithImageOnReveal(
     isLandscape: Boolean = false,
     drawnCard: DrawnCard,
-    onReveal: () -> Unit = {}) {
-    val modifier = Modifier.height(200.dp).clickable { onReveal() }
+    onReveal: () -> Unit = {},
+    onCardClick: (DrawnCard) -> Unit = {}) {
+    val modifier = Modifier.height(200.dp)
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = MaterialTheme.shapes.medium,
@@ -102,9 +106,13 @@ fun CardWithImageOnReveal(
             containerColor = MaterialTheme.colorScheme.surface
         ),
         modifier = if (isLandscape)
-                modifier.fillMaxWidth()
+                modifier.fillMaxWidth().clickable {
+                    if (drawnCard.isRevealed) onCardClick(drawnCard) else onReveal()
+                }
             else
-                modifier.width(160.dp)
+                modifier.width(160.dp).clickable {
+                    if (drawnCard.isRevealed) onCardClick(drawnCard) else onReveal()
+                }
     ) { CardImageOrPlaceholder(drawnCard) }
 }
 
@@ -136,6 +144,18 @@ fun CardMeaning(drawnCard: DrawnCard) {
         textAlign = TextAlign.Start,
         maxLines = 12,
         overflow = TextOverflow.Ellipsis)
+}
+
+@Composable
+fun CardTitle(drawnCard: DrawnCard) {
+    Text(
+        text = drawnCard.card.name,
+        color = MaterialTheme.colorScheme.onBackground,
+        style = MaterialTheme.typography.bodySmall,
+        textAlign = TextAlign.Center,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
+    )
 }
 
 @Preview
