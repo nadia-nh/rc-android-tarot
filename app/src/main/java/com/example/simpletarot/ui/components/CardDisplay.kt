@@ -205,6 +205,14 @@ fun CardMeaningPreview() {
 
 @Preview(showBackground = true)
 @Composable
+fun CardTitlePreview() {
+    SimpleTarotTheme {
+        CardTitle(drawnCard = PreviewConstants.drawnCard)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
 fun CardDisplayPreview() {
     SimpleTarotTheme {
         CardDisplay(drawnCard = PreviewConstants.drawnCard)
