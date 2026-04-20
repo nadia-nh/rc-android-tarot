@@ -49,5 +49,14 @@ val TarotTypography = Typography(
         fontSize = 15.sp,
         lineHeight = 22.sp, // Increased line height for a subtle look
         letterSpacing = 0.4.sp,
+    ),
+
+    // Interpretations / Meanings
+    bodyLarge = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 18.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.4.sp,
     )
 )
