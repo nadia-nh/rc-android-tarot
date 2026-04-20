@@ -3,6 +3,7 @@ package com.example.simpletarot.ui.components
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -11,11 +12,13 @@ import com.example.simpletarot.ui.theme.PreviewConstants
 import com.example.simpletarot.ui.theme.SimpleTarotTheme
 
 @Composable
-fun CardTitle(drawnCard: DrawnCard) {
+fun CardTitle(
+    drawnCard: DrawnCard,
+    style: TextStyle = MaterialTheme.typography.titleSmall) {
     Text(
         text = drawnCard.card.name,
         color = MaterialTheme.colorScheme.onBackground,
-        style = MaterialTheme.typography.bodySmall,
+        style = style,
         textAlign = TextAlign.Center,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis

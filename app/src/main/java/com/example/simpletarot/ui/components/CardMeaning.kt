@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,11 +19,13 @@ import com.example.simpletarot.ui.theme.PreviewConstants
 import com.example.simpletarot.ui.theme.SimpleTarotTheme
 
 @Composable
-fun CardMeaning(drawnCard: DrawnCard) {
+fun CardMeaning(
+    drawnCard: DrawnCard,
+    style: TextStyle = MaterialTheme.typography.bodyMedium) {
     Text(text = drawnCard.getMeaning(),
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.onBackground,
-        style = MaterialTheme.typography.bodyMedium,
+        style = style,
         textAlign = TextAlign.Start,
         maxLines = 12,
         overflow = TextOverflow.Ellipsis)
