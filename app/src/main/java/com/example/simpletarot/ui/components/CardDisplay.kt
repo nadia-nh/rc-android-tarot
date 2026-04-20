@@ -135,16 +135,6 @@ fun CardImageOrPlaceholder(drawnCard: DrawnCard) {
         }
     }
 }
-@Composable
-fun CardMeaning(drawnCard: DrawnCard) {
-    Text(text = drawnCard.getMeaning(),
-        modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.onBackground,
-        style = MaterialTheme.typography.bodyMedium,
-        textAlign = TextAlign.Start,
-        maxLines = 12,
-        overflow = TextOverflow.Ellipsis)
-}
 
 @Composable
 fun CardTitle(drawnCard: DrawnCard) {
@@ -185,20 +175,6 @@ fun CardImageOrPlaceholderPreview() {
             CardImageOrPlaceholder(
                 drawnCard = PreviewConstants.drawnCard.copy(isRevealed = false)
             )
-        }
-    }
-}
-
-@Preview
-@Composable
-fun CardMeaningPreview() {
-    SimpleTarotTheme {
-        Box(modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.background)
-            .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CardMeaning(drawnCard = PreviewConstants.drawnCard)
         }
     }
 }
