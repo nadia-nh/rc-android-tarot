@@ -11,7 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.simpletarot.domain.model.DrawnCard
 import com.example.simpletarot.domain.model.getMeaning
@@ -26,9 +25,7 @@ fun CardMeaning(
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.onBackground,
         style = style,
-        textAlign = TextAlign.Start,
-        maxLines = 12,
-        overflow = TextOverflow.Ellipsis)
+        textAlign = TextAlign.Start)
 }
 
 @Preview
