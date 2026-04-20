@@ -43,7 +43,8 @@ fun StyledButton(
         Row(verticalAlignment = Alignment.CenterVertically) {
             if (displayIcon && icon != null) {
                 Icon(icon, contentDescription = null)
-                Spacer(Modifier.size(spacing.small))
+
+                if (text.isNotEmpty()) Spacer(Modifier.size(spacing.small))
             }
 
             Text(
