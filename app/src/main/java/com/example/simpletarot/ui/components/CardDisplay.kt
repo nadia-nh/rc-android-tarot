@@ -20,17 +20,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.simpletarot.ui.theme.PreviewConstants
 import com.example.simpletarot.domain.model.DrawnCard
-import com.example.simpletarot.domain.model.getMeaning
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.theme.SimpleTarotTheme
 
@@ -136,18 +132,6 @@ fun CardImageOrPlaceholder(drawnCard: DrawnCard) {
     }
 }
 
-@Composable
-fun CardTitle(drawnCard: DrawnCard) {
-    Text(
-        text = drawnCard.card.name,
-        color = MaterialTheme.colorScheme.onBackground,
-        style = MaterialTheme.typography.bodySmall,
-        textAlign = TextAlign.Center,
-        maxLines = 1,
-        overflow = TextOverflow.Ellipsis
-    )
-}
-
 @Preview
 @Composable
 fun CardWithImageOnRevealPreview() {
@@ -176,14 +160,6 @@ fun CardImageOrPlaceholderPreview() {
                 drawnCard = PreviewConstants.drawnCard.copy(isRevealed = false)
             )
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CardTitlePreview() {
-    SimpleTarotTheme {
-        CardTitle(drawnCard = PreviewConstants.drawnCard)
     }
 }
 
