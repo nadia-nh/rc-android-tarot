@@ -407,8 +407,21 @@ private val baseDeck by lazy {
     )
 }
 
+private val cardNameMap: Map<String, TarotCard> by lazy {
+    baseDeck.associateBy { it.name }
+}
+
 object TarotDeck {
     fun getDeck(): List<TarotCard> {
         return baseDeck.map { it.withRankAndSuit() }
+    }
+
+    fun getCardByName(name: String): TarotCard? {
+        val mappedName = when (name) {
+            "Fortitude" -> "Strength"
+            "The Last Judgment" -> "Judgement"
+            else -> name
+        }
+        return cardNameMap[mappedName]?.withRankAndSuit()
     }
 }
