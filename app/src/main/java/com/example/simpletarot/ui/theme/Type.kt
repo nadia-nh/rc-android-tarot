@@ -16,6 +16,14 @@ val TarotTypography = Typography(
         letterSpacing = 4.sp // Extra wide
     ),
 
+    // Menu Buttons
+    labelSmall = TextStyle(
+        fontFamily = FontFamily.Serif,
+        fontWeight = FontWeight.Light,
+        fontSize = 12.sp,
+        letterSpacing = 2.sp,
+    ),
+
     // Card Names
     titleSmall = TextStyle(
         fontFamily = FontFamily.Serif,
@@ -31,15 +39,6 @@ val TarotTypography = Typography(
         fontSize = 20.sp,
         lineHeight = 28.sp,
         letterSpacing = 2.sp
-    ),
-
-    // Labels
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Bold,
-        fontSize = 11.sp,
-        letterSpacing = 1.5.sp, // Wide spacing on tiny text
-        color = Color.Gray
     ),
 
     // Interpretations / Meanings
