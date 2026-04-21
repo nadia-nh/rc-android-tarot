@@ -33,7 +33,6 @@ import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.theme.PreviewConstants
 import com.example.simpletarot.ui.theme.SimpleTarotTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardDetailScreen(
     drawnCard: DrawnCard,
@@ -43,23 +42,7 @@ fun CardDetailScreen(
     val spacing = LocalSpacing.current
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    CardTitle(
-                        drawnCard = drawnCard,
-                        style = MaterialTheme.typography.titleMedium
-                            .copy(fontWeight = FontWeight.Bold))
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back"
-                    )
-                }},
-            )
-        }
+        topBar = { CardDetailScreenTopBar(drawnCard, onBack) }
     ) { innerPadding ->
         if (isLandscape) {
             Row(
@@ -114,6 +97,40 @@ fun CardDetailScreen(
                 )
             }
         }
+    }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CardDetailScreenTopBar(
+    drawnCard: DrawnCard,
+    onBack: () -> Unit = {}
+) {
+    TopAppBar(
+        title = {
+            CardTitle(
+                drawnCard = drawnCard,
+                style = MaterialTheme.typography.titleMedium
+                    .copy(fontWeight = FontWeight.Bold))
+        },
+        navigationIcon = {
+            IconButton(onClick = onBack) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back"
+                )
+            }},
+    )
+}
+
+@Preview
+@Composable
+fun PreviewCardDetailScreenTopBar() {
+    SimpleTarotTheme {
+        CardDetailScreenTopBar(
+            drawnCard = PreviewConstants.drawnCard
+        )
     }
 }
 
