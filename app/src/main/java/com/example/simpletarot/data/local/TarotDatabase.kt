@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [ReadingEntity::class, DrawnCardEntity::class, TarotCardEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class TarotDatabase : RoomDatabase() {
@@ -30,8 +30,14 @@ abstract class TarotDatabase : RoomDatabase() {
                         suit TEXT NOT NULL,
                         rank TEXT
                     )
-                """.trimIndent()
-                )
+                """.trimIndent())
+            }
+        }
+
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE drawn_cards DROP COLUMN suit")
+                db.execSQL("ALTER TABLE drawn_cards DROP COLUMN rank")
             }
         }
 
@@ -42,7 +48,7 @@ abstract class TarotDatabase : RoomDatabase() {
                     TarotDatabase::class.java,
                     "arcana_flux_database"
                 )
-                    .addMigrations(MIGRATION_1_2)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                     .build()
                 INSTANCE = instance
                 instance
