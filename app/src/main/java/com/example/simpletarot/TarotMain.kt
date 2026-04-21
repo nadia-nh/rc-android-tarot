@@ -60,7 +60,7 @@ fun TarotMain(
                 com.example.simpletarot.ui.screens.CardDetailScreen(
                     drawnCard = card,
                     isLandscape = isLandscape,
-                    onBack = { viewModel.closeCardDetail()}
+                    onBack = { viewModel.closeCardDetail() }
                 )
             }
     }

@@ -22,6 +22,7 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
     private val _tarotDeck = MutableStateFlow<List<TarotCard>>(emptyList())
     private val _currentSpread = MutableStateFlow<List<DrawnCard>>(emptyList())
     private val _currentScreen = MutableStateFlow(AppScreen.Menu)
+    private val _previousScreen = MutableStateFlow(AppScreen.Result)
     private val _isNetworkEnabled = MutableStateFlow(false)
     private val _isSaved = MutableStateFlow(false)
     private val _pendingDeletion = MutableStateFlow<ReadingEntity?>(null)
@@ -142,11 +143,12 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
 
     fun openCardDetail(card: DrawnCard) {
         _selectedCard.value = card
+        _previousScreen.value = _currentScreen.value
         _currentScreen.value = AppScreen.CardDetail
     }
 
     fun closeCardDetail() {
         _selectedCard.value = null
-        _currentScreen.value = AppScreen.Result
+        _currentScreen.value = _previousScreen.value
     }
 }
