@@ -6,6 +6,8 @@ import com.example.simpletarot.data.local.ReadingEntity
 import com.example.simpletarot.data.local.ReadingWithCards
 import com.example.simpletarot.data.local.TarotDao
 import com.example.simpletarot.data.local.TarotDeck
+import com.example.simpletarot.data.local.toEntity
+import com.example.simpletarot.data.local.toTarotCard
 import com.example.simpletarot.data.remote.TarotApiService
 import com.example.simpletarot.data.remote.toDomainModel
 import com.example.simpletarot.domain.model.TarotCard
@@ -21,27 +23,58 @@ class TarotRepository(
 
     private val localDeck = TarotDeck.getDeck()
 
+    private var cachedDeck: List<TarotCard>? = null
+
     suspend fun getFullDeck(
         useNetwork: Boolean): List<TarotCard> {
-        if (!useNetwork) return localDeck
+        val dbDeck = getDeckFromDb()
+        if (dbDeck.isNotEmpty()) {
+            cachedDeck = dbDeck
+            return dbDeck
+        }
+
+        if (!useNetwork) {
+            cachedDeck = localDeck
+            return localDeck
+        }
 
         try {
             val response = tarotApiService.getAllCards()
-            return response.cards.map { apiCard ->
+            val apiDeck = response.cards.map { apiCard ->
                 apiCard.toDomainModel()
             }
+            saveDeckToDb(apiDeck)
+            cachedDeck = apiDeck
+            return apiDeck
         } catch (e: HttpException) {
-            // This triggers for 404, 500, etc.
             val errorBody = e.response()?.errorBody()?.string()
             Log.e("TarotAPI", "HTTP Error ${e.code()}: $errorBody")
         } catch (e: IOException) {
-            // This triggers for no internet or timeouts
             Log.e("TarotAPI", "Network Error: ${e.message}")
         } catch (e: Exception) {
             Log.e("TarotAPI", "Unknown Error: ${e.message}")
         }
 
+        cachedDeck = localDeck
         return localDeck
+    }
+
+    private suspend fun getDeckFromDb(): List<TarotCard> {
+        return try {
+            tarotDao.getAllCards().map { it.toTarotCard() }
+        } catch (e: Exception) {
+            Log.e("TarotRepository", "Error loading deck from DB: ${e.message}")
+            emptyList()
+        }
+    }
+
+    private suspend fun saveDeckToDb(deck: List<TarotCard>) {
+        try {
+            val entities = deck.map { it.toEntity() }
+            tarotDao.insertOrReplaceCards(entities)
+        } catch (e: Exception) {
+            Log.e("TarotRepository", "Error saving deck to DB: ${e.message}")
+        }
     }
 
     suspend fun saveReading(
