@@ -67,7 +67,8 @@ fun HistoryScreen(
         history = history,
         onBack = onBack,
         onCardClick = { card -> viewModel.openCardDetail(card) },
-        onDeleteRequest = { viewModel.scheduleDeletion(it) })
+        onDeleteRequest = { viewModel.scheduleDeletion(it) },
+        resolveCard = { viewModel.resolveCard(it) })
     HandleDeleteRequest(
         reading = pendingDeletion,
         onConfirm = { viewModel.confirmDeletion() },
@@ -79,7 +80,8 @@ fun HistoryScreenStateless(
     history: List<ReadingWithCards>,
     onBack: () -> Unit = {},
     onCardClick: (DrawnCard) -> Unit = {},
-    onDeleteRequest: (reading: ReadingEntity) -> Unit = {}
+    onDeleteRequest: (reading: ReadingEntity) -> Unit = {},
+    resolveCard: (DrawnCardEntity) -> DrawnCard = { it.toDrawnCard() }
 ) {
     Scaffold(topBar = { HistoryScreenTopBar(onBack) })
     { padding ->
@@ -88,7 +90,8 @@ fun HistoryScreenStateless(
             padding = padding,
             history = history,
             onCardClick = onCardClick,
-            onDeleteRequest = onDeleteRequest
+            onDeleteRequest = onDeleteRequest,
+            resolveCard = resolveCard
         )
     }
 }
@@ -122,6 +125,7 @@ fun HistoryScreenContents(
     history: List<ReadingWithCards> = emptyList(),
     onCardClick: (DrawnCard) -> Unit = {},
     onDeleteRequest: (reading: ReadingEntity) -> Unit = {},
+    resolveCard: (DrawnCardEntity) -> DrawnCard = { it.toDrawnCard() }
 ) {
     if (history.isEmpty()) {
         Column(
@@ -152,7 +156,8 @@ fun HistoryScreenContents(
                 SwipeableTarotItem(
                     item = readingWithCards,
                     onCardClick = onCardClick,
-                    onDeleteRequest = onDeleteRequest)
+                    onDeleteRequest = onDeleteRequest,
+                    resolveCard = resolveCard)
             }
         }
     }
@@ -163,7 +168,8 @@ fun HistoryScreenContents(
 fun SwipeableTarotItem(
     item: ReadingWithCards,
     onCardClick: (DrawnCard) -> Unit = {},
-    onDeleteRequest: (ReadingEntity) -> Unit = {}
+    onDeleteRequest: (ReadingEntity) -> Unit = {},
+    resolveCard: (DrawnCardEntity) -> DrawnCard = { it.toDrawnCard() }
 ) {
     val coroutineScope = rememberCoroutineScope()
     val dismissState = rememberSwipeToDismissBoxState()
@@ -203,7 +209,8 @@ fun SwipeableTarotItem(
     ) {
         TarotReadingItem(
             readingWithCards = item,
-            onCardClick = onCardClick)
+            onCardClick = onCardClick,
+            resolveCard = resolveCard)
     }
 }
 
@@ -225,7 +232,8 @@ fun HandleDeleteRequest(
 fun TarotReadingItem(
     spacing: TarotSpacing = LocalSpacing.current,
     readingWithCards: ReadingWithCards,
-    onCardClick: (DrawnCard) -> Unit = {}) {
+    onCardClick: (DrawnCard) -> Unit = {},
+    resolveCard: (DrawnCardEntity) -> DrawnCard = { it.toDrawnCard() }) {
     val reading = readingWithCards.reading
 
     Card(
@@ -246,7 +254,8 @@ fun TarotReadingItem(
             TarotReadingItemCards(
                 spacing = spacing,
                 onCardClick = onCardClick,
-                cards = readingWithCards.cards)
+                cards = readingWithCards.cards,
+                resolveCard = resolveCard)
         }
     }
 }
@@ -275,18 +284,20 @@ fun TarotReadingItemHeader(
 fun TarotReadingItemCards(
     spacing: TarotSpacing = LocalSpacing.current,
     cards: List<DrawnCardEntity> = emptyList(),
-    onCardClick: (DrawnCard) -> Unit = {}
+    onCardClick: (DrawnCard) -> Unit = {},
+    resolveCard: (DrawnCardEntity) -> DrawnCard = { it.toDrawnCard() }
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(spacing.small)
     ) {
-        cards.forEach { card ->
+        cards.forEach { entity ->
+            val resolved = resolveCard(entity)
             CardImage(
-                card = card.toDrawnCard(),
+                card = resolved,
                 modifier = Modifier
                     .height(80.dp)
-                    .clickable{ onCardClick(card.toDrawnCard()) }
+                    .clickable{ onCardClick(resolved) }
             )
         }
     }
