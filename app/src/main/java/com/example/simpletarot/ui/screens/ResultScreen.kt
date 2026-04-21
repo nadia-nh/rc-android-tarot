@@ -49,7 +49,9 @@ fun ResultsScreen(
         allCardsRevealed = viewModel.isRevealed,
         onBack = onBack,
         onSave = { viewModel.saveReading() },
-        onReveal = { index -> viewModel.revealCard(index) })
+        onReveal = { index -> viewModel.revealCard(index) },
+        onCardClick = { card -> viewModel.openCardDetail(card) }
+    )
 }
 
 @Composable
@@ -60,7 +62,8 @@ fun ResultsScreenStateless(
     allCardsRevealed: StateFlow<Boolean> = MutableStateFlow(false).asStateFlow(),
     onBack: () -> Unit = {},
     onSave: () -> Unit = {},
-    onReveal: (index: Int) -> Unit = {}) {
+    onReveal: (index: Int) -> Unit = {},
+    onCardClick: (DrawnCard) -> Unit = {}) {
     val cardCount = cards.size
     val spacing = LocalSpacing.current
     Column(
@@ -83,7 +86,8 @@ fun ResultsScreenStateless(
                 isLandscape = isLandscape,
                 spacing = spacing,
                 cards = cards,
-                onReveal = onReveal)
+                onReveal = onReveal,
+                onCardClick = onCardClick)
         }
 
         Row(
@@ -108,7 +112,8 @@ fun CardsDisplay(
     isLandscape: Boolean = false,
     spacing: TarotSpacing = LocalSpacing.current,
     cards: List<DrawnCard>,
-    onReveal: (index: Int) -> Unit = {}) {
+    onReveal: (index: Int) -> Unit = {},
+    onCardClick: (DrawnCard) -> Unit = {}) {
     if (isLandscape) {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(spacing.medium),
@@ -118,10 +123,10 @@ fun CardsDisplay(
             itemsIndexed(cards) { index, card ->
                 CardDisplay(
                     isLandscape = isLandscape,
-                    drawnCard = card
-                ) {
-                    onReveal(index)
-                }
+                    drawnCard = card,
+                    onReveal = { onReveal(index) },
+                    onCardClick = onCardClick
+                )
             }
         }
     } else {
@@ -133,10 +138,10 @@ fun CardsDisplay(
             itemsIndexed(cards) { index, card ->
                 CardDisplay(
                     isLandscape = isLandscape,
-                    drawnCard = card
-                ) {
-                    onReveal(index)
-                }
+                    drawnCard = card,
+                    onReveal = { onReveal(index) },
+                    onCardClick = onCardClick
+                )
             }
         }
     }

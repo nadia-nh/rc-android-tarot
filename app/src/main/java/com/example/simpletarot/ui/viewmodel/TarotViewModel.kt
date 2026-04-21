@@ -25,11 +25,13 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
     private val _isNetworkEnabled = MutableStateFlow(false)
     private val _isSaved = MutableStateFlow(false)
     private val _pendingDeletion = MutableStateFlow<ReadingEntity?>(null)
+    private val _selectedCard = MutableStateFlow<DrawnCard?>(null)
 
     val currentSpread: StateFlow<List<DrawnCard>> = _currentSpread
     val currentScreen: StateFlow<AppScreen> = _currentScreen
     val isSaved: StateFlow<Boolean> = _isSaved
     val pendingDeletion: StateFlow<ReadingEntity?> = _pendingDeletion
+    val selectedCard: StateFlow<DrawnCard?> = _selectedCard
 
     val isRevealed: StateFlow<Boolean> = _currentSpread
         .map { cards -> cards.all { it.isRevealed } }
@@ -136,5 +138,10 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
             repository.deleteReading(reading)
             _pendingDeletion.value = null
         }
+    }
+
+    fun openCardDetail(card: DrawnCard) {
+        _selectedCard.value = card
+        _currentScreen.value = AppScreen.CardDetail
     }
 }
