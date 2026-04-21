@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.simpletarot.AppScreen
 import com.example.simpletarot.domain.model.DrawnCard
+import com.example.simpletarot.data.local.DrawnCardEntity
 import com.example.simpletarot.data.local.ReadingEntity
+import com.example.simpletarot.data.local.TarotDeck
 import com.example.simpletarot.data.local.ReadingWithCards
 import com.example.simpletarot.data.repository.TarotRepository
 import com.example.simpletarot.data.local.toEntity
@@ -73,6 +75,18 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
         _currentSpread.value = draw(count)
         _currentScreen.value = AppScreen.Result
         _isSaved.value = false
+    }
+
+    fun resolveCard(entity: DrawnCardEntity): DrawnCard {
+        val cardName = entity.name
+        val card = _tarotDeck.value.find { it.name == cardName }
+            ?: TarotDeck.getCardByName(cardName)
+            ?: TarotCard(
+                name = entity.name,
+                uprightMeaning = "",
+                reversedMeaning = ""
+            )
+        return DrawnCard(card = card, isReversed = entity.isReversed)
     }
 
     fun revealCard(cardIndex: Int) {
