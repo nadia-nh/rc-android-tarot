@@ -54,7 +54,7 @@ fun MenuScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Focus on open-ended questions",
+                    text = "Focus on open-ended questions such as:",
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -75,23 +75,24 @@ fun MenuScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             StyledButton(
-                "1",
-                style = MaterialTheme.typography.titleSmall,
+                "1 Card",
+                style = MaterialTheme.typography.labelSmall,
                 displayIcon = true,
                 icon = Icons.Default.CropPortrait) {
                 onDraw(1)
                 }
                 Spacer(modifier = Modifier.size(spacing.large))
                 StyledButton(
-                    "3",
-                    style = MaterialTheme.typography.titleSmall,
+                    "3 Cards",
+                    style = MaterialTheme.typography.labelSmall,
                     displayIcon = true,
                     icon = Icons.Default.CropPortrait) {
                     onDraw(3)
                 }
                 Spacer(modifier = Modifier.size(spacing.large))
                 StyledButton(
-                    "",
+                    "History",
+                    style = MaterialTheme.typography.labelSmall,
                     displayIcon = true,
                     icon = Icons.Default.History) {
                     onOpenHistory()
