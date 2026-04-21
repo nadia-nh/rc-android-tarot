@@ -14,7 +14,8 @@ import com.example.simpletarot.ui.viewmodel.TarotViewModel
 enum class AppScreen {
     Menu,
     Result,
-    History
+    History,
+    CardDetail
 }
 @Composable
 fun TarotMain(
