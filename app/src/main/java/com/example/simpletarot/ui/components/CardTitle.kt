@@ -14,13 +14,15 @@ import com.example.simpletarot.ui.theme.SimpleTarotTheme
 @Composable
 fun CardTitle(
     drawnCard: DrawnCard,
-    style: TextStyle = MaterialTheme.typography.titleSmall) {
+    style: TextStyle = MaterialTheme.typography.titleSmall,
+    keepToOneLine: Boolean = true) {
     Text(
         text = drawnCard.card.name,
         color = MaterialTheme.colorScheme.onBackground,
         style = style,
         textAlign = TextAlign.Center,
-        maxLines = 1,
+        minLines = if (keepToOneLine) 1 else 2,
+        maxLines = 2,
         overflow = TextOverflow.Ellipsis
     )
 }

@@ -83,7 +83,9 @@ fun CardDisplayInternal(
         )
         if (drawnCard.isRevealed) {
             Spacer(modifier = Modifier.size(LocalSpacing.current.small))
-            CardTitle(drawnCard = drawnCard)
+            CardTitle(
+                drawnCard = drawnCard,
+                keepToOneLine = !isLandscape)
         }
     }
 }
