@@ -3,6 +3,7 @@ package com.example.simpletarot.data.local
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
@@ -18,4 +19,16 @@ interface TarotDao {
 
     @Delete
     suspend fun deleteReading(reading: ReadingEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOrReplaceCards(cards: List<TarotCardEntity>)
+
+    @Query("SELECT * FROM tarot_cards ORDER BY name")
+    suspend fun getAllCards(): List<TarotCardEntity>
+
+    @Query("SELECT * FROM tarot_cards WHERE name = :name LIMIT 1")
+    suspend fun getCardByName(name: String): TarotCardEntity?
+
+    @Query("SELECT COUNT(*) FROM tarot_cards")
+    suspend fun getDeckCount(): Int
 }
