@@ -1,6 +1,7 @@
 package com.example.simpletarot.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,6 +44,7 @@ import com.example.simpletarot.data.local.DrawnCardEntity
 import com.example.simpletarot.data.local.ReadingEntity
 import com.example.simpletarot.data.local.ReadingWithCards
 import com.example.simpletarot.data.local.toDrawnCard
+import com.example.simpletarot.domain.model.DrawnCard
 import com.example.simpletarot.ui.components.CardImage
 import com.example.simpletarot.ui.components.DeleteConfirmationDialog
 import com.example.simpletarot.ui.components.getColorFromSwipeState
@@ -64,6 +66,7 @@ fun HistoryScreen(
     HistoryScreenStateless(
         history = history,
         onBack = onBack,
+        onCardClick = { card -> viewModel.openCardDetail(card) },
         onDeleteRequest = { viewModel.scheduleDeletion(it) })
     HandleDeleteRequest(
         reading = pendingDeletion,
@@ -75,6 +78,7 @@ fun HistoryScreen(
 fun HistoryScreenStateless(
     history: List<ReadingWithCards>,
     onBack: () -> Unit = {},
+    onCardClick: (DrawnCard) -> Unit = {},
     onDeleteRequest: (reading: ReadingEntity) -> Unit = {}
 ) {
     Scaffold(topBar = { HistoryScreenTopBar(onBack) })
@@ -83,6 +87,7 @@ fun HistoryScreenStateless(
             spacing = LocalSpacing.current,
             padding = padding,
             history = history,
+            onCardClick = onCardClick,
             onDeleteRequest = onDeleteRequest
         )
     }
@@ -115,6 +120,7 @@ fun HistoryScreenContents(
     spacing: TarotSpacing = LocalSpacing.current,
     padding: PaddingValues = PaddingValues(),
     history: List<ReadingWithCards> = emptyList(),
+    onCardClick: (DrawnCard) -> Unit = {},
     onDeleteRequest: (reading: ReadingEntity) -> Unit = {},
 ) {
     if (history.isEmpty()) {
@@ -145,6 +151,7 @@ fun HistoryScreenContents(
                 key = { it.reading.readingId }) { readingWithCards ->
                 SwipeableTarotItem(
                     item = readingWithCards,
+                    onCardClick = onCardClick,
                     onDeleteRequest = onDeleteRequest)
             }
         }
@@ -155,6 +162,7 @@ fun HistoryScreenContents(
 @Composable
 fun SwipeableTarotItem(
     item: ReadingWithCards,
+    onCardClick: (DrawnCard) -> Unit = {},
     onDeleteRequest: (ReadingEntity) -> Unit = {}
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -193,7 +201,9 @@ fun SwipeableTarotItem(
             }
         }
     ) {
-        TarotReadingItem(readingWithCards = item)
+        TarotReadingItem(
+            readingWithCards = item,
+            onCardClick = onCardClick)
     }
 }
 
@@ -214,7 +224,8 @@ fun HandleDeleteRequest(
 @Composable
 fun TarotReadingItem(
     spacing: TarotSpacing = LocalSpacing.current,
-    readingWithCards: ReadingWithCards) {
+    readingWithCards: ReadingWithCards,
+    onCardClick: (DrawnCard) -> Unit = {}) {
     val reading = readingWithCards.reading
 
     Card(
@@ -234,6 +245,7 @@ fun TarotReadingItem(
             Spacer(modifier = Modifier.height(spacing.small))
             TarotReadingItemCards(
                 spacing = spacing,
+                onCardClick = onCardClick,
                 cards = readingWithCards.cards)
         }
     }
@@ -262,7 +274,8 @@ fun TarotReadingItemHeader(
 @Composable
 fun TarotReadingItemCards(
     spacing: TarotSpacing = LocalSpacing.current,
-    cards: List<DrawnCardEntity> = emptyList()
+    cards: List<DrawnCardEntity> = emptyList(),
+    onCardClick: (DrawnCard) -> Unit = {}
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -271,7 +284,9 @@ fun TarotReadingItemCards(
         cards.forEach { card ->
             CardImage(
                 card = card.toDrawnCard(),
-                modifier = Modifier.height(80.dp)
+                modifier = Modifier
+                    .height(80.dp)
+                    .clickable{ onCardClick(card.toDrawnCard()) }
             )
         }
     }
