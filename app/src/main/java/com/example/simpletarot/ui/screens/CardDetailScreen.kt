@@ -50,7 +50,9 @@ fun CardDetailScreen(
                     .background(color = MaterialTheme.colorScheme.background)
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .padding(spacing.medium),
+                    .padding(
+                        horizontal = spacing.medium,
+                        vertical = spacing.large),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 CardImage(
@@ -80,7 +82,9 @@ fun CardDetailScreen(
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
                     .padding(innerPadding)
-                    .padding(spacing.medium),
+                    .padding(
+                        horizontal = spacing.large,
+                        vertical = spacing.medium),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 CardImage(
