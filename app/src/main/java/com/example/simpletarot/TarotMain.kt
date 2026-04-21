@@ -24,10 +24,14 @@ fun TarotMain(
     val orientation = LocalConfiguration.current.orientation
     val isLandscape = orientation == Configuration.ORIENTATION_LANDSCAPE
     val currentScreen by viewModel.currentScreen.collectAsState()
+    val selectedCard by viewModel.selectedCard.collectAsState()
 
-    // Intercept the hardware back button
-    BackHandler(enabled = currentScreen == AppScreen.Result) {
-        viewModel.clearSpread()
+    BackHandler(enabled = currentScreen == AppScreen.Result || currentScreen == AppScreen.CardDetail) {
+        if (currentScreen == AppScreen.CardDetail) {
+            viewModel.closeCardDetail()
+        } else {
+            viewModel.clearSpread()
+        }
     }
 
     when (currentScreen) {
@@ -50,6 +54,14 @@ fun TarotMain(
                 viewModel = viewModel
             ) {
                 viewModel.backToMenu()
+            }
+        AppScreen.CardDetail ->
+            selectedCard?.let { card ->
+                com.example.simpletarot.ui.screens.CardDetailScreen(
+                    drawnCard = card,
+                    isLandscape = isLandscape,
+                    onBack = { viewModel.closeCardDetail()}
+                )
             }
     }
 }

@@ -144,4 +144,9 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
         _selectedCard.value = card
         _currentScreen.value = AppScreen.CardDetail
     }
+
+    fun closeCardDetail() {
+        _selectedCard.value = null
+        _currentScreen.value = AppScreen.Result
+    }
 }
