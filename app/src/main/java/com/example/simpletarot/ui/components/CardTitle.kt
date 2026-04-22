@@ -16,7 +16,8 @@ fun CardTitle(
     drawnCard: DrawnCard,
     style: TextStyle = MaterialTheme.typography.titleSmall,
     keepToOneLine: Boolean = true) {
-    val name = drawnCard.card.name + if (drawnCard.isReversed) " - Reversed" else ""
+    val reversedText = if (keepToOneLine) " - Reversed" else " (R)"
+    val name = drawnCard.card.name + if (drawnCard.isReversed) reversedText else ""
     Text(
         text = name,
         color = MaterialTheme.colorScheme.onBackground,
