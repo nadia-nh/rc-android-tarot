@@ -4,6 +4,8 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Preview
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -40,28 +42,51 @@ fun StyledButton(
         ),
         border = BorderStroke(
             0.5.dp,
-            MaterialTheme.colorScheme.outlineVariant)
+            MaterialTheme.colorScheme.outlineVariant
+        )
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            if (displayIcon && icon != null) {
-                Icon(icon, contentDescription = null)
-
-                if (text.isNotEmpty()) Spacer(Modifier.size(spacing.small))
-            }
-
-            Text(
-                text,
-                style = style
+            StylizedButtonIconDisplay(
+                text = text,
+                spacing = spacing,
+                displayIcon = displayIcon,
+                icon = icon
             )
+            Text(text = text,  style = style)
         }
     }
 }
 
+@Composable
+fun StylizedButtonIconDisplay(
+    text: String = "",
+    spacing: TarotSpacing = LocalSpacing.current,
+    displayIcon: Boolean = false,
+    icon: ImageVector? = null,
+) {
+    if (displayIcon && icon != null) {
+        Icon(icon, contentDescription = null)
+
+        if (text.isNotEmpty()) Spacer(Modifier.size(spacing.small))
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun StylizedButtonIconDisplayPreview() {
+    SimpleTarotTheme {
+        StylizedButtonIconDisplay(
+            text = "Test Button",
+            displayIcon = true,
+            icon = Icons.Default.Preview
+        )
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
 fun StyledButtonPreview() {
     SimpleTarotTheme {
-        StyledButton("Test Button") { }
+        StyledButton(text = "Test Button") { }
     }
 }
