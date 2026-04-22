@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import com.example.simpletarot.ui.components.StyledButton
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.theme.SimpleTarotTheme
@@ -46,33 +47,41 @@ fun MenuScreen(
 
         Row(
             modifier = Modifier.weight(1f),
-            horizontalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            val textStyle = MaterialTheme.typography.labelSmall
+                .copy(fontSize = if (isLandscape) 12.sp else 9.sp)
             StyledButton(
+                modifier = Modifier.weight(1f),
+                isLandscape = isLandscape,
                 text = "1 Card",
-                style = MaterialTheme.typography.labelSmall,
+                style = textStyle,
                 displayIcon = true,
                 icon = Icons.Default.CropPortrait) {
                 onDraw(1)
-                }
-                Spacer(modifier = Modifier.size(spacing.large))
-                StyledButton(
-                    text = "3 Cards",
-                    style = MaterialTheme.typography.labelSmall,
-                    displayIcon = true,
-                    icon = Icons.Default.CropPortrait) {
-                    onDraw(3)
-                }
-                Spacer(modifier = Modifier.size(spacing.large))
-                StyledButton(
-                    text = "History",
-                    style = MaterialTheme.typography.labelSmall,
-                    displayIcon = true,
-                    icon = Icons.Default.History) {
-                    onOpenHistory()
-                }
             }
+            Spacer(modifier = Modifier.size(spacing.large))
+            StyledButton(
+                modifier = Modifier.weight(1f),
+                isLandscape = isLandscape,
+                text = "3 Cards",
+                style = textStyle,
+                displayIcon = true,
+                icon = Icons.Default.CropPortrait) {
+                onDraw(3)
+            }
+            Spacer(modifier = Modifier.size(spacing.large))
+            StyledButton(
+                modifier = Modifier.weight(1f),
+                isLandscape = isLandscape,
+                text = "History",
+                style = textStyle,
+                displayIcon = true,
+                icon = Icons.Default.History) {
+                onOpenHistory()
+            }
+        }
     }
 }
 
