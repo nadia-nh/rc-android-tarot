@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.simpletarot.ui.components.StyledButton
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.theme.SimpleTarotTheme
+import com.example.simpletarot.ui.theme.TarotSpacing
 
 @Composable
 fun MenuScreen(
@@ -40,34 +41,8 @@ fun MenuScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(spacing.large))
-        Text("Arcana Flux Tarot",
-            color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.headlineSmall)
-
-        Spacer(modifier = Modifier.height(spacing.large))
-        Surface(
-            color = MaterialTheme.colorScheme.surfaceVariant,
-            shape = MaterialTheme.shapes.large
-        ) {
-            Column(modifier = Modifier.padding(spacing.large),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Focus on open-ended questions such as:",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-
-                Spacer(modifier = Modifier.height(spacing.medium))
-                Text(
-                    text = "What do I need to know today?\nWhat are the themes of my work life?",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontStyle = FontStyle.Italic,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        }
+        MenuScreenHeadline(spacing)
+        MenuScreenGuidanceText(spacing)
 
         Row(
             modifier = Modifier.weight(1f),
@@ -98,6 +73,61 @@ fun MenuScreen(
                     onOpenHistory()
                 }
             }
+    }
+}
+
+@Composable
+fun MenuScreenHeadline(
+    spacing: TarotSpacing = LocalSpacing.current
+) {
+    Spacer(modifier = Modifier.height(spacing.large))
+    Text("Arcana Flux Tarot",
+        color = MaterialTheme.colorScheme.onBackground,
+        style = MaterialTheme.typography.headlineSmall)
+}
+
+@Composable
+fun MenuScreenGuidanceText(
+    spacing: TarotSpacing = LocalSpacing.current
+) {
+    Spacer(modifier = Modifier.height(spacing.large))
+    Surface(
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        shape = MaterialTheme.shapes.large
+    ) {
+        Column(modifier = Modifier.padding(spacing.large),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Focus on open-ended questions such as:",
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            Spacer(modifier = Modifier.height(spacing.medium))
+            Text(
+                text = "What do I need to know today?\nWhat are the themes of my work life?",
+                style = MaterialTheme.typography.bodyMedium,
+                fontStyle = FontStyle.Italic,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun MenuScreenHeadlinePreview() {
+    SimpleTarotTheme {
+        MenuScreenHeadline()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun MenuScreenGuidanceTextPreview() {
+    SimpleTarotTheme {
+        MenuScreenGuidanceText()
     }
 }
 
