@@ -39,49 +39,19 @@ fun MenuScreen(
             .background(color = MaterialTheme.colorScheme.background)
             .fillMaxSize()
             .padding(spacing.large),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         MenuScreenHeadline(spacing)
         MenuScreenGuidanceText(spacing)
 
-        Row(
-            modifier = Modifier.weight(1f),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            val textStyle = MaterialTheme.typography.labelSmall
-                .copy(fontSize = if (isLandscape) 12.sp else 9.sp)
-            StyledButton(
-                modifier = Modifier.weight(1f),
-                isLandscape = isLandscape,
-                text = "1 Card",
-                style = textStyle,
-                displayIcon = true,
-                icon = Icons.Default.CropPortrait) {
-                onDraw(1)
-            }
-            Spacer(modifier = Modifier.size(spacing.large))
-            StyledButton(
-                modifier = Modifier.weight(1f),
-                isLandscape = isLandscape,
-                text = "3 Cards",
-                style = textStyle,
-                displayIcon = true,
-                icon = Icons.Default.CropPortrait) {
-                onDraw(3)
-            }
-            Spacer(modifier = Modifier.size(spacing.large))
-            StyledButton(
-                modifier = Modifier.weight(1f),
-                isLandscape = isLandscape,
-                text = "History",
-                style = textStyle,
-                displayIcon = true,
-                icon = Icons.Default.History) {
-                onOpenHistory()
-            }
-        }
+        Spacer(modifier = Modifier.size(spacing.extraLarge))
+        MenuScreenButtons(
+            spacing = spacing,
+            isLandscape = isLandscape,
+            onDraw = onDraw,
+            onOpenHistory = onOpenHistory
+        )
     }
 }
 
@@ -124,6 +94,51 @@ fun MenuScreenGuidanceText(
     }
 }
 
+@Composable
+fun MenuScreenButtons(
+    spacing: TarotSpacing = LocalSpacing.current,
+    isLandscape: Boolean = false,
+    onDraw: (count: Int) -> Unit = {},
+    onOpenHistory: () -> Unit = {}
+) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        val textStyle = MaterialTheme.typography.labelSmall
+            .copy(fontSize = if (isLandscape) 12.sp else 9.sp)
+        StyledButton(
+            modifier = Modifier.weight(1f),
+            isLandscape = isLandscape,
+            text = "1 Card",
+            style = textStyle,
+            displayIcon = true,
+            icon = Icons.Default.CropPortrait) {
+            onDraw(1)
+        }
+        Spacer(modifier = Modifier.size(spacing.large))
+        StyledButton(
+            modifier = Modifier.weight(1f),
+            isLandscape = isLandscape,
+            text = "3 Cards",
+            style = textStyle,
+            displayIcon = true,
+            icon = Icons.Default.CropPortrait) {
+            onDraw(3)
+        }
+        Spacer(modifier = Modifier.size(spacing.large))
+        StyledButton(
+            modifier = Modifier.weight(1f),
+            isLandscape = isLandscape,
+            text = "History",
+            style = textStyle,
+            displayIcon = true,
+            icon = Icons.Default.History) {
+            onOpenHistory()
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun MenuScreenHeadlinePreview() {
@@ -142,10 +157,20 @@ fun MenuScreenGuidanceTextPreview() {
 
 @Preview(showBackground = true)
 @Composable
+fun MenuScreenButtonsPreview() {
+    SimpleTarotTheme {
+        MenuScreenButtons()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
 fun MenuScreenPreview() {
     SimpleTarotTheme {
-        MenuScreen(onDraw = {
-            Log.d("tarot", "MenuScreenPreview: $it")
-        })
+        MenuScreen(
+            onDraw = {
+                Log.d("tarot", "MenuScreenPreview: $it")
+            }
+        )
     }
 }
