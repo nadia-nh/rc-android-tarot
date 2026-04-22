@@ -1,6 +1,7 @@
 package com.example.simpletarot.ui.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
@@ -25,6 +26,7 @@ import com.example.simpletarot.ui.theme.TarotSpacing
 @Composable
 fun StyledButton(
     modifier: Modifier = Modifier,
+    isLandscape: Boolean = false,
     text: String = "",
     style: TextStyle = MaterialTheme.typography.bodyMedium,
     spacing: TarotSpacing = LocalSpacing.current,
@@ -45,14 +47,26 @@ fun StyledButton(
             MaterialTheme.colorScheme.outlineVariant
         )
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            StylizedButtonIconDisplay(
-                text = text,
-                spacing = spacing,
-                displayIcon = displayIcon,
-                icon = icon
-            )
-            Text(text = text,  style = style)
+        if (isLandscape) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                StylizedButtonIconDisplay(
+                    text = text,
+                    spacing = spacing,
+                    displayIcon = displayIcon,
+                    icon = icon
+                )
+                Text(text = text,  style = style)
+            }
+        } else {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                StylizedButtonIconDisplay(
+                    text = text,
+                    spacing = spacing,
+                    displayIcon = displayIcon,
+                    icon = icon
+                )
+                Text(text = text,  style = style)
+            }
         }
     }
 }
