@@ -23,6 +23,7 @@ import kotlin.random.Random
 class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
     private val _tarotDeck = MutableStateFlow<List<TarotCard>>(emptyList())
     private val _currentSpread = MutableStateFlow<List<DrawnCard>>(emptyList())
+    private val _dailySpread = MutableStateFlow<List<DrawnCard>>(emptyList())
     private val _currentScreen = MutableStateFlow(AppScreen.Menu)
     private val _previousScreen = MutableStateFlow(AppScreen.Result)
     private val _isNetworkEnabled = MutableStateFlow(false)
@@ -31,6 +32,7 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
     private val _selectedCard = MutableStateFlow<DrawnCard?>(null)
 
     val currentSpread: StateFlow<List<DrawnCard>> = _currentSpread
+    val dailySpread: StateFlow<List<DrawnCard>> = _dailySpread
     val currentScreen: StateFlow<AppScreen> = _currentScreen
     val isSaved: StateFlow<Boolean> = _isSaved
     val pendingDeletion: StateFlow<ReadingEntity?> = _pendingDeletion
@@ -55,6 +57,8 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
         viewModelScope.launch {
             _tarotDeck.value = repository
                 .getFullDeck(useNetwork = _isNetworkEnabled.value)
+
+            drawDailyCards(1)
         }
     }
 
@@ -75,6 +79,15 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
         _currentSpread.value = draw(count)
         _currentScreen.value = AppScreen.Result
         _isSaved.value = false
+    }
+
+    fun drawDailyCards(count: Int) {
+        if (_dailySpread.value.isEmpty()) {
+            // Initialize daily cards as revealed
+            _dailySpread.value = draw(count).map { card ->
+                card.copy(isRevealed = true)
+            }
+        }
     }
 
     fun resolveCard(entity: DrawnCardEntity): DrawnCard {
