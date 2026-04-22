@@ -22,6 +22,7 @@ import com.example.simpletarot.ui.theme.TarotSpacing
 
 @Composable
 fun StyledButton(
+    modifier: Modifier = Modifier,
     text: String = "",
     style: TextStyle = MaterialTheme.typography.bodyMedium,
     spacing: TarotSpacing = LocalSpacing.current,
@@ -32,6 +33,7 @@ fun StyledButton(
     OutlinedButton(
         enabled = enabled,
         onClick = onClick,
+        modifier = modifier,
         colors = ButtonDefaults.outlinedButtonColors(
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.primary
