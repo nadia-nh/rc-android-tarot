@@ -75,7 +75,7 @@ fun MenuScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             StyledButton(
-                "1 Card",
+                text = "1 Card",
                 style = MaterialTheme.typography.labelSmall,
                 displayIcon = true,
                 icon = Icons.Default.CropPortrait) {
@@ -83,7 +83,7 @@ fun MenuScreen(
                 }
                 Spacer(modifier = Modifier.size(spacing.large))
                 StyledButton(
-                    "3 Cards",
+                    text = "3 Cards",
                     style = MaterialTheme.typography.labelSmall,
                     displayIcon = true,
                     icon = Icons.Default.CropPortrait) {
@@ -91,7 +91,7 @@ fun MenuScreen(
                 }
                 Spacer(modifier = Modifier.size(spacing.large))
                 StyledButton(
-                    "History",
+                    text = "History",
                     style = MaterialTheme.typography.labelSmall,
                     displayIcon = true,
                     icon = Icons.Default.History) {
