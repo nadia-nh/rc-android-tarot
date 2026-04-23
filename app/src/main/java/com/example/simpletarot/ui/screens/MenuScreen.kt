@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CropPortrait
 import androidx.compose.material.icons.filled.History
@@ -22,14 +24,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.example.simpletarot.domain.model.DrawnCard
+import com.example.simpletarot.ui.components.CardDisplay
 import com.example.simpletarot.ui.components.StyledButton
 import com.example.simpletarot.ui.theme.LocalSpacing
+import com.example.simpletarot.ui.theme.PreviewConstants
 import com.example.simpletarot.ui.theme.SimpleTarotTheme
 import com.example.simpletarot.ui.theme.TarotSpacing
 
 @Composable
 fun MenuScreen(
     isLandscape: Boolean = false,
+    dailySpread: List<DrawnCard> = listOf(),
     onDraw: (count: Int) -> Unit = {},
     onOpenHistory: () -> Unit = {}) {
     val spacing = LocalSpacing.current
@@ -43,9 +49,33 @@ fun MenuScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         MenuScreenHeadline(spacing)
-        MenuScreenGuidanceText(spacing)
 
-        Spacer(modifier = Modifier.size(spacing.extraLarge))
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            if (!dailySpread.isEmpty()) {
+                Text(
+                    text = "Your daily card",
+                    style = MaterialTheme.typography.titleSmall
+                        .copy(fontStyle = FontStyle.Italic),
+                )
+                Spacer(modifier = Modifier.height(spacing.small))
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(spacing.medium),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    items(dailySpread) { card ->
+                        CardDisplay(
+                            drawnCard = card,
+                        )
+                    }
+                }
+            }
+        }
+
+        MenuScreenGuidanceText(spacing)
+        Spacer(modifier = Modifier.size(spacing.large))
         MenuScreenButtons(
             spacing = spacing,
             isLandscape = isLandscape,
@@ -78,7 +108,7 @@ fun MenuScreenGuidanceText(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Focus on open-ended questions such as:",
+                text = "Before drawing cards, focus on open-ended questions such as:",
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -137,6 +167,7 @@ fun MenuScreenButtons(
             onOpenHistory()
         }
     }
+    Spacer(modifier = Modifier.height(spacing.large))
 }
 
 @Preview(showBackground = true)
@@ -168,6 +199,7 @@ fun MenuScreenButtonsPreview() {
 fun MenuScreenPreview() {
     SimpleTarotTheme {
         MenuScreen(
+            dailySpread = listOf(PreviewConstants.drawnCard),
             onDraw = {
                 Log.d("tarot", "MenuScreenPreview: $it")
             }

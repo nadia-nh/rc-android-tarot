@@ -25,6 +25,7 @@ fun TarotMain(
     val isLandscape = orientation == Configuration.ORIENTATION_LANDSCAPE
     val currentScreen by viewModel.currentScreen.collectAsState()
     val selectedCard by viewModel.selectedCard.collectAsState()
+    val dailySpread by viewModel.dailySpread.collectAsState()
 
     BackHandler(enabled = currentScreen == AppScreen.Result || currentScreen == AppScreen.CardDetail) {
         if (currentScreen == AppScreen.CardDetail) {
@@ -38,6 +39,7 @@ fun TarotMain(
         AppScreen.Menu ->
             MenuScreen(
                 isLandscape = isLandscape,
+                dailySpread = dailySpread,
                 onDraw = { count -> viewModel.drawCards(count) },
                 onOpenHistory = { viewModel.openHistory() }
             )
