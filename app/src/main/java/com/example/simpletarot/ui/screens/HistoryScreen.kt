@@ -57,7 +57,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HistoryScreen(
-    isLandscape: Boolean = false,
     viewModel: TarotViewModel,
     onBack: () -> Unit = {}
 ){
@@ -220,7 +219,7 @@ fun HandleDeleteRequest(
     onConfirm: () -> Unit = {},
     onDismiss: () -> Unit = {}) {
     // Show Dialog if a reading is pending deletion
-    reading?.let { reading ->
+    reading?.let { _ ->
         DeleteConfirmationDialog(
             onConfirm = { onConfirm() },
             onDismiss = { onDismiss() }

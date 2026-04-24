@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalConfiguration
+import com.example.simpletarot.ui.screens.CardDetailScreen
 import com.example.simpletarot.ui.screens.HistoryScreen
 import com.example.simpletarot.ui.screens.MenuScreen
 import com.example.simpletarot.ui.screens.ResultsScreen
@@ -52,14 +53,13 @@ fun TarotMain(
             }
         AppScreen.History ->
             HistoryScreen(
-                isLandscape = isLandscape,
                 viewModel = viewModel
             ) {
                 viewModel.backToMenu()
             }
         AppScreen.CardDetail ->
             selectedCard?.let { card ->
-                com.example.simpletarot.ui.screens.CardDetailScreen(
+                CardDetailScreen(
                     drawnCard = card,
                     isLandscape = isLandscape,
                     onBack = { viewModel.closeCardDetail() }
