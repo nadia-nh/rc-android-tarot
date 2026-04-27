@@ -37,7 +37,8 @@ fun MenuScreen(
     isLandscape: Boolean = false,
     dailySpread: List<DrawnCard> = listOf(),
     onDraw: (count: Int) -> Unit = {},
-    onOpenHistory: () -> Unit = {}) {
+    onOpenHistory: () -> Unit = {},
+    onCardClick: (DrawnCard) -> Unit = {}) {
     val spacing = LocalSpacing.current
 
     Column(
@@ -68,6 +69,7 @@ fun MenuScreen(
                     items(dailySpread) { card ->
                         CardDisplay(
                             drawnCard = card,
+                            onCardClick = onCardClick
                         )
                     }
                 }

@@ -42,7 +42,8 @@ fun TarotMain(
                 isLandscape = isLandscape,
                 dailySpread = dailySpread,
                 onDraw = { count -> viewModel.drawCards(count) },
-                onOpenHistory = { viewModel.openHistory() }
+                onOpenHistory = { viewModel.openHistory() },
+                onCardClick = { card -> viewModel.openCardDetail(card) }
             )
         AppScreen.Result ->
             ResultsScreen(
