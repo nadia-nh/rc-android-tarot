@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -15,13 +16,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CropPortrait
 import androidx.compose.material.icons.filled.History
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.simpletarot.domain.model.DrawnCard
@@ -32,6 +37,7 @@ import com.example.simpletarot.ui.theme.PreviewConstants
 import com.example.simpletarot.ui.theme.SimpleTarotTheme
 import com.example.simpletarot.ui.theme.TarotSpacing
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuScreen(
     isLandscape: Boolean = false,
@@ -41,49 +47,58 @@ fun MenuScreen(
     onCardClick: (DrawnCard) -> Unit = {}) {
     val spacing = LocalSpacing.current
 
-    Column(
-        modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.background)
-            .fillMaxSize()
-            .padding(spacing.large),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        MenuScreenHeadline(spacing)
-
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {MenuScreenHeadline(spacing)}
+            )
+        },
+        bottomBar = {
+            MenuScreenButtons(
+                spacing = spacing,
+                isLandscape = isLandscape,
+                onDraw = onDraw,
+                onOpenHistory = onOpenHistory
+            )
+        }
+    ) { innerPadding ->
         Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally) {
-            if (!dailySpread.isEmpty()) {
-                Text(
-                    text = "Your daily card",
-                    style = MaterialTheme.typography.titleSmall
-                        .copy(fontStyle = FontStyle.Italic),
-                )
-                Spacer(modifier = Modifier.height(spacing.small))
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(spacing.medium),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    items(dailySpread) { card ->
-                        CardDisplay(
-                            drawnCard = card,
-                            onCardClick = onCardClick
-                        )
+            modifier = Modifier
+                .background(color = MaterialTheme.colorScheme.background)
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(spacing.large),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (!dailySpread.isEmpty()) {
+                    Text(
+                        text = "Your daily card",
+                        style = MaterialTheme.typography.titleSmall
+                            .copy(fontStyle = FontStyle.Italic),
+                    )
+                    Spacer(modifier = Modifier.height(spacing.small))
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(spacing.medium),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        items(dailySpread) { card ->
+                            CardDisplay(
+                                drawnCard = card,
+                                onCardClick = onCardClick
+                            )
+                        }
                     }
                 }
             }
-        }
 
-        MenuScreenGuidanceText(spacing)
-        Spacer(modifier = Modifier.size(spacing.large))
-        MenuScreenButtons(
-            spacing = spacing,
-            isLandscape = isLandscape,
-            onDraw = onDraw,
-            onOpenHistory = onOpenHistory
-        )
+            MenuScreenGuidanceText(spacing)
+        }
     }
 }
 
@@ -93,8 +108,11 @@ fun MenuScreenHeadline(
 ) {
     Spacer(modifier = Modifier.height(spacing.large))
     Text("Arcana Flux Tarot",
+        modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.onBackground,
-        style = MaterialTheme.typography.headlineSmall)
+        style = MaterialTheme.typography.headlineSmall,
+        textAlign = TextAlign.Center
+        )
 }
 
 @Composable
@@ -134,6 +152,12 @@ fun MenuScreenButtons(
     onOpenHistory: () -> Unit = {}
 ) {
     Row(
+        modifier = Modifier
+            .padding(
+                start = if (isLandscape) spacing.large else spacing.medium,
+                end = if (isLandscape) spacing.large else spacing.medium,
+                top = if (isLandscape) spacing.medium else spacing.large,
+                bottom = spacing.large),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -169,7 +193,6 @@ fun MenuScreenButtons(
             onOpenHistory()
         }
     }
-    Spacer(modifier = Modifier.height(spacing.large))
 }
 
 @Preview(showBackground = true)
