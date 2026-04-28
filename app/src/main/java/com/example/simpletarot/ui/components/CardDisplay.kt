@@ -3,17 +3,13 @@ package com.example.simpletarot.ui.components
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
@@ -32,42 +28,7 @@ import com.example.simpletarot.ui.theme.SimpleTarotTheme
 
 @Composable
 fun CardDisplay(
-    isLandscape: Boolean = false,
-    drawnCard: DrawnCard,
-    onReveal: () -> Unit = {},
-    onCardClick: (DrawnCard) -> Unit = {}) {
-    val spacing = LocalSpacing.current
-
-    if (isLandscape) {
-        Column(
-            modifier = Modifier.width(160.dp).padding(spacing.small),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            CardDisplayInternal(
-                isLandscape = true,
-                drawnCard = drawnCard,
-                onReveal = onReveal,
-                onCardClick = onCardClick
-            )
-        }
-    } else {
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(spacing.small),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            CardDisplayInternal(
-                isLandscape = false,
-                drawnCard = drawnCard,
-                onReveal = onReveal,
-                onCardClick = onCardClick
-            )
-        }
-    }
-}
-
-@Composable
-fun CardDisplayInternal(
+    modifier: Modifier = Modifier,
     isLandscape: Boolean = false,
     drawnCard: DrawnCard,
     onReveal: () -> Unit = {},
@@ -76,7 +37,7 @@ fun CardDisplayInternal(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CardWithImageOnReveal(
-            isLandscape = isLandscape,
+            modifier = modifier,
             drawnCard = drawnCard,
             onReveal = onReveal,
             onCardClick = onCardClick
@@ -92,23 +53,18 @@ fun CardDisplayInternal(
 
 @Composable
 fun CardWithImageOnReveal(
-    isLandscape: Boolean = false,
+    modifier: Modifier = Modifier,
     drawnCard: DrawnCard,
     onReveal: () -> Unit = {},
     onCardClick: (DrawnCard) -> Unit = {}) {
-    val modifier = Modifier.height(200.dp)
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
-        modifier = if (isLandscape)
-                modifier.fillMaxWidth().clickable {
-                    if (drawnCard.isRevealed) onCardClick(drawnCard) else onReveal()
-                }
-            else
-                modifier.width(160.dp).clickable {
+        modifier = modifier.aspectRatio(0.8f)
+            .clickable {
                     if (drawnCard.isRevealed) onCardClick(drawnCard) else onReveal()
                 }
     ) { CardImageOrPlaceholder(drawnCard) }
@@ -143,7 +99,9 @@ fun CardWithImageOnRevealPreview() {
             .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            CardWithImageOnReveal(drawnCard = PreviewConstants.drawnCard)
+            CardWithImageOnReveal(
+                modifier = Modifier.height(200.dp),
+                drawnCard = PreviewConstants.drawnCard)
         }
     }
 }
@@ -169,6 +127,8 @@ fun CardImageOrPlaceholderPreview() {
 @Composable
 fun CardDisplayPreview() {
     SimpleTarotTheme {
-        CardDisplay(drawnCard = PreviewConstants.drawnCard)
+        CardDisplay(
+            modifier = Modifier.height(200.dp),
+            drawnCard = PreviewConstants.drawnCard)
     }
 }
