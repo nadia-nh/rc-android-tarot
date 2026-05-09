@@ -12,12 +12,13 @@ interface TarotApiService {
 
     companion object {
         private const val BASE_URL = "https://tarotapi.dev/"
+        private val json = Json { ignoreUnknownKeys = true }
 
         fun create(): TarotApiService {
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(
-                    Json { ignoreUnknownKeys = true }
+                    json
                         .asConverterFactory(
                             "application/json".toMediaType()
                         ))
