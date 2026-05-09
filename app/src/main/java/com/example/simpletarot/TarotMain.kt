@@ -59,14 +59,16 @@ fun TarotMain(
         isLandscape = isLandscape,
         currentScreen = currentScreen,
         dailySpread = dailySpread,
+        currentSpread = spread,
         selectedCard = selectedCard,
-        cardCount = cardCount,
         onHome = { viewModel.backToMenu() },
         onBack = { viewModel.backToMenu() },
+        onSave = { viewModel.saveReading() },
         onOpenHistory = { viewModel.openHistory() },
         onCloseDetail = { viewModel.closeCardDetail() },
         onDraw = { count -> viewModel.drawCards(count) },
         onCardClick = { card -> viewModel.openCardDetail(card) },
+        onReveal = { index -> viewModel.revealCard(index) },
         homeSelected = selectedScreen == AppScreen.Menu,
         oneCardSelected =
             (selectedScreen == AppScreen.Result) && cardCount == 1,
@@ -83,14 +85,16 @@ fun TarotMainInternal(
     isLandscape: Boolean = false,
     currentScreen: AppScreen = AppScreen.Menu,
     dailySpread: List<DrawnCard> = listOf(),
+    currentSpread: List<DrawnCard> = listOf(),
     selectedCard: DrawnCard? = null,
-    cardCount: Int = 1,
     onHome: () -> Unit = {},
     onBack: () -> Unit = {},
+    onSave: () -> Unit = {},
     onOpenHistory: () -> Unit = {},
     onCloseDetail: () -> Unit = {},
     onDraw: (count: Int) -> Unit = {},
     onCardClick: (card: DrawnCard) -> Unit = {},
+    onReveal: (index: Int) -> Unit = {},
     homeSelected: Boolean = true,
     oneCardSelected: Boolean = false,
     threeCardsSelected: Boolean = false,
@@ -117,7 +121,7 @@ fun TarotMainInternal(
                     AppScreen.Menu ->
                         TopAppBar( title = {TarotHeadline(spacing)} )
                     AppScreen.Result ->
-                        ResultScreenTopAppBar(cardCount, onBack)
+                        ResultScreenTopAppBar(currentSpread.size, onBack)
                     AppScreen.History -> HistoryScreenTopBar(onBack)
                     AppScreen.CardDetail  ->
                         selectedCard?.let {
@@ -153,7 +157,12 @@ fun TarotMainInternal(
                     ResultsScreen(
                         isLandscape = isLandscape,
                         padding = innerPadding,
-                        viewModel = viewModel
+                        cards = currentSpread,
+                        isSaved = viewModel.isSaved,
+                        allCardsRevealed = viewModel.isRevealed,
+                        onSave = onSave,
+                        onReveal = onReveal,
+                        onCardClick = onCardClick
                     )
 
                 AppScreen.History ->

@@ -22,7 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,52 +36,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import com.example.simpletarot.ui.theme.PreviewConstants
 import com.example.simpletarot.ui.theme.SimpleTarotTheme
-import com.example.simpletarot.ui.viewmodel.TarotViewModel
 
 @Composable
 fun ResultsScreen(
-    isLandscape: Boolean = false,
-    padding: PaddingValues = PaddingValues(),
-    viewModel: TarotViewModel,) {
-    val spread by viewModel.currentSpread.collectAsState()
-    ResultsScreenStateless(
-        isLandscape = isLandscape,
-        padding = padding,
-        cards = spread,
-        isSaved = viewModel.isSaved,
-        allCardsRevealed = viewModel.isRevealed,
-        onSave = { viewModel.saveReading() },
-        onReveal = { index -> viewModel.revealCard(index) },
-        onCardClick = { card -> viewModel.openCardDetail(card) }
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ResultScreenTopAppBar(
-    cardCount: Int = 1,
-    onBack: () -> Unit = {}
-) {
-    TopAppBar(
-        title = {
-            Text(
-                text = if (cardCount == 1) "Your Card" else "Your Spread",
-                color = MaterialTheme . colorScheme . onBackground,
-                style = MaterialTheme.typography.headlineSmall
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = onBack) {
-                Icon(
-                    Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back")
-            }
-        }
-    )
-}
-
-@Composable
-fun ResultsScreenStateless(
     isLandscape: Boolean = false,
     padding: PaddingValues = PaddingValues(),
     cards : List<DrawnCard>,
@@ -119,6 +75,30 @@ fun ResultsScreenStateless(
             allCardsRevealed.collectAsState().value,
             onSave)
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ResultScreenTopAppBar(
+    cardCount: Int = 1,
+    onBack: () -> Unit = {}
+) {
+    TopAppBar(
+        title = {
+            Text(
+                text = if (cardCount == 1) "Your Card" else "Your Spread",
+                color = MaterialTheme . colorScheme . onBackground,
+                style = MaterialTheme.typography.headlineSmall
+            )
+        },
+        navigationIcon = {
+            IconButton(onClick = onBack) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back")
+            }
+        }
+    )
 }
 
 @Composable
@@ -202,6 +182,6 @@ fun SaveButtonPreview() {
 @Composable
 fun ResultsScreenPreview() {
     SimpleTarotTheme {
-        ResultsScreenStateless(cards = PreviewConstants.tarotCards)
+        ResultsScreen(cards = PreviewConstants.tarotCards)
     }
 }
