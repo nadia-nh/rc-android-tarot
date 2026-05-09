@@ -154,7 +154,7 @@ fun TarotMainInternal(
                         isLandscape = isLandscape,
                         padding = innerPadding,
                         viewModel = viewModel
-                    ) { onBack() }
+                    )
 
                 AppScreen.History ->
                     HistoryScreen(
@@ -165,9 +165,9 @@ fun TarotMainInternal(
                 AppScreen.CardDetail ->
                     selectedCard?.let { card ->
                         CardDetailScreen(
-                            drawnCard = card,
                             isLandscape = isLandscape,
-                            padding = innerPadding
+                            padding = innerPadding,
+                            drawnCard = card,
                         )
                     }
             }

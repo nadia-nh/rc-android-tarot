@@ -5,12 +5,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -46,8 +43,7 @@ import com.example.simpletarot.ui.viewmodel.TarotViewModel
 fun ResultsScreen(
     isLandscape: Boolean = false,
     padding: PaddingValues = PaddingValues(),
-    viewModel: TarotViewModel,
-    onBack: () -> Unit = {}) {
+    viewModel: TarotViewModel,) {
     val spread by viewModel.currentSpread.collectAsState()
     ResultsScreenStateless(
         isLandscape = isLandscape,
@@ -55,7 +51,6 @@ fun ResultsScreen(
         cards = spread,
         isSaved = viewModel.isSaved,
         allCardsRevealed = viewModel.isRevealed,
-        onBack = onBack,
         onSave = { viewModel.saveReading() },
         onReveal = { index -> viewModel.revealCard(index) },
         onCardClick = { card -> viewModel.openCardDetail(card) }
@@ -93,7 +88,6 @@ fun ResultsScreenStateless(
     cards : List<DrawnCard>,
     isSaved: StateFlow<Boolean> = MutableStateFlow(false).asStateFlow(),
     allCardsRevealed: StateFlow<Boolean> = MutableStateFlow(false).asStateFlow(),
-    onBack: () -> Unit = {},
     onSave: () -> Unit = {},
     onReveal: (index: Int) -> Unit = {},
     onCardClick: (DrawnCard) -> Unit = {}) {
@@ -118,20 +112,12 @@ fun ResultsScreenStateless(
                 onCardClick = onCardClick)
         }
 
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            SaveButton(
-                spacing = spacing,
-                isSaved.collectAsState().value,
-                allCardsRevealed.collectAsState().value,
-                onSave)
-            Spacer(modifier = Modifier.size(spacing.medium))
-            BackButton(onBack = onBack)
-        }
-
-        Spacer(modifier = Modifier.height(spacing.medium))
+        SaveButton(
+            isLandscape = isLandscape,
+            spacing = spacing,
+            isSaved.collectAsState().value,
+            allCardsRevealed.collectAsState().value,
+            onSave)
     }
 }
 
@@ -179,11 +165,13 @@ fun CardsDisplay(
 
 @Composable
 fun SaveButton(
+    isLandscape: Boolean = false,
     spacing: TarotSpacing = LocalSpacing.current,
     isSaved: Boolean,
     allCardsRevealed: Boolean,
     onSave: () -> Unit = {}) {
     StyledButton(
+        isLandscape = isLandscape,
         text = if (isSaved) "Saved" else "Save Reading",
         style = MaterialTheme.typography.bodyMedium,
         spacing = spacing,
@@ -192,11 +180,6 @@ fun SaveButton(
         icon = Icons.Default.Check,
         onClick = onSave
     )
-}
-
-@Composable
-fun BackButton(onBack: () -> Unit = {}) {
-    StyledButton(text = "Back to Menu") { onBack() }
 }
 
 @Preview
@@ -212,14 +195,6 @@ fun CardsDisplayPreview() {
 fun SaveButtonPreview() {
     SimpleTarotTheme {
         SaveButton(isSaved = false, allCardsRevealed = true)
-    }
-}
-
-@Preview
-@Composable
-fun BackButtonPreview() {
-    SimpleTarotTheme {
-        BackButton()
     }
 }
 
