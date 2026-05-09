@@ -15,8 +15,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.example.simpletarot.ui.screens.CardDetailScreen
 import com.example.simpletarot.ui.screens.HistoryScreen
 import com.example.simpletarot.ui.screens.MenuScreen
-import com.example.simpletarot.ui.screens.TarotBottomBar
 import com.example.simpletarot.ui.screens.ResultsScreen
+import com.example.simpletarot.ui.components.TarotBottomBar
 import com.example.simpletarot.ui.components.TarotHeadline
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.viewmodel.TarotViewModel
