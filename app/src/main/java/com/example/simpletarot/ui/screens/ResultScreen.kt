@@ -40,11 +40,13 @@ import com.example.simpletarot.ui.viewmodel.TarotViewModel
 @Composable
 fun ResultsScreen(
     isLandscape: Boolean = false,
+    padding: PaddingValues = PaddingValues(),
     viewModel: TarotViewModel,
     onBack: () -> Unit = {}) {
     val spread by viewModel.currentSpread.collectAsState()
     ResultsScreenStateless(
         isLandscape = isLandscape,
+        padding = padding,
         cards = spread,
         isSaved = viewModel.isSaved,
         allCardsRevealed = viewModel.isRevealed,
@@ -58,6 +60,7 @@ fun ResultsScreen(
 @Composable
 fun ResultsScreenStateless(
     isLandscape: Boolean = false,
+    padding: PaddingValues = PaddingValues(),
     cards : List<DrawnCard>,
     isSaved: StateFlow<Boolean> = MutableStateFlow(false).asStateFlow(),
     allCardsRevealed: StateFlow<Boolean> = MutableStateFlow(false).asStateFlow(),
@@ -71,6 +74,7 @@ fun ResultsScreenStateless(
         modifier = Modifier
             .background(color = MaterialTheme.colorScheme.background)
             .fillMaxSize()
+            .padding(padding)
             .padding(spacing.medium),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

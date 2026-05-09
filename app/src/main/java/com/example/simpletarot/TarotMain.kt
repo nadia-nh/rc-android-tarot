@@ -138,6 +138,7 @@ fun TarotMainInternal(
                 AppScreen.Menu ->
                     MenuScreen(
                         isLandscape = isLandscape,
+                        padding = innerPadding,
                         dailySpread = dailySpread,
                         onCardClick = onCardClick
                     )
@@ -145,6 +146,7 @@ fun TarotMainInternal(
                 AppScreen.Result ->
                     ResultsScreen(
                         isLandscape = isLandscape,
+                        padding = innerPadding,
                         viewModel = viewModel
                     ) { onBack() }
 
