@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Preview
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -30,10 +31,12 @@ fun StyledButton(
     text: String = "",
     style: TextStyle = MaterialTheme.typography.bodyMedium,
     spacing: TarotSpacing = LocalSpacing.current,
+    displayBorder: Boolean = true,
     enabled: Boolean = true,
     displayIcon: Boolean = false,
     icon: ImageVector? = null,
     onClick: () -> Unit = {}) {
+    if (displayBorder) {
     OutlinedButton(
         enabled = enabled,
         onClick = onClick,
@@ -47,26 +50,65 @@ fun StyledButton(
             MaterialTheme.colorScheme.outlineVariant
         )
     ) {
-        if (isLandscape) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                StylizedButtonIconDisplay(
-                    text = text,
-                    spacing = spacing,
-                    displayIcon = displayIcon,
-                    icon = icon
-                )
-                Text(text = text,  style = style)
-            }
-        } else {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                StylizedButtonIconDisplay(
-                    text = text,
-                    spacing = spacing,
-                    displayIcon = displayIcon,
-                    icon = icon
-                )
-                Text(text = text,  style = style)
-            }
+        StylizedButtonContents(
+            isLandscape = isLandscape,
+            text = text,
+            style = style,
+            spacing = spacing,
+            displayIcon = displayIcon,
+            icon = icon
+        )
+    }
+    } else {
+        Button(
+            enabled = enabled,
+            onClick = onClick,
+            modifier = modifier,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+                contentColor = MaterialTheme.colorScheme.primary
+            ),
+        ) {
+            StylizedButtonContents(
+                isLandscape = isLandscape,
+                text = text,
+                style = style,
+                spacing = spacing,
+                displayIcon = displayIcon,
+                icon = icon
+            )
+        }
+    }
+}
+
+@Composable
+fun StylizedButtonContents(
+    isLandscape: Boolean = false,
+    text: String = "",
+    style: TextStyle = MaterialTheme.typography.bodyMedium,
+    spacing: TarotSpacing = LocalSpacing.current,
+    displayIcon: Boolean = false,
+    icon: ImageVector? = null,
+) {
+    if (isLandscape) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            StylizedButtonIconDisplay(
+                text = text,
+                spacing = spacing,
+                displayIcon = displayIcon,
+                icon = icon
+            )
+            Text(text = text,  style = style)
+        }
+    } else {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            StylizedButtonIconDisplay(
+                text = text,
+                spacing = spacing,
+                displayIcon = displayIcon,
+                icon = icon
+            )
+            Text(text = text, style = style)
         }
     }
 }
