@@ -111,6 +111,7 @@ fun TarotMainInternal(
         Scaffold(
             topBar = {
                 when (currentScreen) {
+                    AppScreen.History -> HistoryScreenTopBar(onBack)
                     AppScreen.CardDetail  ->
                         selectedCard?.let {
                             CardDetailScreenTopBar(selectedCard, onCloseDetail)
@@ -149,8 +150,9 @@ fun TarotMainInternal(
 
                 AppScreen.History ->
                     HistoryScreen(
-                        viewModel = viewModel
-                    ) { onBack() }
+                        viewModel = viewModel,
+                        padding = innerPadding
+                    )
 
                 AppScreen.CardDetail ->
                     selectedCard?.let { card ->

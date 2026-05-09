@@ -25,7 +25,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
@@ -58,13 +57,14 @@ import kotlinx.coroutines.launch
 @Composable
 fun HistoryScreen(
     viewModel: TarotViewModel,
-    onBack: () -> Unit = {}
+    padding: PaddingValues = PaddingValues(),
 ){
     val history by viewModel.previousReadings.collectAsState()
     val pendingDeletion by viewModel.pendingDeletion.collectAsState()
     HistoryScreenStateless(
+        spacing = LocalSpacing.current,
         history = history,
-        onBack = onBack,
+        padding = padding,
         onCardClick = { card -> viewModel.openCardDetail(card) },
         onDeleteRequest = { viewModel.scheduleDeletion(it) },
         resolveCard = { viewModel.resolveCard(it) })
@@ -72,27 +72,6 @@ fun HistoryScreen(
         reading = pendingDeletion,
         onConfirm = { viewModel.confirmDeletion() },
         onDismiss = { viewModel.cancelDeletion() })
-}
-
-@Composable
-fun HistoryScreenStateless(
-    history: List<ReadingWithCards>,
-    onBack: () -> Unit = {},
-    onCardClick: (DrawnCard) -> Unit = {},
-    onDeleteRequest: (reading: ReadingEntity) -> Unit = {},
-    resolveCard: (DrawnCardEntity) -> DrawnCard = { it.toDrawnCard() }
-) {
-    Scaffold(topBar = { HistoryScreenTopBar(onBack) })
-    { padding ->
-        HistoryScreenContents(
-            spacing = LocalSpacing.current,
-            padding = padding,
-            history = history,
-            onCardClick = onCardClick,
-            onDeleteRequest = onDeleteRequest,
-            resolveCard = resolveCard
-        )
-    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -118,10 +97,10 @@ fun HistoryScreenTopBar(
 }
 
 @Composable
-fun HistoryScreenContents(
+fun HistoryScreenStateless(
     spacing: TarotSpacing = LocalSpacing.current,
-    padding: PaddingValues = PaddingValues(),
     history: List<ReadingWithCards> = emptyList(),
+    padding: PaddingValues = PaddingValues(),
     onCardClick: (DrawnCard) -> Unit = {},
     onDeleteRequest: (reading: ReadingEntity) -> Unit = {},
     resolveCard: (DrawnCardEntity) -> DrawnCard = { it.toDrawnCard() }
@@ -145,7 +124,8 @@ fun HistoryScreenContents(
         }
     } else {
         LazyColumn(
-            modifier = Modifier.padding(padding),
+            modifier = Modifier
+                .padding(padding),
             contentPadding = PaddingValues(spacing.medium),
             verticalArrangement = Arrangement.spacedBy(spacing.small)
         ) {
@@ -312,14 +292,6 @@ fun HistoryScreenTopBarPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun HistoryScreenContentsPreview() {
-    SimpleTarotTheme {
-        HistoryScreenContents(history = PreviewConstants.readings)
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
 fun TarotReadingItemHeaderPreview() {
     SimpleTarotTheme {
         TarotReadingItemHeader(
@@ -360,6 +332,6 @@ fun TarotReadingItemPreview() {
 @Composable
 fun HistoryScreenPreview() {
     SimpleTarotTheme {
-        HistoryScreenStateless(PreviewConstants.readings)
+        HistoryScreenStateless(history = PreviewConstants.readings)
     }
 }
