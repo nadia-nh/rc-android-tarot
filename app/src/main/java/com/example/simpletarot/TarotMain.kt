@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.example.simpletarot.ui.screens.CardDetailScreen
 import com.example.simpletarot.ui.screens.HistoryScreen
 import com.example.simpletarot.ui.screens.MenuScreen
-import com.example.simpletarot.ui.screens.MenuScreenBottomBar
+import com.example.simpletarot.ui.screens.TarotBottomBar
 import com.example.simpletarot.ui.screens.ResultsScreen
 import com.example.simpletarot.ui.screens.TarotHeadline
 import com.example.simpletarot.ui.theme.LocalSpacing
@@ -35,9 +35,12 @@ fun TarotMain(
     val orientation = LocalConfiguration.current.orientation
     val isLandscape = orientation == Configuration.ORIENTATION_LANDSCAPE
     val currentScreen by viewModel.currentScreen.collectAsState()
+    val selectedScreen by viewModel.selectedScreen.collectAsState()
+    val spread by viewModel.currentSpread.collectAsState()
     val selectedCard by viewModel.selectedCard.collectAsState()
     val dailySpread by viewModel.dailySpread.collectAsState()
     val spacing = LocalSpacing.current
+    val cardCount = spread.size
 
     BackHandler(enabled = currentScreen == AppScreen.Result || currentScreen == AppScreen.CardDetail) {
         if (currentScreen == AppScreen.CardDetail) {
@@ -54,9 +57,16 @@ fun TarotMain(
             )
         },
         bottomBar = {
-            MenuScreenBottomBar(
+            TarotBottomBar(
+                onHome = { viewModel.backToMenu() },
                 onDraw = { count -> viewModel.drawCards(count) },
                 onOpenHistory = { viewModel.openHistory() },
+                homeSelected = selectedScreen == AppScreen.Menu,
+                oneCardSelected =
+                    (selectedScreen == AppScreen.Result) && cardCount == 1,
+                threeCardsSelected =
+                    (selectedScreen == AppScreen.Result) && cardCount == 3,
+                historySelected = selectedScreen == AppScreen.History
             )
         }
     ) { innerPadding ->

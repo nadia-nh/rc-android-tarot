@@ -130,14 +130,19 @@ fun MenuScreenGuidanceText(
 }
 
 @Composable
-fun MenuScreenBottomBar(
+fun TarotBottomBar(
+    onHome: () -> Unit = {},
     onDraw: (count: Int) -> Unit = {},
-    onOpenHistory: () -> Unit = {}
+    onOpenHistory: () -> Unit = {},
+    homeSelected: Boolean = true,
+    oneCardSelected: Boolean = false,
+    threeCardsSelected: Boolean = false,
+    historySelected: Boolean = false
 ) {
     NavigationBar {
         NavigationBarItem(
-            selected = true,
-            onClick = { },
+            selected = homeSelected,
+            onClick = { onHome() },
             icon = { Icon(
                 imageVector = Icons.Default.Home,
                 contentDescription = "Home")},
@@ -145,7 +150,7 @@ fun MenuScreenBottomBar(
         )
 
         NavigationBarItem(
-            selected = false,
+            selected = oneCardSelected,
             onClick = { onDraw(1) },
             icon = { Icon(
                 imageVector = Icons.Default.CropPortrait,
@@ -154,7 +159,7 @@ fun MenuScreenBottomBar(
         )
 
         NavigationBarItem(
-            selected = false,
+            selected = threeCardsSelected,
             onClick = { onDraw(3) },
             icon = { Icon(
                 imageVector = Icons.Default.CropPortrait,
@@ -163,7 +168,7 @@ fun MenuScreenBottomBar(
         )
 
         NavigationBarItem(
-            selected = false,
+            selected = historySelected,
             onClick = { onOpenHistory() },
             icon = { Icon(
                 imageVector = Icons.Default.History,
@@ -191,9 +196,9 @@ fun MenuScreenGuidanceTextPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun MenuScreenBottomBarPreview() {
+fun TarotBottomBarPreview() {
     SimpleTarotTheme {
-        MenuScreenBottomBar()
+        TarotBottomBar()
     }
 }
 
