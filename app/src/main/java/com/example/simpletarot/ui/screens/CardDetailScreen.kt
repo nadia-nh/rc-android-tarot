@@ -2,6 +2,7 @@ package com.example.simpletarot.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -17,7 +18,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,69 +37,65 @@ import com.example.simpletarot.ui.theme.SimpleTarotTheme
 fun CardDetailScreen(
     drawnCard: DrawnCard,
     isLandscape: Boolean = false,
-    onBack: () -> Unit = {}
+    padding: PaddingValues = PaddingValues(),
 ) {
     val spacing = LocalSpacing.current
 
-    Scaffold(
-        topBar = { CardDetailScreenTopBar(drawnCard, onBack) }
-    ) { innerPadding ->
-        if (isLandscape) {
-            Row(
+    if (isLandscape) {
+        Row(
+            modifier = Modifier
+                .background(color = MaterialTheme.colorScheme.background)
+                .fillMaxSize()
+                .padding(padding)
+                .padding(
+                    horizontal = spacing.medium,
+                    vertical = spacing.large),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            CardImage(
+                card = drawnCard,
                 modifier = Modifier
-                    .background(color = MaterialTheme.colorScheme.background)
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(
-                        horizontal = spacing.medium,
-                        vertical = spacing.large),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                CardImage(
-                    card = drawnCard,
-                    modifier = Modifier
-                        .width(280.dp)
-                        .fillMaxHeight()
-                )
+                    .width(280.dp)
+                    .fillMaxHeight()
+            )
 
-                Spacer(modifier = Modifier.width(spacing.medium))
+            Spacer(modifier = Modifier.width(spacing.medium))
 
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    CardMeaning(
-                        drawnCard = drawnCard,
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                }
-            }
-        } else {
             Column(
                 modifier = Modifier
-                    .background(color = MaterialTheme.colorScheme.background)
-                    .fillMaxSize()
+                    .weight(1f)
                     .verticalScroll(rememberScrollState())
-                    .padding(innerPadding)
-                    .padding(
-                        horizontal = spacing.large,
-                        vertical = spacing.medium),
-                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                CardImage(
-                    card = drawnCard,
-                    modifier = Modifier
-                        .width(280.dp)
-                        .height(420.dp)
-                )
-
-                Spacer(modifier = Modifier.height(spacing.medium))
                 CardMeaning(
                     drawnCard = drawnCard,
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
+        }
+    } else {
+        Column(
+            modifier = Modifier
+                .background(color = MaterialTheme.colorScheme.background)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(padding)
+                .padding(
+                    horizontal = spacing.large,
+                    vertical = spacing.medium),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CardImage(
+                card = drawnCard,
+                modifier = Modifier
+                    .width(280.dp)
+                    .height(420.dp)
+            )
+
+            Spacer(modifier = Modifier.height(spacing.medium))
+            CardMeaning(
+                drawnCard = drawnCard,
+                style = MaterialTheme.typography.bodyLarge
+            )
         }
     }
 }

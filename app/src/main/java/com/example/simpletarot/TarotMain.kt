@@ -3,9 +3,7 @@ package com.example.simpletarot
 import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
@@ -22,6 +20,8 @@ import com.example.simpletarot.ui.screens.ResultsScreen
 import com.example.simpletarot.ui.components.TarotBottomBar
 import com.example.simpletarot.ui.components.TarotHeadline
 import com.example.simpletarot.ui.components.TarotNavigationRail
+import com.example.simpletarot.ui.screens.CardDetailScreenTopBar
+import com.example.simpletarot.ui.screens.HistoryScreenTopBar
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.viewmodel.TarotViewModel
 
@@ -110,9 +110,13 @@ fun TarotMainInternal(
 
         Scaffold(
             topBar = {
-                TopAppBar(
-                    title = {TarotHeadline(spacing)}
-                )
+                when (currentScreen) {
+                    AppScreen.CardDetail  ->
+                        selectedCard?.let {
+                            CardDetailScreenTopBar(selectedCard, onCloseDetail)
+                        }
+                    else -> TopAppBar( title = {TarotHeadline(spacing)} )
+                }
             },
             bottomBar = {
                 if (!isLandscape) {
@@ -128,8 +132,6 @@ fun TarotMainInternal(
                 }
             }
         ) { innerPadding ->
-
-            Spacer(modifier = Modifier.padding(innerPadding))
 
             when (currentScreen) {
                 AppScreen.Menu ->
@@ -155,7 +157,7 @@ fun TarotMainInternal(
                         CardDetailScreen(
                             drawnCard = card,
                             isLandscape = isLandscape,
-                            onBack = { onCloseDetail() }
+                            padding = innerPadding
                         )
                     }
             }
