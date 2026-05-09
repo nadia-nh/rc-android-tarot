@@ -22,6 +22,7 @@ import com.example.simpletarot.ui.components.TarotHeadline
 import com.example.simpletarot.ui.components.TarotNavigationRail
 import com.example.simpletarot.ui.screens.CardDetailScreenTopBar
 import com.example.simpletarot.ui.screens.HistoryScreenTopBar
+import com.example.simpletarot.ui.screens.ResultScreenTopAppBar
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.viewmodel.TarotViewModel
 
@@ -59,6 +60,7 @@ fun TarotMain(
         currentScreen = currentScreen,
         dailySpread = dailySpread,
         selectedCard = selectedCard,
+        cardCount = cardCount,
         onHome = { viewModel.backToMenu() },
         onBack = { viewModel.backToMenu() },
         onOpenHistory = { viewModel.openHistory() },
@@ -82,6 +84,7 @@ fun TarotMainInternal(
     currentScreen: AppScreen = AppScreen.Menu,
     dailySpread: List<DrawnCard> = listOf(),
     selectedCard: DrawnCard? = null,
+    cardCount: Int = 1,
     onHome: () -> Unit = {},
     onBack: () -> Unit = {},
     onOpenHistory: () -> Unit = {},
@@ -111,12 +114,15 @@ fun TarotMainInternal(
         Scaffold(
             topBar = {
                 when (currentScreen) {
+                    AppScreen.Menu ->
+                        TopAppBar( title = {TarotHeadline(spacing)} )
+                    AppScreen.Result ->
+                        ResultScreenTopAppBar(cardCount, onBack)
                     AppScreen.History -> HistoryScreenTopBar(onBack)
                     AppScreen.CardDetail  ->
                         selectedCard?.let {
                             CardDetailScreenTopBar(selectedCard, onCloseDetail)
                         }
-                    else -> TopAppBar( title = {TarotHeadline(spacing)} )
                 }
             },
             bottomBar = {

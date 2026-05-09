@@ -15,9 +15,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -57,6 +62,30 @@ fun ResultsScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ResultScreenTopAppBar(
+    cardCount: Int = 1,
+    onBack: () -> Unit = {}
+) {
+    TopAppBar(
+        title = {
+            Text(
+                text = if (cardCount == 1) "Your Card" else "Your Spread",
+                color = MaterialTheme . colorScheme . onBackground,
+                style = MaterialTheme.typography.headlineSmall
+            )
+        },
+        navigationIcon = {
+            IconButton(onClick = onBack) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back")
+            }
+        }
+    )
+}
+
 @Composable
 fun ResultsScreenStateless(
     isLandscape: Boolean = false,
@@ -68,7 +97,6 @@ fun ResultsScreenStateless(
     onSave: () -> Unit = {},
     onReveal: (index: Int) -> Unit = {},
     onCardClick: (DrawnCard) -> Unit = {}) {
-    val cardCount = cards.size
     val spacing = LocalSpacing.current
     Column(
         modifier = Modifier
@@ -78,11 +106,6 @@ fun ResultsScreenStateless(
             .padding(spacing.medium),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(spacing.medium))
-        Text(text = if (cardCount == 1) "Your Card" else "Your Spread",
-            color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.headlineSmall)
-
         Box(
             modifier = Modifier.weight(1f),
             contentAlignment = Alignment.Center
