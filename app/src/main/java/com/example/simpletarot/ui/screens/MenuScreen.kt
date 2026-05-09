@@ -76,43 +76,6 @@ fun MenuScreen(
     }
 }
 
-@Composable
-fun TarotGuidanceText(
-    spacing: TarotSpacing = LocalSpacing.current
-) {
-    Spacer(modifier = Modifier.height(spacing.large))
-    Surface(
-        color = MaterialTheme.colorScheme.surfaceVariant,
-        shape = MaterialTheme.shapes.large
-    ) {
-        Column(modifier = Modifier.padding(spacing.large),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Before drawing cards, focus on open-ended questions such as:",
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
-            Spacer(modifier = Modifier.height(spacing.medium))
-            Text(
-                text = "What do I need to know today?\nWhat are the themes of my work life?",
-                style = MaterialTheme.typography.bodyMedium,
-                fontStyle = FontStyle.Italic,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun TarotGuidanceTextPreview() {
-    SimpleTarotTheme {
-        TarotGuidanceText()
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 fun MenuScreenPreview() {
