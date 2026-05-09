@@ -2,7 +2,9 @@ package com.example.simpletarot
 
 import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -19,6 +21,7 @@ import com.example.simpletarot.ui.screens.MenuScreen
 import com.example.simpletarot.ui.screens.ResultsScreen
 import com.example.simpletarot.ui.components.TarotBottomBar
 import com.example.simpletarot.ui.components.TarotHeadline
+import com.example.simpletarot.ui.components.TarotNavigationRail
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.viewmodel.TarotViewModel
 
@@ -92,14 +95,9 @@ fun TarotMainInternal(
 ) {
     val spacing = LocalSpacing.current
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {TarotHeadline(spacing)}
-            )
-        },
-        bottomBar = {
-            TarotBottomBar(
+    Row(modifier = Modifier.fillMaxSize()) {
+        if (isLandscape) {
+            TarotNavigationRail(
                 onHome = onHome,
                 onDraw = onDraw,
                 onOpenHistory = onOpenHistory,
@@ -109,37 +107,58 @@ fun TarotMainInternal(
                 historySelected = historySelected,
             )
         }
-    ) { innerPadding ->
 
-        Spacer(modifier = Modifier.padding(innerPadding))
-
-        when (currentScreen) {
-            AppScreen.Menu ->
-                MenuScreen(
-                    isLandscape = isLandscape,
-                    dailySpread = dailySpread,
-                    onCardClick = onCardClick
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {TarotHeadline(spacing)}
                 )
-
-            AppScreen.Result ->
-                ResultsScreen(
-                    isLandscape = isLandscape,
-                    viewModel = viewModel
-                ) { onBack() }
-
-            AppScreen.History ->
-                HistoryScreen(
-                    viewModel = viewModel
-                ) { onBack() }
-
-            AppScreen.CardDetail ->
-                selectedCard?.let { card ->
-                    CardDetailScreen(
-                        drawnCard = card,
-                        isLandscape = isLandscape,
-                        onBack = { onCloseDetail() }
+            },
+            bottomBar = {
+                if (!isLandscape) {
+                    TarotBottomBar(
+                        onHome = onHome,
+                        onDraw = onDraw,
+                        onOpenHistory = onOpenHistory,
+                        homeSelected = homeSelected,
+                        oneCardSelected = oneCardSelected,
+                        threeCardsSelected = threeCardsSelected,
+                        historySelected = historySelected,
                     )
                 }
+            }
+        ) { innerPadding ->
+
+            Spacer(modifier = Modifier.padding(innerPadding))
+
+            when (currentScreen) {
+                AppScreen.Menu ->
+                    MenuScreen(
+                        isLandscape = isLandscape,
+                        dailySpread = dailySpread,
+                        onCardClick = onCardClick
+                    )
+
+                AppScreen.Result ->
+                    ResultsScreen(
+                        isLandscape = isLandscape,
+                        viewModel = viewModel
+                    ) { onBack() }
+
+                AppScreen.History ->
+                    HistoryScreen(
+                        viewModel = viewModel
+                    ) { onBack() }
+
+                AppScreen.CardDetail ->
+                    selectedCard?.let { card ->
+                        CardDetailScreen(
+                            drawnCard = card,
+                            isLandscape = isLandscape,
+                            onBack = { onCloseDetail() }
+                        )
+                    }
+            }
         }
     }
 }
