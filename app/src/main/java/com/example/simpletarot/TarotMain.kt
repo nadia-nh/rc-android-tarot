@@ -17,7 +17,7 @@ import com.example.simpletarot.ui.screens.HistoryScreen
 import com.example.simpletarot.ui.screens.MenuScreen
 import com.example.simpletarot.ui.screens.TarotBottomBar
 import com.example.simpletarot.ui.screens.ResultsScreen
-import com.example.simpletarot.ui.screens.TarotHeadline
+import com.example.simpletarot.ui.components.TarotHeadline
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.viewmodel.TarotViewModel
 

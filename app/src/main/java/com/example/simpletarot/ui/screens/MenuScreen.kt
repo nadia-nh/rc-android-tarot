@@ -88,19 +88,6 @@ fun MenuScreen(
 }
 
 @Composable
-fun TarotHeadline(
-    spacing: TarotSpacing = LocalSpacing.current
-) {
-    Spacer(modifier = Modifier.height(spacing.large))
-    Text("Arcana Flux Tarot",
-        modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.onBackground,
-        style = MaterialTheme.typography.headlineSmall,
-        textAlign = TextAlign.Center
-        )
-}
-
-@Composable
 fun MenuScreenGuidanceText(
     spacing: TarotSpacing = LocalSpacing.current
 ) {
@@ -175,14 +162,6 @@ fun TarotBottomBar(
                 contentDescription = "Show History") },
             label = { Text("History") }
         )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun TarotHeadlinePreview() {
-    SimpleTarotTheme {
-        TarotHeadline()
     }
 }
 
