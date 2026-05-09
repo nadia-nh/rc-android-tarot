@@ -128,7 +128,7 @@ fun HistoryScreenStateless(
             modifier = Modifier
                 .padding(padding),
             contentPadding = PaddingValues(spacing.medium),
-            verticalArrangement = Arrangement.spacedBy(spacing.small)
+            verticalArrangement = Arrangement.spacedBy(spacing.small),
         ) {
             items(
                 items = history,
@@ -232,7 +232,6 @@ fun TarotReadingItem(
                 timestamp = reading.timestamp)
             Spacer(modifier = Modifier.height(spacing.small))
             TarotReadingItemCards(
-                spacing = spacing,
                 onCardClick = onCardClick,
                 cards = readingWithCards.cards,
                 resolveCard = resolveCard)
@@ -262,14 +261,13 @@ fun TarotReadingItemHeader(
 
 @Composable
 fun TarotReadingItemCards(
-    spacing: TarotSpacing = LocalSpacing.current,
     cards: List<DrawnCardEntity> = emptyList(),
     onCardClick: (DrawnCard) -> Unit = {},
     resolveCard: (DrawnCardEntity) -> DrawnCard = { it.toDrawnCard() }
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(spacing.small)
+        horizontalArrangement = Arrangement.SpaceAround
     ) {
         cards.forEach { entity ->
             val resolved = resolveCard(entity)
