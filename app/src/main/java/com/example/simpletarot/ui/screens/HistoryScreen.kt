@@ -45,7 +45,6 @@ import com.example.simpletarot.data.local.ReadingWithCards
 import com.example.simpletarot.data.local.toDrawnCard
 import com.example.simpletarot.domain.model.DrawnCard
 import com.example.simpletarot.ui.components.CardImage
-import com.example.simpletarot.ui.components.DeleteConfirmationDialog
 import com.example.simpletarot.ui.components.getColorFromSwipeState
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.theme.SimpleTarotTheme
@@ -60,7 +59,6 @@ fun HistoryScreen(
     padding: PaddingValues = PaddingValues(),
 ){
     val history by viewModel.previousReadings.collectAsState()
-    val pendingDeletion by viewModel.pendingDeletion.collectAsState()
     HistoryScreenStateless(
         spacing = LocalSpacing.current,
         history = history,
@@ -68,10 +66,6 @@ fun HistoryScreen(
         onCardClick = { card -> viewModel.openCardDetail(card) },
         onDeleteRequest = { viewModel.scheduleDeletion(it) },
         resolveCard = { viewModel.resolveCard(it) })
-    HandleDeleteRequest(
-        reading = pendingDeletion,
-        onConfirm = { viewModel.confirmDeletion() },
-        onDismiss = { viewModel.cancelDeletion() })
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -191,20 +185,6 @@ fun SwipeableTarotItem(
             readingWithCards = item,
             onCardClick = onCardClick,
             resolveCard = resolveCard)
-    }
-}
-
-@Composable
-fun HandleDeleteRequest(
-    reading: ReadingEntity?,
-    onConfirm: () -> Unit = {},
-    onDismiss: () -> Unit = {}) {
-    // Show Dialog if a reading is pending deletion
-    reading?.let { _ ->
-        DeleteConfirmationDialog(
-            onConfirm = { onConfirm() },
-            onDismiss = { onDismiss() }
-        )
     }
 }
 

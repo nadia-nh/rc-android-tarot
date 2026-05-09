@@ -12,7 +12,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import com.example.simpletarot.data.local.ReadingEntity
 import com.example.simpletarot.domain.model.DrawnCard
+import com.example.simpletarot.ui.components.DeleteConfirmationDialog
 import com.example.simpletarot.ui.screens.CardDetailScreen
 import com.example.simpletarot.ui.screens.HistoryScreen
 import com.example.simpletarot.ui.screens.MenuScreen
@@ -44,7 +46,7 @@ fun TarotMain(
     val spread by viewModel.currentSpread.collectAsState()
     val selectedCard by viewModel.selectedCard.collectAsState()
     val dailySpread by viewModel.dailySpread.collectAsState()
-    val cardCount = spread.size
+    val pendingDeletion by viewModel.pendingDeletion.collectAsState()
 
     BackHandler(enabled = currentScreen == AppScreen.Result || currentScreen == AppScreen.CardDetail) {
         if (currentScreen == AppScreen.CardDetail) {
@@ -61,6 +63,7 @@ fun TarotMain(
         dailySpread = dailySpread,
         currentSpread = spread,
         selectedCard = selectedCard,
+        pendingDeletion = pendingDeletion,
         onHome = { viewModel.backToMenu() },
         onBack = { viewModel.backToMenu() },
         onSave = { viewModel.saveReading() },
@@ -70,10 +73,7 @@ fun TarotMain(
         onCardClick = { card -> viewModel.openCardDetail(card) },
         onReveal = { index -> viewModel.revealCard(index) },
         homeSelected = selectedScreen == AppScreen.Menu,
-        oneCardSelected =
-            (selectedScreen == AppScreen.Result) && cardCount == 1,
-        threeCardsSelected =
-            (selectedScreen == AppScreen.Result) && cardCount == 3,
+        resultSelected = selectedScreen == AppScreen.Result,
         historySelected = selectedScreen == AppScreen.History
     )
 }
@@ -87,6 +87,7 @@ fun TarotMainInternal(
     dailySpread: List<DrawnCard> = listOf(),
     currentSpread: List<DrawnCard> = listOf(),
     selectedCard: DrawnCard? = null,
+    pendingDeletion: ReadingEntity? = null,
     onHome: () -> Unit = {},
     onBack: () -> Unit = {},
     onSave: () -> Unit = {},
@@ -96,11 +97,11 @@ fun TarotMainInternal(
     onCardClick: (card: DrawnCard) -> Unit = {},
     onReveal: (index: Int) -> Unit = {},
     homeSelected: Boolean = true,
-    oneCardSelected: Boolean = false,
-    threeCardsSelected: Boolean = false,
+    resultSelected: Boolean = false,
     historySelected: Boolean = false
 ) {
     val spacing = LocalSpacing.current
+    val cardCount = currentSpread.size
 
     Row(modifier = Modifier.fillMaxSize()) {
         if (isLandscape) {
@@ -109,8 +110,8 @@ fun TarotMainInternal(
                 onDraw = onDraw,
                 onOpenHistory = onOpenHistory,
                 homeSelected = homeSelected,
-                oneCardSelected = oneCardSelected,
-                threeCardsSelected = threeCardsSelected,
+                oneCardSelected = resultSelected && cardCount == 1,
+                threeCardsSelected = resultSelected  && cardCount == 3,
                 historySelected = historySelected,
             )
         }
@@ -121,7 +122,7 @@ fun TarotMainInternal(
                     AppScreen.Menu ->
                         TopAppBar( title = {TarotHeadline(spacing)} )
                     AppScreen.Result ->
-                        ResultScreenTopAppBar(currentSpread.size, onBack)
+                        ResultScreenTopAppBar(cardCount, onBack)
                     AppScreen.History -> HistoryScreenTopBar(onBack)
                     AppScreen.CardDetail  ->
                         selectedCard?.let {
@@ -136,8 +137,8 @@ fun TarotMainInternal(
                         onDraw = onDraw,
                         onOpenHistory = onOpenHistory,
                         homeSelected = homeSelected,
-                        oneCardSelected = oneCardSelected,
-                        threeCardsSelected = threeCardsSelected,
+                        oneCardSelected = resultSelected && cardCount == 1,
+                        threeCardsSelected = resultSelected  && cardCount == 3,
                         historySelected = historySelected,
                     )
                 }
@@ -165,11 +166,18 @@ fun TarotMainInternal(
                         onCardClick = onCardClick
                     )
 
-                AppScreen.History ->
+                AppScreen.History -> {
+                    pendingDeletion?.let { _ ->
+                        DeleteConfirmationDialog(
+                            onConfirm = { viewModel.confirmDeletion() },
+                            onDismiss = { viewModel.cancelDeletion() }
+                        )
+                    }
                     HistoryScreen(
                         viewModel = viewModel,
                         padding = innerPadding
                     )
+                }
 
                 AppScreen.CardDetail ->
                     selectedCard?.let { card ->
