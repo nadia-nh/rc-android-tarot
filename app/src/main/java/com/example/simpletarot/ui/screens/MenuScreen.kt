@@ -4,22 +4,24 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CropPortrait
 import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -30,10 +32,8 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.simpletarot.domain.model.DrawnCard
 import com.example.simpletarot.ui.components.CardDisplay
-import com.example.simpletarot.ui.components.StyledButton
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.theme.PreviewConstants
 import com.example.simpletarot.ui.theme.SimpleTarotTheme
@@ -56,9 +56,7 @@ fun MenuScreen(
             )
         },
         bottomBar = {
-            MenuScreenButtons(
-                spacing = spacing,
-                isLandscape = isLandscape,
+            MenuScreenBottomBar(
                 onDraw = onDraw,
                 onOpenHistory = onOpenHistory
             )
@@ -152,53 +150,46 @@ fun MenuScreenGuidanceText(
 }
 
 @Composable
-fun MenuScreenButtons(
-    spacing: TarotSpacing = LocalSpacing.current,
-    isLandscape: Boolean = false,
+fun MenuScreenBottomBar(
     onDraw: (count: Int) -> Unit = {},
     onOpenHistory: () -> Unit = {}
 ) {
-    Row(
-        modifier = Modifier
-            .padding(
-                start = if (isLandscape) spacing.large else spacing.medium,
-                end = if (isLandscape) spacing.large else spacing.medium,
-                top = if (isLandscape) spacing.medium else spacing.large,
-                bottom = spacing.large),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        val textStyle = MaterialTheme.typography.labelSmall
-            .copy(fontSize = if (isLandscape) 12.sp else 9.sp)
-        StyledButton(
-            modifier = Modifier.weight(1f),
-            isLandscape = isLandscape,
-            text = "1 Card",
-            style = textStyle,
-            displayIcon = true,
-            icon = Icons.Default.CropPortrait) {
-            onDraw(1)
-        }
-        Spacer(modifier = Modifier.size(spacing.large))
-        StyledButton(
-            modifier = Modifier.weight(1f),
-            isLandscape = isLandscape,
-            text = "3 Cards",
-            style = textStyle,
-            displayIcon = true,
-            icon = Icons.Default.CropPortrait) {
-            onDraw(3)
-        }
-        Spacer(modifier = Modifier.size(spacing.large))
-        StyledButton(
-            modifier = Modifier.weight(1f),
-            isLandscape = isLandscape,
-            text = "History",
-            style = textStyle,
-            displayIcon = true,
-            icon = Icons.Default.History) {
-            onOpenHistory()
-        }
+    NavigationBar {
+        NavigationBarItem(
+            selected = true,
+            onClick = { },
+            icon = { Icon(
+                imageVector = Icons.Default.Home,
+                contentDescription = "Home")},
+            label = { Text("Home") }
+        )
+
+        NavigationBarItem(
+            selected = false,
+            onClick = { onDraw(1) },
+            icon = { Icon(
+                imageVector = Icons.Default.CropPortrait,
+                contentDescription = "Draw 1 Card") },
+            label = { Text("1 Card") }
+        )
+
+        NavigationBarItem(
+            selected = false,
+            onClick = { onDraw(3) },
+            icon = { Icon(
+                imageVector = Icons.Default.CropPortrait,
+                contentDescription = "Draw 3 Cards") },
+            label = { Text("3 Cards") }
+        )
+
+        NavigationBarItem(
+            selected = false,
+            onClick = { onOpenHistory() },
+            icon = { Icon(
+                imageVector = Icons.Default.History,
+                contentDescription = "Show History") },
+            label = { Text("History") }
+        )
     }
 }
 
@@ -220,9 +211,9 @@ fun MenuScreenGuidanceTextPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun MenuScreenButtonsPreview() {
+fun MenuScreenBottomBarPreview() {
     SimpleTarotTheme {
-        MenuScreenButtons()
+        MenuScreenBottomBar()
     }
 }
 
