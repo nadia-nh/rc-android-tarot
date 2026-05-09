@@ -73,13 +73,11 @@ fun MenuScreen(
                 }
             }
         }
-
-        MenuScreenGuidanceText(spacing)
     }
 }
 
 @Composable
-fun MenuScreenGuidanceText(
+fun TarotGuidanceText(
     spacing: TarotSpacing = LocalSpacing.current
 ) {
     Spacer(modifier = Modifier.height(spacing.large))
@@ -109,9 +107,9 @@ fun MenuScreenGuidanceText(
 
 @Preview(showBackground = true)
 @Composable
-fun MenuScreenGuidanceTextPreview() {
+fun TarotGuidanceTextPreview() {
     SimpleTarotTheme {
-        MenuScreenGuidanceText()
+        TarotGuidanceText()
     }
 }
 
