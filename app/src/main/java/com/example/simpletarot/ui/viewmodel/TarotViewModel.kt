@@ -25,7 +25,7 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
     private val _currentSpread = MutableStateFlow<List<DrawnCard>>(emptyList())
     private val _dailySpread = MutableStateFlow<List<DrawnCard>>(emptyList())
     private val _currentScreen = MutableStateFlow(AppScreen.Menu)
-    private val _previousScreen = MutableStateFlow(AppScreen.Result)
+    private val _selectedScreen = MutableStateFlow(AppScreen.Menu)
     private val _isNetworkEnabled = MutableStateFlow(false)
     private val _isSaved = MutableStateFlow(false)
     private val _pendingDeletion = MutableStateFlow<ReadingEntity?>(null)
@@ -34,6 +34,7 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
     val currentSpread: StateFlow<List<DrawnCard>> = _currentSpread
     val dailySpread: StateFlow<List<DrawnCard>> = _dailySpread
     val currentScreen: StateFlow<AppScreen> = _currentScreen
+    val selectedScreen: StateFlow<AppScreen> = _selectedScreen
     val isSaved: StateFlow<Boolean> = _isSaved
     val pendingDeletion: StateFlow<ReadingEntity?> = _pendingDeletion
     val selectedCard: StateFlow<DrawnCard?> = _selectedCard
@@ -78,6 +79,7 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
     fun drawCards(count: Int) {
         _currentSpread.value = draw(count)
         _currentScreen.value = AppScreen.Result
+        _selectedScreen.value = _currentScreen.value
         _isSaved.value = false
     }
 
@@ -114,14 +116,17 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
     fun clearSpread() {
         _currentSpread.value = emptyList()
         _currentScreen.value = AppScreen.Menu
+        _selectedScreen.value = _currentScreen.value
     }
 
     fun backToMenu() {
         _currentScreen.value = AppScreen.Menu
+        _selectedScreen.value = _currentScreen.value
     }
 
     fun openHistory() {
         _currentScreen.value = AppScreen.History
+        _selectedScreen.value = _currentScreen.value
     }
 
     // Save current spread
@@ -170,12 +175,11 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
 
     fun openCardDetail(card: DrawnCard) {
         _selectedCard.value = card
-        _previousScreen.value = _currentScreen.value
         _currentScreen.value = AppScreen.CardDetail
     }
 
     fun closeCardDetail() {
         _selectedCard.value = null
-        _currentScreen.value = _previousScreen.value
+        _currentScreen.value = _selectedScreen.value
     }
 }
