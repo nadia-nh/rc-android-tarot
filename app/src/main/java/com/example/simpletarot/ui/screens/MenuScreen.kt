@@ -50,11 +50,6 @@ fun MenuScreen(
     val spacing = LocalSpacing.current
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {MenuScreenHeadline(spacing)}
-            )
-        },
         bottomBar = {
             MenuScreenBottomBar(
                 onDraw = onDraw,
@@ -108,7 +103,7 @@ fun MenuScreen(
 }
 
 @Composable
-fun MenuScreenHeadline(
+fun TarotHeadline(
     spacing: TarotSpacing = LocalSpacing.current
 ) {
     Spacer(modifier = Modifier.height(spacing.large))
@@ -195,9 +190,9 @@ fun MenuScreenBottomBar(
 
 @Preview(showBackground = true)
 @Composable
-fun MenuScreenHeadlinePreview() {
+fun TarotHeadlinePreview() {
     SimpleTarotTheme {
-        MenuScreenHeadline()
+        TarotHeadline()
     }
 }
 
