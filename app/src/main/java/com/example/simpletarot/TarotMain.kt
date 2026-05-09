@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import com.example.simpletarot.ui.screens.CardDetailScreen
 import com.example.simpletarot.ui.screens.HistoryScreen
 import com.example.simpletarot.ui.screens.MenuScreen
+import com.example.simpletarot.ui.screens.MenuScreenBottomBar
 import com.example.simpletarot.ui.screens.ResultsScreen
 import com.example.simpletarot.ui.screens.TarotHeadline
 import com.example.simpletarot.ui.theme.LocalSpacing
@@ -51,6 +52,12 @@ fun TarotMain(
             TopAppBar(
                 title = {TarotHeadline(spacing)}
             )
+        },
+        bottomBar = {
+            MenuScreenBottomBar(
+                onDraw = { count -> viewModel.drawCards(count) },
+                onOpenHistory = { viewModel.openHistory() },
+            )
         }
     ) { innerPadding ->
 
@@ -61,8 +68,6 @@ fun TarotMain(
                 MenuScreen(
                     isLandscape = isLandscape,
                     dailySpread = dailySpread,
-                    onDraw = { count -> viewModel.drawCards(count) },
-                    onOpenHistory = { viewModel.openHistory() },
                     onCardClick = { card -> viewModel.openCardDetail(card) }
                 )
 
