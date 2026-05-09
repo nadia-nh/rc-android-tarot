@@ -83,7 +83,8 @@ fun HistoryScreenTopBar(
         title = {
             Text(
                 text = "Tarot History",
-                color = MaterialTheme.colorScheme.onBackground
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.headlineSmall
             )
         },
         navigationIcon = {
