@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import com.example.simpletarot.domain.model.DrawnCard
 import com.example.simpletarot.ui.screens.CardDetailScreen
 import com.example.simpletarot.ui.screens.HistoryScreen
 import com.example.simpletarot.ui.screens.MenuScreen
@@ -27,7 +28,7 @@ enum class AppScreen {
     History,
     CardDetail
 }
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun TarotMain(
     viewModel: TarotViewModel
@@ -39,16 +40,57 @@ fun TarotMain(
     val spread by viewModel.currentSpread.collectAsState()
     val selectedCard by viewModel.selectedCard.collectAsState()
     val dailySpread by viewModel.dailySpread.collectAsState()
-    val spacing = LocalSpacing.current
     val cardCount = spread.size
 
     BackHandler(enabled = currentScreen == AppScreen.Result || currentScreen == AppScreen.CardDetail) {
         if (currentScreen == AppScreen.CardDetail) {
             viewModel.closeCardDetail()
         } else {
-            viewModel.clearSpread()
+            viewModel.backToMenu()
         }
     }
+
+    TarotMainInternal(
+        viewModel = viewModel,
+        isLandscape = isLandscape,
+        currentScreen = currentScreen,
+        dailySpread = dailySpread,
+        selectedCard = selectedCard,
+        onHome = { viewModel.backToMenu() },
+        onBack = { viewModel.backToMenu() },
+        onOpenHistory = { viewModel.openHistory() },
+        onCloseDetail = { viewModel.closeCardDetail() },
+        onDraw = { count -> viewModel.drawCards(count) },
+        onCardClick = { card -> viewModel.openCardDetail(card) },
+        homeSelected = selectedScreen == AppScreen.Menu,
+        oneCardSelected =
+            (selectedScreen == AppScreen.Result) && cardCount == 1,
+        threeCardsSelected =
+            (selectedScreen == AppScreen.Result) && cardCount == 3,
+        historySelected = selectedScreen == AppScreen.History
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TarotMainInternal(
+    viewModel: TarotViewModel,
+    isLandscape: Boolean = false,
+    currentScreen: AppScreen = AppScreen.Menu,
+    dailySpread: List<DrawnCard> = listOf(),
+    selectedCard: DrawnCard? = null,
+    onHome: () -> Unit = {},
+    onBack: () -> Unit = {},
+    onOpenHistory: () -> Unit = {},
+    onCloseDetail: () -> Unit = {},
+    onDraw: (count: Int) -> Unit = {},
+    onCardClick: (card: DrawnCard) -> Unit = {},
+    homeSelected: Boolean = true,
+    oneCardSelected: Boolean = false,
+    threeCardsSelected: Boolean = false,
+    historySelected: Boolean = false
+) {
+    val spacing = LocalSpacing.current
 
     Scaffold(
         topBar = {
@@ -58,15 +100,13 @@ fun TarotMain(
         },
         bottomBar = {
             TarotBottomBar(
-                onHome = { viewModel.backToMenu() },
-                onDraw = { count -> viewModel.drawCards(count) },
-                onOpenHistory = { viewModel.openHistory() },
-                homeSelected = selectedScreen == AppScreen.Menu,
-                oneCardSelected =
-                    (selectedScreen == AppScreen.Result) && cardCount == 1,
-                threeCardsSelected =
-                    (selectedScreen == AppScreen.Result) && cardCount == 3,
-                historySelected = selectedScreen == AppScreen.History
+                onHome = onHome,
+                onDraw = onDraw,
+                onOpenHistory = onOpenHistory,
+                homeSelected = homeSelected,
+                oneCardSelected = oneCardSelected,
+                threeCardsSelected = threeCardsSelected,
+                historySelected = historySelected,
             )
         }
     ) { innerPadding ->
@@ -78,30 +118,26 @@ fun TarotMain(
                 MenuScreen(
                     isLandscape = isLandscape,
                     dailySpread = dailySpread,
-                    onCardClick = { card -> viewModel.openCardDetail(card) }
+                    onCardClick = onCardClick
                 )
 
             AppScreen.Result ->
                 ResultsScreen(
                     isLandscape = isLandscape,
                     viewModel = viewModel
-                ) {
-                    viewModel.clearSpread()
-                }
+                ) { onBack() }
 
             AppScreen.History ->
                 HistoryScreen(
                     viewModel = viewModel
-                ) {
-                    viewModel.backToMenu()
-                }
+                ) { onBack() }
 
             AppScreen.CardDetail ->
                 selectedCard?.let { card ->
                     CardDetailScreen(
                         drawnCard = card,
                         isLandscape = isLandscape,
-                        onBack = { viewModel.closeCardDetail() }
+                        onBack = { onCloseDetail() }
                     )
                 }
         }

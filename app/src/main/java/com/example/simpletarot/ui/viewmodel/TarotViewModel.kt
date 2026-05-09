@@ -113,13 +113,8 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
         }
     }
 
-    fun clearSpread() {
-        _currentSpread.value = emptyList()
-        _currentScreen.value = AppScreen.Menu
-        _selectedScreen.value = _currentScreen.value
-    }
-
     fun backToMenu() {
+        _currentSpread.value = emptyList()
         _currentScreen.value = AppScreen.Menu
         _selectedScreen.value = _currentScreen.value
     }
