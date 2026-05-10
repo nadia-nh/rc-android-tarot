@@ -31,8 +31,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,57 +47,19 @@ import com.example.simpletarot.ui.components.getColorFromSwipeState
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.theme.SimpleTarotTheme
 import com.example.simpletarot.ui.theme.TarotSpacing
-import com.example.simpletarot.ui.viewmodel.TarotViewModel
 import com.example.simpletarot.util.DateUtils
 import kotlinx.coroutines.launch
 
 @Composable
 fun HistoryScreen(
-    viewModel: TarotViewModel,
-    padding: PaddingValues = PaddingValues(),
-){
-    val history by viewModel.previousReadings.collectAsState()
-    HistoryScreenStateless(
-        spacing = LocalSpacing.current,
-        history = history,
-        padding = padding,
-        onCardClick = { card -> viewModel.openCardDetail(card) },
-        onDeleteRequest = { viewModel.scheduleDeletion(it) },
-        resolveCard = { viewModel.resolveCard(it) })
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun HistoryScreenTopBar(
-    onBack: () -> Unit = {},
-) {
-    TopAppBar(
-        title = {
-            Text(
-                text = "Tarot History",
-                color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.headlineSmall
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = onBack) {
-                Icon(
-                    Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back")
-            }
-        }
-    )
-}
-
-@Composable
-fun HistoryScreenStateless(
-    spacing: TarotSpacing = LocalSpacing.current,
     history: List<ReadingWithCards> = emptyList(),
     padding: PaddingValues = PaddingValues(),
     onCardClick: (DrawnCard) -> Unit = {},
     onDeleteRequest: (reading: ReadingEntity) -> Unit = {},
     resolveCard: (DrawnCardEntity) -> DrawnCard = { it.toDrawnCard() }
-) {
+){
+   val spacing = LocalSpacing.current
+
     if (history.isEmpty()) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -135,6 +95,29 @@ fun HistoryScreenStateless(
             }
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HistoryScreenTopBar(
+    onBack: () -> Unit = {},
+) {
+    TopAppBar(
+        title = {
+            Text(
+                text = "Tarot History",
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.headlineSmall
+            )
+        },
+        navigationIcon = {
+            IconButton(onClick = onBack) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back")
+            }
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -311,6 +294,6 @@ fun TarotReadingItemPreview() {
 @Composable
 fun HistoryScreenPreview() {
     SimpleTarotTheme {
-        HistoryScreenStateless(history = PreviewConstants.readings)
+        HistoryScreen(history = PreviewConstants.readings)
     }
 }

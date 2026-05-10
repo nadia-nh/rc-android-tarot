@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import com.example.simpletarot.data.local.ReadingEntity
+import com.example.simpletarot.data.local.ReadingWithCards
 import com.example.simpletarot.domain.model.DrawnCard
 import com.example.simpletarot.ui.components.DeleteConfirmationDialog
 import com.example.simpletarot.ui.screens.CardDetailScreen
@@ -47,6 +48,7 @@ fun TarotMain(
     val selectedCard by viewModel.selectedCard.collectAsState()
     val dailySpread by viewModel.dailySpread.collectAsState()
     val pendingDeletion by viewModel.pendingDeletion.collectAsState()
+    val history by viewModel.previousReadings.collectAsState()
 
     BackHandler(enabled = currentScreen == AppScreen.Result || currentScreen == AppScreen.CardDetail) {
         if (currentScreen == AppScreen.CardDetail) {
@@ -64,6 +66,7 @@ fun TarotMain(
         currentSpread = spread,
         selectedCard = selectedCard,
         pendingDeletion = pendingDeletion,
+        history = history,
         onHome = { viewModel.backToMenu() },
         onBack = { viewModel.backToMenu() },
         onSave = { viewModel.saveReading() },
@@ -88,6 +91,7 @@ fun TarotMainInternal(
     currentSpread: List<DrawnCard> = listOf(),
     selectedCard: DrawnCard? = null,
     pendingDeletion: ReadingEntity? = null,
+    history: List<ReadingWithCards> = listOf(),
     onHome: () -> Unit = {},
     onBack: () -> Unit = {},
     onSave: () -> Unit = {},
@@ -174,8 +178,11 @@ fun TarotMainInternal(
                         )
                     }
                     HistoryScreen(
-                        viewModel = viewModel,
-                        padding = innerPadding
+                        history = history,
+                        padding = innerPadding,
+                        onCardClick = onCardClick,
+                        onDeleteRequest = {viewModel.scheduleDeletion(it) },
+                        resolveCard = { viewModel.resolveCard(it) }
                     )
                 }
 
