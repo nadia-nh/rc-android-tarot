@@ -163,8 +163,8 @@ fun TarotMainInternal(
                         isLandscape = isLandscape,
                         padding = innerPadding,
                         cards = currentSpread,
-                        isSaved = viewModel.isSaved,
-                        allCardsRevealed = viewModel.isRevealed,
+                        isSaved = viewModel.isSpreadSaved,
+                        allCardsRevealed = viewModel.isSpreadRevealed,
                         onSave = onSave,
                         onReveal = onReveal,
                         onCardClick = onCardClick

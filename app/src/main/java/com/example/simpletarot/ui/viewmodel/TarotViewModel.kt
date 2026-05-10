@@ -27,7 +27,7 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
     private val _currentScreen = MutableStateFlow(AppScreen.Menu)
     private val _selectedScreen = MutableStateFlow(AppScreen.Menu)
     private val _isNetworkEnabled = MutableStateFlow(false)
-    private val _isSaved = MutableStateFlow(false)
+    private val _isSpreadSaved = MutableStateFlow(false)
     private val _pendingDeletion = MutableStateFlow<ReadingEntity?>(null)
     private val _selectedCard = MutableStateFlow<DrawnCard?>(null)
 
@@ -35,11 +35,11 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
     val dailySpread: StateFlow<List<DrawnCard>> = _dailySpread
     val currentScreen: StateFlow<AppScreen> = _currentScreen
     val selectedScreen: StateFlow<AppScreen> = _selectedScreen
-    val isSaved: StateFlow<Boolean> = _isSaved
+    val isSpreadSaved: StateFlow<Boolean> = _isSpreadSaved
     val pendingDeletion: StateFlow<ReadingEntity?> = _pendingDeletion
     val selectedCard: StateFlow<DrawnCard?> = _selectedCard
 
-    val isRevealed: StateFlow<Boolean> = _currentSpread
+    val isSpreadRevealed: StateFlow<Boolean> = _currentSpread
         .map { cards -> cards.all { it.isRevealed } }
         .stateIn(
             scope = viewModelScope,
@@ -80,7 +80,7 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
         _currentSpread.value = draw(count)
         _currentScreen.value = AppScreen.Result
         _selectedScreen.value = _currentScreen.value
-        _isSaved.value = false
+        _isSpreadSaved.value = false
     }
 
     fun drawDailyCards(count: Int) {
@@ -126,7 +126,7 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
 
     // Save current spread
     fun saveReading() {
-        if (_isSaved.value) return
+        if (_isSpreadSaved.value) return
 
         val cardCount = _currentSpread.value.size
         val spreadType = if (cardCount == 3) "ThreeCardDraw" else "SingleCardDraw"
@@ -137,7 +137,7 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
 
         viewModelScope.launch {
             repository.saveReading(reading, cards)
-            _isSaved.value = true
+            _isSpreadSaved.value = true
         }
     }
 
