@@ -49,6 +49,8 @@ fun TarotMain(
     val dailySpread by viewModel.dailySpread.collectAsState()
     val pendingDeletion by viewModel.pendingDeletion.collectAsState()
     val history by viewModel.previousReadings.collectAsState()
+    val isSpreadSaved by viewModel.isSpreadSaved.collectAsState()
+    val allRevealed by viewModel.isSpreadRevealed.collectAsState()
 
     BackHandler(enabled = currentScreen == AppScreen.Result || currentScreen == AppScreen.CardDetail) {
         if (currentScreen == AppScreen.CardDetail) {
@@ -67,6 +69,8 @@ fun TarotMain(
         selectedCard = selectedCard,
         pendingDeletion = pendingDeletion,
         history = history,
+        isSpreadSaved = isSpreadSaved,
+        allRevealed = allRevealed,
         onHome = { viewModel.backToMenu() },
         onBack = { viewModel.backToMenu() },
         onSave = { viewModel.saveReading() },
@@ -92,6 +96,8 @@ fun TarotMainInternal(
     selectedCard: DrawnCard? = null,
     pendingDeletion: ReadingEntity? = null,
     history: List<ReadingWithCards> = listOf(),
+    isSpreadSaved: Boolean = false,
+    allRevealed: Boolean = false,
     onHome: () -> Unit = {},
     onBack: () -> Unit = {},
     onSave: () -> Unit = {},
@@ -163,8 +169,8 @@ fun TarotMainInternal(
                         isLandscape = isLandscape,
                         padding = innerPadding,
                         cards = currentSpread,
-                        isSaved = viewModel.isSpreadSaved,
-                        allCardsRevealed = viewModel.isSpreadRevealed,
+                        isSaved = isSpreadSaved,
+                        allCardsRevealed = allRevealed,
                         onSave = onSave,
                         onReveal = onReveal,
                         onCardClick = onCardClick

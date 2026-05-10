@@ -21,7 +21,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,9 +30,6 @@ import com.example.simpletarot.domain.model.DrawnCard
 import com.example.simpletarot.ui.components.StyledButton
 import com.example.simpletarot.ui.theme.LocalSpacing
 import com.example.simpletarot.ui.theme.TarotSpacing
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import com.example.simpletarot.ui.theme.PreviewConstants
 import com.example.simpletarot.ui.theme.SimpleTarotTheme
 
@@ -42,8 +38,8 @@ fun ResultsScreen(
     isLandscape: Boolean = false,
     padding: PaddingValues = PaddingValues(),
     cards : List<DrawnCard>,
-    isSaved: StateFlow<Boolean> = MutableStateFlow(false).asStateFlow(),
-    allCardsRevealed: StateFlow<Boolean> = MutableStateFlow(false).asStateFlow(),
+    isSaved: Boolean = false,
+    allCardsRevealed: Boolean = false,
     onSave: () -> Unit = {},
     onReveal: (index: Int) -> Unit = {},
     onCardClick: (DrawnCard) -> Unit = {}) {
@@ -71,8 +67,8 @@ fun ResultsScreen(
         SaveButton(
             isLandscape = isLandscape,
             spacing = spacing,
-            isSaved.collectAsState().value,
-            allCardsRevealed.collectAsState().value,
+            isSaved,
+            allCardsRevealed,
             onSave)
     }
 }
