@@ -65,6 +65,7 @@ fun TarotMain(
     TarotMainInternal(
         isLandscape = isLandscape,
         currentScreen = currentScreen,
+        selectedScreen = selectedScreen,
         dailySpread = dailySpread,
         currentSpread = spread,
         selectedCard = selectedCard,
@@ -84,9 +85,6 @@ fun TarotMain(
         scheduleDelection = { entity -> viewModel.scheduleDeletion(entity) },
         confirmDeletion = { viewModel.confirmDeletion() },
         cancelDeletion = { viewModel.cancelDeletion() },
-        homeSelected = selectedScreen == AppScreen.Menu,
-        resultSelected = selectedScreen == AppScreen.Result,
-        historySelected = selectedScreen == AppScreen.History
     )
 }
 
@@ -95,6 +93,7 @@ fun TarotMain(
 fun TarotMainInternal(
     isLandscape: Boolean = false,
     currentScreen: AppScreen = AppScreen.Menu,
+    selectedScreen: AppScreen = AppScreen.Menu,
     dailySpread: List<DrawnCard> = listOf(),
     currentSpread: List<DrawnCard> = listOf(),
     selectedCard: DrawnCard? = null,
@@ -114,12 +113,14 @@ fun TarotMainInternal(
     scheduleDelection: (entity: ReadingEntity) -> Unit = {},
     confirmDeletion: () -> Unit = {},
     cancelDeletion: () -> Unit = {},
-    homeSelected: Boolean = true,
-    resultSelected: Boolean = false,
-    historySelected: Boolean = false
 ) {
     val spacing = LocalSpacing.current
     val cardCount = currentSpread.size
+    val homeSelected = selectedScreen == AppScreen.Menu
+    val resultSelected = selectedScreen == AppScreen.Result
+    val historySelected = selectedScreen == AppScreen.History
+    val oneCardSelected = resultSelected && cardCount == 1
+    val threeCardsSelected = resultSelected && cardCount == 3
 
     Row(modifier = Modifier.fillMaxSize()) {
         if (isLandscape) {
@@ -128,8 +129,8 @@ fun TarotMainInternal(
                 onDraw = onDraw,
                 onOpenHistory = onOpenHistory,
                 homeSelected = homeSelected,
-                oneCardSelected = resultSelected && cardCount == 1,
-                threeCardsSelected = resultSelected  && cardCount == 3,
+                oneCardSelected = oneCardSelected,
+                threeCardsSelected = threeCardsSelected,
                 historySelected = historySelected,
             )
         }
@@ -155,8 +156,8 @@ fun TarotMainInternal(
                         onDraw = onDraw,
                         onOpenHistory = onOpenHistory,
                         homeSelected = homeSelected,
-                        oneCardSelected = resultSelected && cardCount == 1,
-                        threeCardsSelected = resultSelected  && cardCount == 3,
+                        oneCardSelected = oneCardSelected,
+                        threeCardsSelected = threeCardsSelected,
                         historySelected = historySelected,
                     )
                 }
