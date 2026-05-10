@@ -12,8 +12,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import com.example.simpletarot.data.local.DrawnCardEntity
 import com.example.simpletarot.data.local.ReadingEntity
 import com.example.simpletarot.data.local.ReadingWithCards
+import com.example.simpletarot.data.local.toDrawnCard
 import com.example.simpletarot.domain.model.DrawnCard
 import com.example.simpletarot.ui.components.DeleteConfirmationDialog
 import com.example.simpletarot.ui.screens.CardDetailScreen
@@ -61,7 +63,6 @@ fun TarotMain(
     }
 
     TarotMainInternal(
-        viewModel = viewModel,
         isLandscape = isLandscape,
         currentScreen = currentScreen,
         dailySpread = dailySpread,
@@ -79,6 +80,10 @@ fun TarotMain(
         onDraw = { count -> viewModel.drawCards(count) },
         onCardClick = { card -> viewModel.openCardDetail(card) },
         onReveal = { index -> viewModel.revealCard(index) },
+        resolveCard = { cardEntity -> viewModel.resolveCard(cardEntity) },
+        scheduleDelection = { entity -> viewModel.scheduleDeletion(entity) },
+        confirmDeletion = { viewModel.confirmDeletion() },
+        cancelDeletion = { viewModel.cancelDeletion() },
         homeSelected = selectedScreen == AppScreen.Menu,
         resultSelected = selectedScreen == AppScreen.Result,
         historySelected = selectedScreen == AppScreen.History
@@ -88,7 +93,6 @@ fun TarotMain(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TarotMainInternal(
-    viewModel: TarotViewModel,
     isLandscape: Boolean = false,
     currentScreen: AppScreen = AppScreen.Menu,
     dailySpread: List<DrawnCard> = listOf(),
@@ -106,6 +110,10 @@ fun TarotMainInternal(
     onDraw: (count: Int) -> Unit = {},
     onCardClick: (card: DrawnCard) -> Unit = {},
     onReveal: (index: Int) -> Unit = {},
+    resolveCard: (card: DrawnCardEntity) -> DrawnCard = { it.toDrawnCard() },
+    scheduleDelection: (entity: ReadingEntity) -> Unit = {},
+    confirmDeletion: () -> Unit = {},
+    cancelDeletion: () -> Unit = {},
     homeSelected: Boolean = true,
     resultSelected: Boolean = false,
     historySelected: Boolean = false
@@ -179,16 +187,16 @@ fun TarotMainInternal(
                 AppScreen.History -> {
                     pendingDeletion?.let { _ ->
                         DeleteConfirmationDialog(
-                            onConfirm = { viewModel.confirmDeletion() },
-                            onDismiss = { viewModel.cancelDeletion() }
+                            onConfirm = confirmDeletion,
+                            onDismiss = cancelDeletion
                         )
                     }
                     HistoryScreen(
                         history = history,
                         padding = innerPadding,
                         onCardClick = onCardClick,
-                        onDeleteRequest = {viewModel.scheduleDeletion(it) },
-                        resolveCard = { viewModel.resolveCard(it) }
+                        onDeleteRequest = scheduleDelection,
+                        resolveCard = resolveCard
                     )
                 }
 
