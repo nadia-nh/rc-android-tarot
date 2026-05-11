@@ -1,6 +1,5 @@
 package com.example.simpletarot.ui.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,20 +29,23 @@ import com.example.simpletarot.ui.theme.TarotSpacing
 fun MenuScreen(
     modifier: Modifier = Modifier,
     isLandscape: Boolean = false,
-    dailySpread: List<DrawnCard> = listOf(),
+    dailySpread: List<DrawnCard> = emptyList(),
     onCardClick: (DrawnCard) -> Unit = {}) {
-    Box(
-        modifier = modifier
-            .background(color = MaterialTheme.colorScheme.background)
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
+    Surface(
+        modifier = modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
     ) {
-        MenuScreenDailySpread(
-            spacing = LocalSpacing.current,
-            isLandscape = isLandscape,
-            dailySpread = dailySpread,
-            onCardClick = onCardClick
-        )
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            MenuScreenDailySpread(
+                spacing = LocalSpacing.current,
+                isLandscape = isLandscape,
+                dailySpread = dailySpread,
+                onCardClick = onCardClick
+            )
+        }
     }
 }
 
