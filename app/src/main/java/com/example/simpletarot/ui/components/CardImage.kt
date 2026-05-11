@@ -1,8 +1,11 @@
 package com.example.simpletarot.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.ContentScale
@@ -29,14 +32,25 @@ fun CardImage(
     )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun CardImagePreview() {
     SimpleTarotTheme {
-        CardImage(card = DrawnCard(card = TarotCard("The Fool",
-            "New beginnings, character, trust",
-            "Recklessness, naivety, holding back"),
-            isReversed = false,
-            isRevealed = true))
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CardImage(
+                card = DrawnCard(
+                    card = TarotCard(
+                        "The Fool",
+                        "New beginnings, character, trust",
+                        "Recklessness, naivety, holding back"
+                    ),
+                    isReversed = false,
+                    isRevealed = true
+                )
+            )
+        }
     }
 }

@@ -1,6 +1,8 @@
 package com.example.simpletarot.ui.components
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CropPortrait
 import androidx.compose.material.icons.filled.History
@@ -11,6 +13,7 @@ import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.simpletarot.ui.theme.SimpleTarotTheme
@@ -75,7 +78,12 @@ fun TarotNavigationRail(
 @Composable
 fun TarotNavigationRailPreview() {
     SimpleTarotTheme {
-        TarotNavigationRail()
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            TarotNavigationRail()
+        }
     }
 }
 

@@ -1,9 +1,11 @@
 package com.example.simpletarot.ui.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Preview
@@ -130,12 +132,17 @@ fun StylizedButtonIconDisplay(
 @Preview(showBackground = true)
 @Composable
 fun StylizedButtonIconDisplayPreview() {
-    SimpleTarotTheme {
-        StylizedButtonIconDisplay(
-            text = "Test Button",
-            displayIcon = true,
-            icon = Icons.Default.Preview
-        )
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        SimpleTarotTheme {
+            StylizedButtonIconDisplay(
+                text = "Test Button",
+                displayIcon = true,
+                icon = Icons.Default.Preview
+            )
+        }
     }
 }
 

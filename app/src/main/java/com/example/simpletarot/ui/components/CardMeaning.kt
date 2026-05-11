@@ -28,13 +28,11 @@ fun CardMeaning(
         textAlign = TextAlign.Start)
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun CardMeaningPreview() {
     SimpleTarotTheme {
-        Box(modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.background)
-            .fillMaxSize(),
+        Box(modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             CardMeaning(drawnCard = PreviewConstants.drawnCard)

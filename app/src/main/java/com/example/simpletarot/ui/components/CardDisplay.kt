@@ -90,13 +90,11 @@ fun CardImageOrPlaceholder(drawnCard: DrawnCard) {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun CardWithImageOnRevealPreview() {
     SimpleTarotTheme {
-        Box(modifier = Modifier
-            .background(color = MaterialTheme.colorScheme.background)
-            .fillMaxSize(),
+        Box(modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             CardWithImageOnReveal(
@@ -106,14 +104,12 @@ fun CardWithImageOnRevealPreview() {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun CardImageOrPlaceholderPreview() {
     SimpleTarotTheme {
         Box(
-            modifier = Modifier
-                .background(color = MaterialTheme.colorScheme.background)
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             CardImageOrPlaceholder(
@@ -127,8 +123,14 @@ fun CardImageOrPlaceholderPreview() {
 @Composable
 fun CardDisplayPreview() {
     SimpleTarotTheme {
-        CardDisplay(
-            modifier = Modifier.height(200.dp),
-            drawnCard = PreviewConstants.drawnCard)
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CardDisplay(
+                modifier = Modifier.height(200.dp),
+                drawnCard = PreviewConstants.drawnCard
+            )
+        }
     }
 }
