@@ -20,7 +20,7 @@ import com.example.simpletarot.ui.theme.SimpleTarotTheme
 @Composable
 fun CardMeaning(
     drawnCard: DrawnCard,
-    style: TextStyle = MaterialTheme.typography.bodyMedium) {
+    style: TextStyle = MaterialTheme.typography.bodyLarge) {
     Text(text = drawnCard.getMeaning(),
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.onBackground,
