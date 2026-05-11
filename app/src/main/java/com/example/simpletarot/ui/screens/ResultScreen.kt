@@ -157,26 +157,41 @@ fun SaveButton(
     )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun CardsDisplayPreview() {
     SimpleTarotTheme {
-        CardsDisplay(cards = PreviewConstants.tarotCards)
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CardsDisplay(cards = PreviewConstants.tarotCards)
+        }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun SaveButtonPreview() {
     SimpleTarotTheme {
-        SaveButton(isSaved = false, allCardsRevealed = true)
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            SaveButton(isSaved = false, allCardsRevealed = true)
+        }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun ResultsScreenPreview() {
     SimpleTarotTheme {
-        ResultsScreen(cards = PreviewConstants.tarotCards)
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            ResultsScreen(cards = PreviewConstants.tarotCards)
+        }
     }
 }

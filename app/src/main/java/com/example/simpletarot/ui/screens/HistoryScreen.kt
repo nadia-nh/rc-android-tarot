@@ -247,7 +247,12 @@ fun TarotReadingItemCards(
 @Composable
 fun HistoryScreenTopBarPreview() {
     SimpleTarotTheme {
-        HistoryScreenTopBar()
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            HistoryScreenTopBar()
+        }
     }
 }
 
@@ -255,10 +260,15 @@ fun HistoryScreenTopBarPreview() {
 @Composable
 fun TarotReadingItemHeaderPreview() {
     SimpleTarotTheme {
-        TarotReadingItemHeader(
-            spreadType = "Three Card Draw",
-            timestamp = System.currentTimeMillis()
-        )
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            TarotReadingItemHeader(
+                spreadType = "Three Card Draw",
+                timestamp = System.currentTimeMillis()
+            )
+        }
     }
 }
 
@@ -266,7 +276,13 @@ fun TarotReadingItemHeaderPreview() {
 @Composable
 fun SwipeableTarotItemPreview() {
     SimpleTarotTheme {
-        SwipeableTarotItem(item = PreviewConstants.readingWithCards)
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            SwipeableTarotItem(
+                item = PreviewConstants.readingWithCards)
+        }
     }
 }
 
@@ -274,9 +290,14 @@ fun SwipeableTarotItemPreview() {
 @Composable
 fun TarotReadingItemCardsPreview() {
     SimpleTarotTheme {
-        TarotReadingItemCards(
-            cards = PreviewConstants.readingWithCards.cards
-        )
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            TarotReadingItemCards(
+                cards = PreviewConstants.readingWithCards.cards
+            )
+        }
     }
 }
 
@@ -284,15 +305,26 @@ fun TarotReadingItemCardsPreview() {
 @Composable
 fun TarotReadingItemPreview() {
     SimpleTarotTheme {
-        TarotReadingItem(
-            readingWithCards = PreviewConstants.readingWithCards)
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            TarotReadingItem(
+                readingWithCards = PreviewConstants.readingWithCards
+            )
+        }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun HistoryScreenPreview() {
-    SimpleTarotTheme {
-        HistoryScreen(history = PreviewConstants.readings)
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        SimpleTarotTheme {
+            HistoryScreen(history = PreviewConstants.readings)
+        }
     }
 }

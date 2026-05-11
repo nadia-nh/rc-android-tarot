@@ -1,6 +1,7 @@
 package com.example.simpletarot.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -121,22 +122,32 @@ fun CardDetailScreenTopBar(
     )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun PreviewCardDetailScreenTopBar() {
     SimpleTarotTheme {
-        CardDetailScreenTopBar(
-            drawnCard = PreviewConstants.drawnCard
-        )
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CardDetailScreenTopBar(
+                drawnCard = PreviewConstants.drawnCard
+            )
+        }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun CardDetailScreenPreview() {
     SimpleTarotTheme {
-        CardDetailScreen(
-            drawnCard = PreviewConstants.drawnCard
-        )
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CardDetailScreen(
+                drawnCard = PreviewConstants.drawnCard
+            )
+        }
     }
 }

@@ -89,9 +89,14 @@ fun MenuScreenDailySpread(
 @Composable
 fun MenuScreenDailySpreadPreview() {
     SimpleTarotTheme {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
         MenuScreenDailySpread(
             dailySpread = listOf(PreviewConstants.drawnCard),
         )
+            }
     }
 }
 
@@ -99,8 +104,13 @@ fun MenuScreenDailySpreadPreview() {
 @Composable
 fun MenuScreenPreview() {
     SimpleTarotTheme {
-        MenuScreen(
-            dailySpread = listOf(PreviewConstants.drawnCard),
-        )
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            MenuScreen(
+                dailySpread = listOf(PreviewConstants.drawnCard),
+            )
+        }
     }
 }
