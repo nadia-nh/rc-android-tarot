@@ -2,7 +2,6 @@ package com.example.simpletarot.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -36,17 +35,16 @@ import com.example.simpletarot.ui.theme.SimpleTarotTheme
 @Composable
 fun CardDetailScreen(
     drawnCard: DrawnCard,
+    modifier: Modifier = Modifier,
     isLandscape: Boolean = false,
-    padding: PaddingValues = PaddingValues(),
 ) {
     val spacing = LocalSpacing.current
 
     if (isLandscape) {
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .background(color = MaterialTheme.colorScheme.background)
                 .fillMaxSize()
-                .padding(padding)
                 .padding(
                     horizontal = spacing.medium,
                     vertical = spacing.large),
@@ -74,11 +72,10 @@ fun CardDetailScreen(
         }
     } else {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .background(color = MaterialTheme.colorScheme.background)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(padding)
                 .padding(
                     horizontal = spacing.large,
                     vertical = spacing.medium),

@@ -35,8 +35,8 @@ import com.example.simpletarot.ui.theme.SimpleTarotTheme
 
 @Composable
 fun ResultsScreen(
+    modifier: Modifier = Modifier,
     isLandscape: Boolean = false,
-    padding: PaddingValues = PaddingValues(),
     cards : List<DrawnCard>,
     isSaved: Boolean = false,
     allCardsRevealed: Boolean = false,
@@ -45,10 +45,9 @@ fun ResultsScreen(
     onCardClick: (DrawnCard) -> Unit = {}) {
     val spacing = LocalSpacing.current
     Column(
-        modifier = Modifier
+        modifier = modifier
             .background(color = MaterialTheme.colorScheme.background)
             .fillMaxSize()
-            .padding(padding)
             .padding(spacing.medium),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

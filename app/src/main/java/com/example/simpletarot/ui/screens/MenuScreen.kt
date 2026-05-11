@@ -4,12 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -29,14 +27,13 @@ import com.example.simpletarot.ui.theme.TarotSpacing
 
 @Composable
 fun MenuScreen(
+    modifier: Modifier = Modifier,
     isLandscape: Boolean = false,
-    padding: PaddingValues = PaddingValues(),
     dailySpread: List<DrawnCard> = listOf(),
     onCardClick: (DrawnCard) -> Unit = {}) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .background(color = MaterialTheme.colorScheme.background)
-            .padding(padding)
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {

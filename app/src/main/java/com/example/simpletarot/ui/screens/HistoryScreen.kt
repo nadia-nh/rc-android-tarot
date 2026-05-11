@@ -52,8 +52,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HistoryScreen(
+    modifier: Modifier = Modifier,
     history: List<ReadingWithCards> = emptyList(),
-    padding: PaddingValues = PaddingValues(),
     onCardClick: (DrawnCard) -> Unit = {},
     onDeleteRequest: (reading: ReadingEntity) -> Unit = {},
     resolveCard: (DrawnCardEntity) -> DrawnCard = { it.toDrawnCard() }
@@ -79,8 +79,7 @@ fun HistoryScreen(
         }
     } else {
         LazyColumn(
-            modifier = Modifier
-                .padding(padding),
+            modifier = modifier,
             contentPadding = PaddingValues(spacing.medium),
             verticalArrangement = Arrangement.spacedBy(spacing.small),
         ) {

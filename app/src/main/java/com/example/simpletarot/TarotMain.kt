@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
@@ -167,16 +168,16 @@ fun TarotMainInternal(
             when (currentScreen) {
                 AppScreen.Menu ->
                     MenuScreen(
+                        modifier = Modifier.padding(innerPadding),
                         isLandscape = isLandscape,
-                        padding = innerPadding,
                         dailySpread = dailySpread,
                         onCardClick = onCardClick
                     )
 
                 AppScreen.Result ->
                     ResultsScreen(
+                        modifier = Modifier.padding(innerPadding),
                         isLandscape = isLandscape,
-                        padding = innerPadding,
                         cards = currentSpread,
                         isSaved = isSpreadSaved,
                         allCardsRevealed = allRevealed,
@@ -193,8 +194,8 @@ fun TarotMainInternal(
                         )
                     }
                     HistoryScreen(
+                        modifier = Modifier.padding(innerPadding),
                         history = history,
-                        padding = innerPadding,
                         onCardClick = onCardClick,
                         onDeleteRequest = scheduleDeletion,
                         resolveCard = resolveCard
@@ -204,9 +205,9 @@ fun TarotMainInternal(
                 AppScreen.CardDetail ->
                     selectedCard?.let { card ->
                         CardDetailScreen(
-                            isLandscape = isLandscape,
-                            padding = innerPadding,
                             drawnCard = card,
+                            modifier = Modifier.padding(innerPadding),
+                            isLandscape = isLandscape,
                         )
                     }
             }
