@@ -82,7 +82,7 @@ fun TarotMain(
         onCardClick = { card -> viewModel.openCardDetail(card) },
         onReveal = { index -> viewModel.revealCard(index) },
         resolveCard = { cardEntity -> viewModel.resolveCard(cardEntity) },
-        scheduleDelection = { entity -> viewModel.scheduleDeletion(entity) },
+        scheduleDeletion = { entity -> viewModel.scheduleDeletion(entity) },
         confirmDeletion = { viewModel.confirmDeletion() },
         cancelDeletion = { viewModel.cancelDeletion() },
     )
@@ -110,7 +110,7 @@ fun TarotMainInternal(
     onCardClick: (card: DrawnCard) -> Unit = {},
     onReveal: (index: Int) -> Unit = {},
     resolveCard: (card: DrawnCardEntity) -> DrawnCard = { it.toDrawnCard() },
-    scheduleDelection: (entity: ReadingEntity) -> Unit = {},
+    scheduleDeletion: (entity: ReadingEntity) -> Unit = {},
     confirmDeletion: () -> Unit = {},
     cancelDeletion: () -> Unit = {},
 ) {
@@ -196,7 +196,7 @@ fun TarotMainInternal(
                         history = history,
                         padding = innerPadding,
                         onCardClick = onCardClick,
-                        onDeleteRequest = scheduleDelection,
+                        onDeleteRequest = scheduleDeletion,
                         resolveCard = resolveCard
                     )
                 }
