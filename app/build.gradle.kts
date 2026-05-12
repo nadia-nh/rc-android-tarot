@@ -6,13 +6,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.simpletarot"
+    namespace = "com.flowworks.arcanaflux"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.example.simpletarot"
+        applicationId = "com.flowworks.arcanaflux"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
