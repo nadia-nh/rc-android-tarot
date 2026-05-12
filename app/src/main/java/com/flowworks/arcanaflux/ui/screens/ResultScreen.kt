@@ -1,6 +1,5 @@
 package com.flowworks.arcanaflux.ui.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +17,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -44,31 +44,35 @@ fun ResultsScreen(
     onReveal: (index: Int) -> Unit = {},
     onCardClick: (DrawnCard) -> Unit = {}) {
     val spacing = LocalSpacing.current
-    Column(
-        modifier = modifier
-            .background(color = MaterialTheme.colorScheme.background)
-            .fillMaxSize()
-            .padding(spacing.medium),
-        horizontalAlignment = Alignment.CenterHorizontally
+    Surface(
+        modifier = modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
     ) {
-        Box(
-            modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.Center
+        Column(
+            modifier = Modifier.padding(spacing.medium),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CardsDisplay(
+            Box(
+                modifier = Modifier.weight(1f),
+                contentAlignment = Alignment.Center
+            ) {
+                CardsDisplay(
+                    isLandscape = isLandscape,
+                    spacing = spacing,
+                    cards = cards,
+                    onReveal = onReveal,
+                    onCardClick = onCardClick
+                )
+            }
+
+            SaveButton(
                 isLandscape = isLandscape,
                 spacing = spacing,
-                cards = cards,
-                onReveal = onReveal,
-                onCardClick = onCardClick)
+                isSaved,
+                allCardsRevealed,
+                onSave
+            )
         }
-
-        SaveButton(
-            isLandscape = isLandscape,
-            spacing = spacing,
-            isSaved,
-            allCardsRevealed,
-            onSave)
     }
 }
 
