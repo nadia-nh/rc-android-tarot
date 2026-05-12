@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
@@ -113,15 +114,7 @@ fun CardsDisplay(
             contentPadding = PaddingValues(horizontal = spacing.extraLarge),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            itemsIndexed(cards) { index, card ->
-                CardDisplay(
-                    modifier = Modifier.height(200.dp),
-                    isLandscape = isLandscape,
-                    drawnCard = card,
-                    onReveal = { onReveal(index) },
-                    onCardClick = onCardClick
-                )
-            }
+            cardItems(cards, isLandscape, onReveal, onCardClick)
         }
     } else {
         LazyColumn(
@@ -129,16 +122,28 @@ fun CardsDisplay(
             contentPadding = PaddingValues(vertical = spacing.extraLarge),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            itemsIndexed(cards) { index, card ->
-                CardDisplay(
-                    modifier = Modifier.height(200.dp),
-                    isLandscape = isLandscape,
-                    drawnCard = card,
-                    onReveal = { onReveal(index) },
-                    onCardClick = onCardClick
-                )
-            }
+            cardItems(cards, isLandscape, onReveal, onCardClick)
         }
+    }
+}
+
+private fun LazyListScope.cardItems(
+    cards: List<DrawnCard>,
+    isLandscape: Boolean,
+    onReveal: (Int) -> Unit,
+    onCardClick: (DrawnCard) -> Unit
+) {
+    itemsIndexed(
+        items = cards,
+        key = { _, card -> card.card.name }
+    ) { index, card ->
+        CardDisplay(
+            modifier = Modifier.height(200.dp),
+            isLandscape = isLandscape,
+            drawnCard = card,
+            onReveal = { onReveal(index) },
+            onCardClick = onCardClick
+        )
     }
 }
 
