@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.flowworks.arcanaflux.ui.components.CardDisplay
 import com.flowworks.arcanaflux.domain.model.DrawnCard
@@ -106,6 +107,7 @@ fun CardsDisplay(
     isLandscape: Boolean = false,
     spacing: TarotSpacing = LocalSpacing.current,
     cards: List<DrawnCard>,
+    cardHeight: Dp = 200.dp,
     onReveal: (index: Int) -> Unit = {},
     onCardClick: (DrawnCard) -> Unit = {}) {
     if (isLandscape) {
@@ -114,7 +116,7 @@ fun CardsDisplay(
             contentPadding = PaddingValues(horizontal = spacing.extraLarge),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            cardItems(cards, isLandscape, onReveal, onCardClick)
+            cardItems(cards, isLandscape, cardHeight, onReveal, onCardClick)
         }
     } else {
         LazyColumn(
@@ -122,7 +124,7 @@ fun CardsDisplay(
             contentPadding = PaddingValues(vertical = spacing.extraLarge),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            cardItems(cards, isLandscape, onReveal, onCardClick)
+            cardItems(cards, isLandscape, cardHeight, onReveal, onCardClick)
         }
     }
 }
@@ -130,6 +132,7 @@ fun CardsDisplay(
 private fun LazyListScope.cardItems(
     cards: List<DrawnCard>,
     isLandscape: Boolean,
+    cardHeight: Dp,
     onReveal: (Int) -> Unit,
     onCardClick: (DrawnCard) -> Unit
 ) {
@@ -138,7 +141,7 @@ private fun LazyListScope.cardItems(
         key = { _, card -> card.card.name }
     ) { index, card ->
         CardDisplay(
-            modifier = Modifier.height(200.dp),
+            modifier = Modifier.height(cardHeight),
             isLandscape = isLandscape,
             drawnCard = card,
             onReveal = { onReveal(index) },
