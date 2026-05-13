@@ -25,6 +25,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
@@ -73,21 +74,28 @@ fun HistoryScreen(
 @Composable
 fun EmptyHistoryScreen(modifier: Modifier = Modifier) {
     val spacing = LocalSpacing.current
-    Column(
+    Surface(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        color = MaterialTheme.colorScheme.background
     ) {
-        Icon(
-            imageVector = Icons.Default.History,
-            contentDescription = null,
-            modifier = Modifier.size(64.dp),
-            tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
-        )
-        Spacer(modifier = Modifier.height(spacing.medium))
-        Text("No Tarot readings saved yet",
-            color = MaterialTheme.colorScheme.onBackground,
-            style = MaterialTheme.typography.headlineSmall)
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Icon(
+                imageVector = Icons.Default.History,
+                contentDescription = null,
+                modifier = Modifier.size(64.dp),
+                tint = MaterialTheme
+                    .colorScheme.primary.copy(alpha = 0.2f)
+            )
+            Spacer(modifier = Modifier.height(spacing.medium))
+            Text(
+                "No Tarot readings saved yet",
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.headlineSmall
+            )
+        }
     }
 }
 
@@ -100,19 +108,24 @@ fun FilledHistoryScreen(
     resolveCard: (DrawnCardEntity) -> DrawnCard = { it.toDrawnCard() }
 ) {
     val spacing = LocalSpacing.current
-    LazyColumn(
-        modifier = modifier,
-        contentPadding = PaddingValues(spacing.medium),
-        verticalArrangement = Arrangement.spacedBy(spacing.small),
+    Surface(
+        modifier = modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
     ) {
-        items(
-            items = history,
-            key = { it.reading.readingId }) { readingWithCards ->
-            SwipeableTarotItem(
-                item = readingWithCards,
-                onCardClick = onCardClick,
-                onDeleteRequest = onDeleteRequest,
-                resolveCard = resolveCard)
+        LazyColumn(
+            contentPadding = PaddingValues(spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(spacing.small),
+        ) {
+            items(
+                items = history,
+                key = { it.reading.readingId }) { readingWithCards ->
+                SwipeableTarotItem(
+                    item = readingWithCards,
+                    onCardClick = onCardClick,
+                    onDeleteRequest = onDeleteRequest,
+                    resolveCard = resolveCard
+                )
+            }
         }
     }
 }
