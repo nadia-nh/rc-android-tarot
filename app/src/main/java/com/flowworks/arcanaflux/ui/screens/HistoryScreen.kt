@@ -58,40 +58,61 @@ fun HistoryScreen(
     onDeleteRequest: (reading: ReadingEntity) -> Unit = {},
     resolveCard: (DrawnCardEntity) -> DrawnCard = { it.toDrawnCard() }
 ){
-   val spacing = LocalSpacing.current
-
-    if (history.isEmpty()) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                imageVector = Icons.Default.History,
-                contentDescription = null,
-                modifier = Modifier.size(64.dp),
-                tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
-            )
-            Spacer(modifier = Modifier.height(spacing.medium))
-            Text("No Tarot readings saved yet",
-                color = MaterialTheme.colorScheme.onBackground,
-                style = MaterialTheme.typography.headlineSmall)
-        }
-    } else {
-        LazyColumn(
+    when {
+        history.isNotEmpty() -> FilledHistoryScreen(
             modifier = modifier,
-            contentPadding = PaddingValues(spacing.medium),
-            verticalArrangement = Arrangement.spacedBy(spacing.small),
-        ) {
-            items(
-                items = history,
-                key = { it.reading.readingId }) { readingWithCards ->
-                SwipeableTarotItem(
-                    item = readingWithCards,
-                    onCardClick = onCardClick,
-                    onDeleteRequest = onDeleteRequest,
-                    resolveCard = resolveCard)
-            }
+            history = history,
+            onCardClick = onCardClick,
+            onDeleteRequest = onDeleteRequest,
+            resolveCard = resolveCard
+        )
+        else -> EmptyHistoryScreen()
+    }
+}
+
+@Composable
+fun EmptyHistoryScreen(modifier: Modifier = Modifier) {
+    val spacing = LocalSpacing.current
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Icon(
+            imageVector = Icons.Default.History,
+            contentDescription = null,
+            modifier = Modifier.size(64.dp),
+            tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+        )
+        Spacer(modifier = Modifier.height(spacing.medium))
+        Text("No Tarot readings saved yet",
+            color = MaterialTheme.colorScheme.onBackground,
+            style = MaterialTheme.typography.headlineSmall)
+    }
+}
+
+@Composable
+fun FilledHistoryScreen(
+    modifier: Modifier = Modifier,
+    history: List<ReadingWithCards> = emptyList(),
+    onCardClick: (DrawnCard) -> Unit = {},
+    onDeleteRequest: (reading: ReadingEntity) -> Unit = {},
+    resolveCard: (DrawnCardEntity) -> DrawnCard = { it.toDrawnCard() }
+) {
+    val spacing = LocalSpacing.current
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(spacing.medium),
+        verticalArrangement = Arrangement.spacedBy(spacing.small),
+    ) {
+        items(
+            items = history,
+            key = { it.reading.readingId }) { readingWithCards ->
+            SwipeableTarotItem(
+                item = readingWithCards,
+                onCardClick = onCardClick,
+                onDeleteRequest = onDeleteRequest,
+                resolveCard = resolveCard)
         }
     }
 }
