@@ -50,7 +50,10 @@ The app follows the MVVM architecture pattern with Jetpack Compose for UI and Ro
   Official documentation for the SQLite database abstraction.
 
 - [Material 3 Design](https://m3.material.io/)  
-  Design system used for the app's UI components.
+  System used for the app's UI components.
+
+- [Tarot API](https://tarotapi.dev)  
+  REST API used for card data including names and meanings.
 
 ### Assets
 
