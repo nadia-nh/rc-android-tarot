@@ -1,6 +1,5 @@
 package com.flowworks.arcanaflux.ui.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +17,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,6 +32,7 @@ import com.flowworks.arcanaflux.ui.components.CardTitle
 import com.flowworks.arcanaflux.ui.theme.LocalSpacing
 import com.flowworks.arcanaflux.ui.theme.PreviewConstants
 import com.flowworks.arcanaflux.ui.theme.SimpleTarotTheme
+import com.flowworks.arcanaflux.ui.theme.TarotSpacing
 
 @Composable
 fun CardDetailScreen(
@@ -41,59 +42,65 @@ fun CardDetailScreen(
 ) {
     val spacing = LocalSpacing.current
 
+    Surface(
+        modifier = modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        CardDetailScreenContents(
+            drawnCard = drawnCard,
+            modifier = if (isLandscape) {
+                Modifier.padding(
+                    horizontal = spacing.medium,
+                    vertical = spacing.large)
+            } else {
+                Modifier.padding(
+                    horizontal = spacing.large,
+                    vertical = spacing.medium)
+            },
+            cardModifier = if (isLandscape) {
+                Modifier.width(480.dp).fillMaxHeight()
+            } else {
+                Modifier.width(480.dp).height(420.dp)
+            },
+            isLandscape = isLandscape,
+        )
+    }
+}
+
+@Composable
+fun CardDetailScreenContents(
+    drawnCard: DrawnCard,
+    modifier: Modifier = Modifier,
+    cardModifier: Modifier = Modifier,
+    spacing: TarotSpacing = LocalSpacing.current,
+    isLandscape: Boolean = false,
+) {
+    val scrollState = rememberScrollState()
+
     if (isLandscape) {
         Row(
-            modifier = modifier
-                .background(color = MaterialTheme.colorScheme.background)
-                .fillMaxSize()
-                .padding(
-                    horizontal = spacing.medium,
-                    vertical = spacing.large),
+            modifier = modifier,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            CardImage(
-                card = drawnCard,
-                modifier = Modifier
-                    .width(280.dp)
-                    .fillMaxHeight()
-            )
-
+            CardImage(card = drawnCard, modifier = cardModifier)
             Spacer(modifier = Modifier.width(spacing.medium))
 
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .verticalScroll(rememberScrollState())
+                    .verticalScroll(state = scrollState)
             ) {
-                CardMeaning(
-                    drawnCard = drawnCard,
-                    style = MaterialTheme.typography.bodyLarge
-                )
+                CardMeaning(drawnCard = drawnCard)
             }
         }
     } else {
         Column(
-            modifier = modifier
-                .background(color = MaterialTheme.colorScheme.background)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(
-                    horizontal = spacing.large,
-                    vertical = spacing.medium),
+            modifier = modifier.verticalScroll(state = scrollState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CardImage(
-                card = drawnCard,
-                modifier = Modifier
-                    .width(280.dp)
-                    .height(420.dp)
-            )
-
+            CardImage(card = drawnCard, modifier = cardModifier)
             Spacer(modifier = Modifier.height(spacing.medium))
-            CardMeaning(
-                drawnCard = drawnCard,
-                style = MaterialTheme.typography.bodyLarge
-            )
+            CardMeaning(drawnCard = drawnCard)
         }
     }
 }
