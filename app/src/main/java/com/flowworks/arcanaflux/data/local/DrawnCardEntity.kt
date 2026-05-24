@@ -2,6 +2,7 @@ package com.flowworks.arcanaflux.data.local
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.flowworks.arcanaflux.domain.model.DrawnCard
 import com.flowworks.arcanaflux.domain.model.TarotCard
@@ -15,7 +16,8 @@ import com.flowworks.arcanaflux.domain.model.TarotCard
             childColumns = ["readingOwnerId"],
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ],
+    indices = [Index(value = ["readingOwnerId"])]
 )
 data class DrawnCardEntity(
     @PrimaryKey(autoGenerate = true) val cardId: Long = 0,

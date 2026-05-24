@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -14,6 +15,8 @@ interface TarotDao {
 
     @Insert
     suspend fun insertDrawnCards(cards: List<DrawnCardEntity>)
+
+    @Transaction
     @Query("SELECT * FROM readings ORDER BY timestamp DESC")
     fun getAllReadingsWithCards(): Flow<List<ReadingWithCards>>
 
