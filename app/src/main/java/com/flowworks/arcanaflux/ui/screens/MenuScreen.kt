@@ -62,10 +62,10 @@ fun MenuScreenDailySpread(
         if (!dailySpread.isEmpty()) {
             Text(
                 text = "Your daily card",
-                style = MaterialTheme.typography.titleSmall
+                style = MaterialTheme.typography.titleMedium
                     .copy(fontStyle = FontStyle.Italic),
             )
-            Spacer(modifier = Modifier.height(spacing.small))
+            Spacer(modifier = Modifier.height(spacing.medium))
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(spacing.medium),
                 verticalAlignment = Alignment.CenterVertically
