@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [ReadingEntity::class, DrawnCardEntity::class, TarotCardEntity::class],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 abstract class TarotDatabase : RoomDatabase() {
@@ -49,6 +49,7 @@ abstract class TarotDatabase : RoomDatabase() {
                     "arcana_flux_database"
                 )
                     .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                    .fallbackToDestructiveMigration(dropAllTables = true)
                     .build()
                 INSTANCE = instance
                 instance
