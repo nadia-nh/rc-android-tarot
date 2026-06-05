@@ -35,8 +35,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.flowworks.arcanaflux.ui.theme.PreviewConstants
 import com.flowworks.arcanaflux.data.local.DrawnCardEntity
 import com.flowworks.arcanaflux.data.local.ReadingEntity
@@ -79,6 +81,7 @@ fun EmptyHistoryScreen(modifier: Modifier = Modifier) {
         color = MaterialTheme.colorScheme.background
     ) {
         Column(
+            modifier = Modifier.padding(spacing.extraLarge),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -91,9 +94,10 @@ fun EmptyHistoryScreen(modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.height(spacing.medium))
             Text(
-                "No Tarot readings saved yet",
+                "No tarot readings saved yet",
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.headlineSmall
+                    .copy(lineHeight = 48.sp, textAlign = TextAlign.Center),
             )
         }
     }
@@ -346,6 +350,19 @@ fun TarotReadingItemPreview() {
             TarotReadingItem(
                 readingWithCards = PreviewConstants.readingWithCards
             )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun EmptyHistoryScreenPreview() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        SimpleTarotTheme {
+            EmptyHistoryScreen()
         }
     }
 }
