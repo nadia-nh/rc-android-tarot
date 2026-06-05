@@ -6,6 +6,6 @@ import androidx.compose.ui.unit.dp
 
 val TarotShapes = Shapes(
     small = RoundedCornerShape(8.dp),
-    medium = RoundedCornerShape(12.dp), // For Cards
+    medium = RoundedCornerShape(15.dp), // For Cards
     large = RoundedCornerShape(24.dp)   // For Buttons
 )
