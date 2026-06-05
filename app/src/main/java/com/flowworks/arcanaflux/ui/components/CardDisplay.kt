@@ -62,7 +62,7 @@ fun CardWithImageOnReveal(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
-        modifier = modifier.aspectRatio(0.8f)
+        modifier = modifier.aspectRatio(0.72f)
             .clickable {
                     if (drawnCard.isRevealed) onCardClick(drawnCard) else onReveal()
                 }
