@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.flowworks.arcanaflux.domain.model.DrawnCard
 import com.flowworks.arcanaflux.ui.components.CardDisplay
 import com.flowworks.arcanaflux.ui.theme.LocalSpacing
@@ -76,7 +75,7 @@ fun MenuScreenDailySpread(
                         modifier = if (isLandscape) {
                             Modifier.fillMaxHeight(0.8f)
                         } else {
-                            Modifier.height(200.dp)
+                            Modifier.fillMaxHeight(0.7f)
                         },
                         isLandscape = isLandscape,
                         drawnCard = card,
