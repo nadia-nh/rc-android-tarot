@@ -3,6 +3,7 @@ package com.flowworks.arcanaflux.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flowworks.arcanaflux.AppScreen
+import com.flowworks.arcanaflux.data.local.DailyCardEntity
 import com.flowworks.arcanaflux.domain.model.DrawnCard
 import com.flowworks.arcanaflux.data.local.DrawnCardEntity
 import com.flowworks.arcanaflux.data.local.ReadingEntity
@@ -10,7 +11,9 @@ import com.flowworks.arcanaflux.data.local.TarotDeck
 import com.flowworks.arcanaflux.data.local.ReadingWithCards
 import com.flowworks.arcanaflux.data.repository.TarotRepository
 import com.flowworks.arcanaflux.data.local.toEntity
+import com.flowworks.arcanaflux.data.local.toDrawnCard
 import com.flowworks.arcanaflux.domain.model.TarotCard
+import com.flowworks.arcanaflux.util.DateUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -83,11 +86,42 @@ class TarotViewModel(private val repository: TarotRepository) : ViewModel() {
         _isSpreadSaved.value = false
     }
 
-    fun drawDailyCards(count: Int) {
-        if (_dailySpread.value.isEmpty()) {
-            // Initialize daily cards as revealed
-            _dailySpread.value = draw(count).map { card ->
-                card.copy(isRevealed = true)
+
+    suspend fun getDailySpreadFromDb(date: String) {
+        val existingDaily = repository.getDailyReadingByDate(date)
+
+        if (existingDaily != null) {
+            _dailySpread.value = listOf(
+                existingDaily.card.toDrawnCard()
+                    .copy(isRevealed = true)
+            )
+        }
+    }
+
+    suspend fun saveDailySpreadToDb(
+        cards: List<DrawnCard>,
+        date: String
+    ) {
+        _dailySpread.value = cards
+
+        cards.firstOrNull()?.let { card ->
+            val entity = DailyCardEntity(
+                card = card.toEntity(),
+                date = date
+            )
+            repository.saveDailyReading(entity)
+        }
+    }
+    fun drawDailyCards(count: Int = 1) {
+        if (_dailySpread.value.isNotEmpty()) return
+
+        val today = DateUtils.getTodayDate()
+        viewModelScope.launch {
+            getDailySpreadFromDb(today)
+
+            if (_dailySpread.value.isEmpty()) {
+                val cards = draw(count).map { it.copy(isRevealed = true) }
+                saveDailySpreadToDb(cards, today)
             }
         }
     }

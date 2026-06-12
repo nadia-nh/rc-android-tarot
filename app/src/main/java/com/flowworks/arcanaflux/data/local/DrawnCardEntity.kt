@@ -26,7 +26,8 @@ data class DrawnCardEntity(
     val isReversed: Boolean
 )
 
-fun DrawnCard.toEntity(readingId: Long): DrawnCardEntity = DrawnCardEntity(
+fun DrawnCard.toEntity(
+    readingId: Long = 0): DrawnCardEntity = DrawnCardEntity(
     readingOwnerId = readingId,
     name = card.name,
     isReversed = isReversed
