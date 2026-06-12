@@ -20,6 +20,11 @@ object DateUtils {
             TIMESTAMP_FORMAT_DATE_STORAGE)
     }
 
+    fun formatForDb(timestamp: Long): String {
+        return formatTimestampDate(timestamp,
+            TIMESTAMP_FORMAT_DATE_STORAGE)
+    }
+
     private const val TIMESTAMP_FORMAT_DATE_DISPLAY = "MMM dd, yyyy"
     private const val TIMESTAMP_FORMAT_DATE_STORAGE = "yyyy-MM-dd"
 }
