@@ -16,9 +16,15 @@ interface TarotDao {
     @Insert
     suspend fun insertDrawnCards(cards: List<DrawnCardEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertDailyReading(reading: DailyCardEntity)
+
     @Transaction
     @Query("SELECT * FROM readings ORDER BY timestamp DESC")
     fun getAllReadingsWithCards(): Flow<List<ReadingWithCards>>
+
+    @Query("SELECT * FROM daily_readings WHERE date = :date LIMIT 1")
+    suspend fun getDailyReadingByDate(date: String): DailyCardEntity?
 
     @Delete
     suspend fun deleteReading(reading: ReadingEntity)

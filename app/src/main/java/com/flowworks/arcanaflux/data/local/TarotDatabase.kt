@@ -8,8 +8,8 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
-    entities = [ReadingEntity::class, DrawnCardEntity::class, TarotCardEntity::class],
-    version = 4,
+    entities = [ReadingEntity::class, DrawnCardEntity::class, TarotCardEntity::class, DailyCardEntity::class],
+    version = 6,
     exportSchema = false
 )
 abstract class TarotDatabase : RoomDatabase() {

@@ -1,6 +1,7 @@
 package com.flowworks.arcanaflux.data.repository
 
 import android.util.Log
+import com.flowworks.arcanaflux.data.local.DailyCardEntity
 import com.flowworks.arcanaflux.data.local.DrawnCardEntity
 import com.flowworks.arcanaflux.data.local.ReadingEntity
 import com.flowworks.arcanaflux.data.local.ReadingWithCards
@@ -83,6 +84,14 @@ class TarotRepository(
         val id = tarotDao.insertReading(reading)
         val cardsWithOwner = cards.map { it.copy(readingOwnerId = id) }
         tarotDao.insertDrawnCards(cardsWithOwner)
+    }
+
+    suspend fun saveDailyReading(reading: DailyCardEntity) {
+        tarotDao.insertDailyReading(reading)
+    }
+
+    suspend fun getDailyReadingByDate(date: String): DailyCardEntity? {
+        return tarotDao.getDailyReadingByDate(date)
     }
 
     suspend fun deleteReading(reading: ReadingEntity) {
