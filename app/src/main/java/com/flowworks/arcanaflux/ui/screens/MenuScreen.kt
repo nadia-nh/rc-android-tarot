@@ -15,14 +15,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import com.flowworks.arcanaflux.domain.model.DrawnCard
 import com.flowworks.arcanaflux.ui.components.CardDisplay
 import com.flowworks.arcanaflux.ui.theme.LocalSpacing
 import com.flowworks.arcanaflux.ui.theme.PreviewConstants
 import com.flowworks.arcanaflux.ui.theme.SimpleTarotTheme
 import com.flowworks.arcanaflux.ui.theme.TarotSpacing
+import com.flowworks.arcanaflux.util.DateUtils
 
 @Composable
 fun MenuScreen(
@@ -61,9 +64,15 @@ fun MenuScreenDailySpread(
     ) {
         if (!dailySpread.isEmpty()) {
             Text(
-                text = "Your daily card",
+                text = "Your Daily Card",
                 style = MaterialTheme.typography.titleMedium
-                    .copy(fontStyle = FontStyle.Italic),
+                    .copy(fontSize = 32.sp, fontStyle = FontStyle.Italic),
+            )
+            Spacer(modifier = Modifier.height(spacing.large))
+            Text(
+                text = DateUtils.getTodayDate(),
+                style = MaterialTheme.typography.titleMedium
+                    .copy(color = Color.Gray),
             )
             Spacer(modifier = Modifier.height(spacing.medium))
             LazyRow(
