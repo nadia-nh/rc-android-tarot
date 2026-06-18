@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [ReadingEntity::class, DrawnCardEntity::class, TarotCardEntity::class, DailyCardEntity::class],
-    version = 6,
+    version = 5,
     exportSchema = false
 )
 abstract class TarotDatabase : RoomDatabase() {
@@ -41,6 +41,26 @@ abstract class TarotDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // Create the new daily_readings table matching the DailyCardEntity with embedded DrawnCardEntity
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS daily_readings (
+                        dailyId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                        timestamp INTEGER NOT NULL, 
+                        date TEXT NOT NULL, 
+                        cardId INTEGER NOT NULL,
+                        readingOwnerId INTEGER NOT NULL,
+                        name TEXT NOT NULL, 
+                        isReversed INTEGER NOT NULL
+                    )
+                """.trimIndent())
+
+                db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_daily_readings_date` ON `daily_readings` (`date`)")
+            }
+        }
+
         fun getDatabase(context: Context): TarotDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -48,7 +68,10 @@ abstract class TarotDatabase : RoomDatabase() {
                     TarotDatabase::class.java,
                     "arcana_flux_database"
                 )
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                    .addMigrations(
+                        MIGRATION_1_2,
+                        MIGRATION_2_3,
+                        MIGRATION_4_5)
                     .fallbackToDestructiveMigration(dropAllTables = true)
                     .build()
                 INSTANCE = instance
