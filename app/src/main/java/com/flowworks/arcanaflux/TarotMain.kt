@@ -55,7 +55,7 @@ fun TarotMain(
     val isSpreadSaved by viewModel.isSpreadSaved.collectAsState()
     val allRevealed by viewModel.isSpreadRevealed.collectAsState()
 
-    BackHandler(enabled = currentScreen == AppScreen.Result || currentScreen == AppScreen.CardDetail) {
+    BackHandler(enabled = currentScreen != AppScreen.Menu) {
         if (currentScreen == AppScreen.CardDetail) {
             viewModel.closeCardDetail()
         } else {
