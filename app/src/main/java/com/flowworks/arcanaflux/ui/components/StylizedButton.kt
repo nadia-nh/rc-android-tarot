@@ -95,7 +95,7 @@ fun StylizedButtonContents(
     if (isLandscape) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             StylizedButtonIconDisplay(
-                text = text,
+                precedesText = text.isNotEmpty(),
                 spacing = spacing,
                 displayIcon = displayIcon,
                 icon = icon
@@ -105,7 +105,7 @@ fun StylizedButtonContents(
     } else {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             StylizedButtonIconDisplay(
-                text = text,
+                precedesText = text.isNotEmpty(),
                 spacing = spacing,
                 displayIcon = displayIcon,
                 icon = icon
@@ -116,8 +116,8 @@ fun StylizedButtonContents(
 }
 
 @Composable
-fun StylizedButtonIconDisplay(
-    text: String = "",
+private fun StylizedButtonIconDisplay(
+    precedesText: Boolean = false,
     spacing: TarotSpacing = LocalSpacing.current,
     displayIcon: Boolean = false,
     icon: ImageVector? = null,
@@ -125,7 +125,7 @@ fun StylizedButtonIconDisplay(
     if (displayIcon && icon != null) {
         Icon(icon, contentDescription = null)
 
-        if (text.isNotEmpty()) Spacer(Modifier.size(spacing.small))
+        if (precedesText) Spacer(Modifier.size(spacing.small))
     }
 }
 
@@ -138,7 +138,7 @@ fun StylizedButtonIconDisplayPreview() {
     ) {
         SimpleTarotTheme {
             StylizedButtonIconDisplay(
-                text = "Test Button",
+                precedesText = false,
                 displayIcon = true,
                 icon = Icons.Default.Preview
             )
