@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.CropPortrait
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
@@ -27,7 +28,9 @@ fun TarotBottomBar(
     threeCardsSelected: Boolean = false,
     historySelected: Boolean = false
 ) {
-    NavigationBar {
+    NavigationBar(
+        containerColor = MaterialTheme.colorScheme.surfaceVariant
+    ) {
         NavigationBarItem(
             selected = homeSelected,
             onClick = { onHome() },
