@@ -55,6 +55,7 @@ fun StyledButton(
     ) {
         StylizedButtonContents(
             isLandscape = isLandscape,
+            forceHorizontalLayout = true,
             text = text,
             style = style,
             spacing = spacing,
@@ -74,6 +75,7 @@ fun StyledButton(
         ) {
             StylizedButtonContents(
                 isLandscape = isLandscape,
+                forceHorizontalLayout = true,
                 text = text,
                 style = style,
                 spacing = spacing,
@@ -87,23 +89,23 @@ fun StyledButton(
 @Composable
 fun StylizedButtonContents(
     isLandscape: Boolean = false,
+    forceHorizontalLayout: Boolean = false,
     text: String = "",
     style: TextStyle = MaterialTheme.typography.bodyMedium,
     spacing: TarotSpacing = LocalSpacing.current,
     displayIcon: Boolean = false,
     icon: ImageVector? = null,
 ) {
-    if (isLandscape) {
     val spacingSize = if (text.isNotEmpty()) {
         spacing.small
     } else {
         0.dp
     }
 
+    if (isLandscape || forceHorizontalLayout) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             StylizedButtonIconDisplay(
-                precedesText = text.isNotEmpty(),
-                spacing = spacing,
+                modifier = Modifier.width(spacingSize),
                 displayIcon = displayIcon,
                 icon = icon
             )
@@ -152,7 +154,12 @@ fun StylizedButtonIconDisplayPreview() {
 @Preview(showBackground = true)
 @Composable
 fun StyledButtonPreview() {
-    SimpleTarotTheme {
-        StyledButton(text = "Test Button") { }
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        SimpleTarotTheme {
+            StyledButton(text = "Test Button") { }
+        }
     }
 }
