@@ -6,7 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Preview
 import androidx.compose.material3.Button
@@ -93,6 +94,12 @@ fun StylizedButtonContents(
     icon: ImageVector? = null,
 ) {
     if (isLandscape) {
+    val spacingSize = if (text.isNotEmpty()) {
+        spacing.small
+    } else {
+        0.dp
+    }
+
         Row(verticalAlignment = Alignment.CenterVertically) {
             StylizedButtonIconDisplay(
                 precedesText = text.isNotEmpty(),
@@ -105,8 +112,7 @@ fun StylizedButtonContents(
     } else {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             StylizedButtonIconDisplay(
-                precedesText = text.isNotEmpty(),
-                spacing = spacing,
+                modifier = Modifier.height(spacingSize),
                 displayIcon = displayIcon,
                 icon = icon
             )
@@ -117,15 +123,13 @@ fun StylizedButtonContents(
 
 @Composable
 private fun StylizedButtonIconDisplay(
-    precedesText: Boolean = false,
-    spacing: TarotSpacing = LocalSpacing.current,
+    modifier: Modifier = Modifier,
     displayIcon: Boolean = false,
     icon: ImageVector? = null,
 ) {
     if (displayIcon && icon != null) {
         Icon(icon, contentDescription = null)
-
-        if (precedesText) Spacer(Modifier.size(spacing.small))
+        Spacer(modifier)
     }
 }
 
@@ -138,7 +142,6 @@ fun StylizedButtonIconDisplayPreview() {
     ) {
         SimpleTarotTheme {
             StylizedButtonIconDisplay(
-                precedesText = false,
                 displayIcon = true,
                 icon = Icons.Default.Preview
             )
