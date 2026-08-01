@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.flowworks.arcanaflux.ui.components.CardDisplay
@@ -170,14 +171,33 @@ fun SaveButton(
 }
 
 @Preview(showBackground = true)
+@PreviewScreenSizes
 @Composable
-fun CardsDisplayPreview() {
+fun CardsDisplayLandscapePreview() {
     SimpleTarotTheme {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            CardsDisplay(cards = PreviewConstants.tarotCards)
+            CardsDisplay(
+                isLandscape = true,
+                cards = PreviewConstants.tarotCards)
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@PreviewScreenSizes
+@Composable
+fun CardsDisplayPortraitPreview() {
+    SimpleTarotTheme {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CardsDisplay(
+                isLandscape = false,
+                cards = PreviewConstants.tarotCards)
         }
     }
 }
