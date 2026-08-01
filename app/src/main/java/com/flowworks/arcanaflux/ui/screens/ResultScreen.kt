@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,7 +29,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.flowworks.arcanaflux.ui.components.CardDisplay
 import com.flowworks.arcanaflux.domain.model.DrawnCard
 import com.flowworks.arcanaflux.ui.components.StyledButton
@@ -82,6 +83,7 @@ fun ResultsScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResultScreenTopAppBar(
+    modifier: Modifier = Modifier,
     cardCount: Int = 1,
     onBack: () -> Unit = {}
 ) {
@@ -93,6 +95,7 @@ fun ResultScreenTopAppBar(
                 style = MaterialTheme.typography.headlineSmall
             )
         },
+        modifier = modifier,
         navigationIcon = {
             IconButton(onClick = onBack) {
                 Icon(
@@ -108,7 +111,7 @@ fun CardsDisplay(
     isLandscape: Boolean = false,
     spacing: TarotSpacing = LocalSpacing.current,
     cards: List<DrawnCard>,
-    cardHeight: Dp = 200.dp,
+    cardHeight: Dp? = null,
     onReveal: (index: Int) -> Unit = {},
     onCardClick: (DrawnCard) -> Unit = {}) {
     if (isLandscape) {
@@ -133,7 +136,7 @@ fun CardsDisplay(
 private fun LazyListScope.cardItems(
     cards: List<DrawnCard>,
     isLandscape: Boolean,
-    cardHeight: Dp,
+    cardHeight: Dp? = null,
     onReveal: (Int) -> Unit,
     onCardClick: (DrawnCard) -> Unit
 ) {
@@ -141,8 +144,18 @@ private fun LazyListScope.cardItems(
         items = cards,
         key = { _, card -> card.card.name }
     ) { index, card ->
+        val modifier = if (cardHeight != null) {
+            Modifier.height(cardHeight)
+        } else {
+            if (isLandscape) {
+                Modifier.fillMaxHeight(0.6f)
+            } else {
+                Modifier.fillMaxWidth(0.6f)
+            }
+        }
+
         CardDisplay(
-            modifier = Modifier.height(cardHeight),
+            modifier = modifier,
             isLandscape = isLandscape,
             drawnCard = card,
             onReveal = { onReveal(index) },
