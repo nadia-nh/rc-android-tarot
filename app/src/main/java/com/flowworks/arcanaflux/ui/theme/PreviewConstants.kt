@@ -9,9 +9,23 @@ import com.flowworks.arcanaflux.data.local.toEntity
 
 object PreviewConstants {
     val tarotCard = TarotCard(
-        "The Fool",
-        "New beginnings, spontaneity, trust",
-        "Recklessness, naivety, holding back"
+        name = "The Fool",
+        uprightMeaning = "New beginnings, spontaneity, trust",
+        reversedMeaning = "Recklessness, naivety, holding back",
+        uprightReflection = "Where am I being called to take a leap of faith?",
+        reversedReflection = "Where has carelessness cost me recently?",
+        uprightKeywords = listOf(
+            "new beginnings",
+            "innocence",
+            "spontaneity",
+            "free spirit"
+        ),
+        reversedKeywords = listOf(
+            "recklessness",
+            "naivety",
+            "being taken advantage of",
+            "poor judgment"
+        )
     )
         .withRankAndSuit()
     val drawnCard = DrawnCard(tarotCard, false, isRevealed = true)
