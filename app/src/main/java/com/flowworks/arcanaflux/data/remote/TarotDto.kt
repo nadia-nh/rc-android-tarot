@@ -4,18 +4,24 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TarotApiResponse(
-    val nhits: Int,
+    val count: Int,
     val cards: List<ApiCard>
 )
 
 @Serializable
 data class ApiCard(
-    val name_short: String,
+    val id: String,
     val name: String,
-    val meaning_up: String,
-    val meaning_rev: String,
-    val type: String, // Major or Minor
-    val value: String,
-    val value_int: Int,
-    val desc: String, // Interpretation/Description
+    val suit: String,
+    val rank: String? = null,
+    val value: Int,
+    val upright: ApiCardMeaning,
+    val reversed: ApiCardMeaning,
+)
+
+@Serializable
+data class ApiCardMeaning(
+    val keywords: List<String> = emptyList(),
+    val meaning: String = "",
+    val reflection: String = "",
 )

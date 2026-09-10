@@ -11,7 +11,7 @@ interface TarotApiService {
     suspend fun getAllCards(): TarotApiResponse
 
     companion object {
-        private const val BASE_URL = "https://tarotapi.dev/"
+        private const val BASE_URL = "https://tarot-api.fly.dev/"
         private val json = Json { ignoreUnknownKeys = true }
 
         fun create(): TarotApiService {
