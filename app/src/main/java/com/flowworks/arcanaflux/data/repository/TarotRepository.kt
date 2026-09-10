@@ -24,28 +24,19 @@ class TarotRepository(
 
     private val localDeck = TarotDeck.getDeck()
 
-    private var cachedDeck: List<TarotCard>? = null
-
     suspend fun getFullDeck(
         useNetwork: Boolean): List<TarotCard> {
         val dbDeck = getDeckFromDb()
         if (dbDeck.isNotEmpty()) {
-            cachedDeck = dbDeck
             return dbDeck
         }
 
-        if (!useNetwork) {
-            cachedDeck = localDeck
-            return localDeck
-        }
-
-        try {
+         if (useNetwork) try {
             val response = tarotApiService.getAllCards()
             val apiDeck = response.cards.map { apiCard ->
                 apiCard.toDomainModel()
             }
             saveDeckToDb(apiDeck)
-            cachedDeck = apiDeck
             return apiDeck
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
@@ -56,7 +47,6 @@ class TarotRepository(
             Log.e("TarotAPI", "Unknown Error: ${e.message}")
         }
 
-        cachedDeck = localDeck
         return localDeck
     }
 
