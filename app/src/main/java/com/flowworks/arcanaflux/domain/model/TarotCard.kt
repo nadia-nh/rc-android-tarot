@@ -6,6 +6,10 @@ data class TarotCard(
     val name: String,
     val uprightMeaning: String,
     val reversedMeaning: String,
+    val uprightReflection: String = "",
+    val reversedReflection: String = "",
+    val uprightKeywords: List<String> = listOf(),
+    val reversedKeywords: List<String> = listOf(),
     val suit: Suit = Suit.MajorArcana,
     val rank: Rank? = null,
 )
