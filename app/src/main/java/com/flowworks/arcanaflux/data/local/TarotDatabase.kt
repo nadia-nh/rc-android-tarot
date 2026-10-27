@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [ReadingEntity::class, DrawnCardEntity::class, TarotCardEntity::class, DailyCardEntity::class],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 abstract class TarotDatabase : RoomDatabase() {
@@ -61,6 +61,12 @@ abstract class TarotDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("DELETE FROM tarot_cards")
+            }
+        }
+
         fun getDatabase(context: Context): TarotDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -71,7 +77,8 @@ abstract class TarotDatabase : RoomDatabase() {
                     .addMigrations(
                         MIGRATION_1_2,
                         MIGRATION_2_3,
-                        MIGRATION_4_5)
+                        MIGRATION_4_5,
+                        MIGRATION_5_6)
                     .fallbackToDestructiveMigration(dropAllTables = true)
                     .build()
                 INSTANCE = instance
