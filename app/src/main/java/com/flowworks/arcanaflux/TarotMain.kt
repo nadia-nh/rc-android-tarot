@@ -3,6 +3,7 @@ package com.flowworks.arcanaflux
 import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -136,17 +137,35 @@ fun TarotMainInternal(
             )
         }
 
+        val topBarModifier =
+            if (isLandscape) {
+                Modifier
+                    .fillMaxHeight(0.2f)
+            } else {
+                Modifier
+            }
         Scaffold(
             topBar = {
                 when (currentScreen) {
                     AppScreen.Menu ->
-                        TopAppBar( title = {TarotHeadline(spacing)} )
+                        TopAppBar(
+                            title = {TarotHeadline(spacing)},
+                            modifier = topBarModifier)
                     AppScreen.Result ->
-                        ResultScreenTopAppBar(cardCount, onBack)
-                    AppScreen.History -> HistoryScreenTopBar(onBack)
+                        ResultScreenTopAppBar(
+                            modifier = topBarModifier,
+                            cardCount = cardCount,
+                            onBack = onBack)
+                    AppScreen.History ->
+                        HistoryScreenTopBar(
+                            modifier = topBarModifier,
+                            onBack = onBack)
                     AppScreen.CardDetail  ->
                         selectedCard?.let {
-                            CardDetailScreenTopBar(selectedCard, onCloseDetail)
+                            CardDetailScreenTopBar(
+                                modifier = topBarModifier,
+                                drawnCard = selectedCard,
+                                onBack = onCloseDetail)
                         }
                 }
             },
