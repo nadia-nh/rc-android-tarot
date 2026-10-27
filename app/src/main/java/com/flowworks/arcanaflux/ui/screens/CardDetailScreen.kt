@@ -109,6 +109,7 @@ fun CardDetailScreenContents(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardDetailScreenTopBar(
+    modifier: Modifier = Modifier,
     drawnCard: DrawnCard,
     onBack: () -> Unit = {}
 ) {
@@ -119,6 +120,7 @@ fun CardDetailScreenTopBar(
                 style = MaterialTheme.typography.titleMedium
                     .copy(fontWeight = FontWeight.Bold))
         },
+        modifier = modifier,
         navigationIcon = {
             IconButton(onClick = onBack) {
                 Icon(

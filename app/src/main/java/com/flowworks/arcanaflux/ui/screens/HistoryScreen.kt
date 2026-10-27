@@ -137,6 +137,7 @@ fun FilledHistoryScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HistoryScreenTopBar(
+    modifier: Modifier = Modifier,
     onBack: () -> Unit = {},
 ) {
     TopAppBar(
@@ -147,6 +148,7 @@ fun HistoryScreenTopBar(
                 style = MaterialTheme.typography.headlineSmall
             )
         },
+        modifier = modifier,
         navigationIcon = {
             IconButton(onClick = onBack) {
                 Icon(
