@@ -46,6 +46,11 @@ fun CardDisplay(
             CardTitle(
                 drawnCard = drawnCard,
                 keepToOneLine = !isLandscape)
+            Spacer(modifier = Modifier.size(LocalSpacing.current.extraSmall))
+            CardKeywords(
+                drawnCard = drawnCard,
+                modifier = modifier,
+                keepToOneLine = !isLandscape)
         }
     }
 }
