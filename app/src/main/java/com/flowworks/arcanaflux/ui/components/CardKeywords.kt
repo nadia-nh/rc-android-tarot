@@ -21,22 +21,23 @@ fun CardKeywords(
     drawnCard: DrawnCard,
     modifier: Modifier = Modifier,
     style: TextStyle = MaterialTheme.typography.titleSmall
-        .copy(fontSize = 12.sp),
-    keepToOneLine: Boolean = true) {
+        .copy(fontSize = 12.sp, lineHeight = 15.sp),
+    shortVersion: Boolean = true) {
     val keywords: String = if (drawnCard.isReversed) {
         drawnCard.card.reversedKeywords
     } else {
         drawnCard.card.uprightKeywords
-    }.joinToString()
+    }.joinToString(", ")
+        .replaceFirstChar { c: Char -> c.titlecase() }
 
     Text(
         modifier = modifier,
         text = keywords,
         color = MaterialTheme.colorScheme.onBackground,
         style = style,
-        textAlign = TextAlign.Center,
-        minLines = if (keepToOneLine) 1 else 2,
-        maxLines = 2,
+        textAlign = TextAlign.Start,
+        minLines = if (shortVersion) 1 else 2,
+        maxLines = if (shortVersion) 2 else 3,
         overflow = TextOverflow.Ellipsis
     )
 }
